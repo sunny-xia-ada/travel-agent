@@ -246,7 +246,7 @@ def generate_html_report(reports_data: List[Dict]):
 <body>
     <div class="container">
         <header>
-            <h1>Travel Agent Log</h1>
+            <h1>Travel Agent From Yidan</h1>
             <p class="subtitle">AIR INTELLIGENCE REPORT • {today_str}</p>
         </header>
 

@@ -1,11 +1,13 @@
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Travel Agent | Flight Intelligence</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,700;1,700&display=swap"
+        rel="stylesheet">
     <style>
         :root {
             --bg: #f8fafc;
@@ -18,30 +20,45 @@
             --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { 
-            font-family: 'Outfit', sans-serif; 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
             background: linear-gradient(135deg, #e0f2fe 0%, #f1f5f9 100%);
             color: var(--text);
             min-height: 100vh;
             padding: 40px 20px;
         }
 
-        .container { max-width: 1000px; margin: 0 auto; }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
 
         /* Header Area */
         header {
             text-align: center;
             margin-bottom: 60px;
         }
-        h1 { 
-            font-family: 'Playfair Display', serif; 
-            font-size: 3.5rem; 
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
             color: var(--primary);
             margin-bottom: 10px;
             letter-spacing: -1px;
         }
-        .subtitle { font-size: 1.1rem; color: var(--secondary); font-weight: 400; letter-spacing: 2px; }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: var(--secondary);
+            font-weight: 400;
+            letter-spacing: 2px;
+        }
 
         /* Dashboard Grid */
         .dashboard-grid {
@@ -61,25 +78,66 @@
             padding: 30px;
             transition: transform 0.3s ease;
         }
-        .flight-card:hover { transform: translateY(-5px); }
 
-        .route-info { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 25px; }
-        .route-name { font-size: 2rem; font-weight: 800; color: var(--text); }
-        .badge { 
-            padding: 8px 16px; 
-            border-radius: 20px; 
-            font-size: 0.8rem; 
-            font-weight: 600; 
-            text-transform: uppercase; 
+        .flight-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .route-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 25px;
+        }
+
+        .route-name {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--text);
+        }
+
+        .badge {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
             letter-spacing: 1px;
         }
-        .badge-none { background: #e2e8f0; color: #475569; }
-        .badge-trigger { background: #fee2e2; color: #ef4444; border: 1px solid #fecaca; }
 
-        .price-row { display: flex; align-items: baseline; gap: 10px; margin-bottom: 20px; }
-        .current-price { font-size: 3rem; font-weight: 800; color: var(--primary); }
-        .airline { font-size: 1.2rem; color: var(--secondary); font-weight: 600; }
-        .trend { font-size: 1.5rem; }
+        .badge-none {
+            background: #e2e8f0;
+            color: #475569;
+        }
+
+        .badge-trigger {
+            background: #fee2e2;
+            color: #ef4444;
+            border: 1px solid #fecaca;
+        }
+
+        .price-row {
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .current-price {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .airline {
+            font-size: 1.2rem;
+            color: var(--secondary);
+            font-weight: 600;
+        }
+
+        .trend {
+            font-size: 1.5rem;
+        }
 
         /* Evidence Section */
         .evidence {
@@ -87,28 +145,44 @@
             border-radius: 20px;
             overflow: hidden;
             border: 4px solid white;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
         }
-        .evidence img { width: 100%; display: block; filter: grayscale(10%); transition: filter 0.3s; }
-        .evidence:hover img { filter: grayscale(0%); }
 
-        footer { text-align: center; margin-top: 60px; color: var(--secondary); font-size: 0.9rem; }
+        .evidence img {
+            width: 100%;
+            display: block;
+            filter: grayscale(10%);
+            transition: filter 0.3s;
+        }
+
+        .evidence:hover img {
+            filter: grayscale(0%);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            color: var(--secondary);
+            font-size: 0.9rem;
+        }
     </style>
 </head>
+
 <body>
     <div class="container">
         <header>
-            <h1>Travel Agent Log</h1>
+            <h1>Travel Agent From Yidan</h1>
             <p class="subtitle">AIR INTELLIGENCE REPORT • January 28, 2026</p>
         </header>
 
         <div class="dashboard-grid">
-            
+
             <div class="flight-card">
                 <div class="route-info">
                     <div>
                         <div class="route-name">SEA-SFO</div>
-                        <div style="color: var(--secondary); font-size: 0.9rem; font-weight: 600;">2026-03-27 to 2026-03-29</div>
+                        <div style="color: var(--secondary); font-size: 0.9rem; font-weight: 600;">2026-03-27 to
+                            2026-03-29</div>
                     </div>
                     <span class="badge badge-none">Watching</span>
                 </div>
@@ -121,12 +195,13 @@
                     <img src="debug_sf_weekend.png" alt="Flight Evidence">
                 </div>
             </div>
-        
+
             <div class="flight-card">
                 <div class="route-info">
                     <div>
                         <div class="route-name">SEA-PSP</div>
-                        <div style="color: var(--secondary); font-size: 0.9rem; font-weight: 600;">2026-04-09 to 2026-04-13</div>
+                        <div style="color: var(--secondary); font-size: 0.9rem; font-weight: 600;">2026-04-09 to
+                            2026-04-13</div>
                     </div>
                     <span class="badge badge-none">Watching</span>
                 </div>
@@ -139,7 +214,7 @@
                     <img src="debug_desert_escape.png" alt="Flight Evidence">
                 </div>
             </div>
-        
+
         </div>
 
         <footer>
@@ -147,5 +222,5 @@
         </footer>
     </div>
 </body>
+
 </html>
-    
