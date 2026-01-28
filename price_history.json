@@ -1,0 +1,110 @@
+{
+    "sf_weekend": {
+        "latest": {
+            "date": "2026-01-28",
+            "price": 187,
+            "carrier": "Delta"
+        },
+        "history": [
+            {
+                "date": "2026-01-28",
+                "price": 0,
+                "carrier": "N/A"
+            },
+            {
+                "date": "2026-01-28",
+                "price": 0,
+                "carrier": "N/A"
+            },
+            {
+                "date": "2026-01-28",
+                "price": 0,
+                "carrier": "N/A"
+            },
+            {
+                "date": "2026-01-28",
+                "price": 187,
+                "carrier": "Delta"
+            },
+            {
+                "date": "2026-01-28",
+                "price": 0,
+                "carrier": "N/A"
+            },
+            {
+                "date": "2026-01-28",
+                "price": 187,
+                "carrier": "Delta"
+            },
+            {
+                "date": "2026-01-28",
+                "price": 0,
+                "carrier": "N/A"
+            },
+            {
+                "date": "2026-01-28",
+                "price": 187,
+                "carrier": "Delta"
+            },
+            {
+                "date": "2026-01-28",
+                "price": 187,
+                "carrier": "Delta"
+            }
+        ]
+    },
+    "desert_escape": {
+        "latest": {
+            "date": "2026-01-28",
+            "price": 465,
+            "carrier": "Alaska"
+        },
+        "history": [
+            {
+                "date": "2026-01-28",
+                "price": 0,
+                "carrier": "N/A"
+            },
+            {
+                "date": "2026-01-28",
+                "price": 0,
+                "carrier": "N/A"
+            },
+            {
+                "date": "2026-01-28",
+                "price": 0,
+                "carrier": "N/A"
+            },
+            {
+                "date": "2026-01-28",
+                "price": 0,
+                "carrier": "N/A"
+            },
+            {
+                "date": "2026-01-28",
+                "price": 0,
+                "carrier": "N/A"
+            },
+            {
+                "date": "2026-01-28",
+                "price": 0,
+                "carrier": "N/A"
+            },
+            {
+                "date": "2026-01-28",
+                "price": 0,
+                "carrier": "N/A"
+            },
+            {
+                "date": "2026-01-28",
+                "price": 465,
+                "carrier": "Alaska"
+            },
+            {
+                "date": "2026-01-28",
+                "price": 465,
+                "carrier": "Alaska"
+            }
+        ]
+    }
+}
