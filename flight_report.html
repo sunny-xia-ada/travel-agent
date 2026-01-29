@@ -1,226 +1,115 @@
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Travel Agent | Flight Intelligence</title>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,700;1,700&display=swap"
-        rel="stylesheet">
+    <title>Travel Agent | Intelligence Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #f8fafc;
-            --surface: rgba(255, 255, 255, 0.7);
-            --primary: #2563eb;
-            --secondary: #64748b;
-            --accent: #f43f5e;
-            --text: #0f172a;
-            --glass-border: rgba(255, 255, 255, 0.5);
-            --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+            --bg: #ffffff;
+            --surface: #f8fafc;
+            --primary: #0f172a;
+            --accent: #2563eb;
+            --target: #f43f5e;
+            --border: #e2e8f0;
+            --text-main: #1e293b;
+            --text-sub: #64748b;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Outfit', sans-serif; 
+            background-color: var(--bg);
+            color: var(--text-main);
+            padding: 60px 20px;
+            line-height: 1.6;
         }
 
-        body {
-            font-family: 'Outfit', sans-serif;
-            background: linear-gradient(135deg, #e0f2fe 0%, #f1f5f9 100%);
-            color: var(--text);
-            min-height: 100vh;
-            padding: 40px 20px;
-        }
+        .container { max-width: 900px; margin: 0 auto; }
 
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-        }
+        header { margin-bottom: 80px; text-align: left; border-bottom: 1px solid var(--border); padding-bottom: 20px; }
+        h1 { font-family: 'Playfair Display', serif; font-size: 4rem; letter-spacing: -2px; line-height: 1; margin-bottom: 10px; }
+        .date-badge { font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 3px; color: var(--accent); }
 
-        /* Header Area */
-        header {
-            text-align: center;
-            margin-bottom: 60px;
-        }
+        /* Status Cards */
+        .status-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 80px; }
+        .status-card { border: 1px solid var(--border); padding: 40px; border-radius: 4px; }
+        .route-label { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; color: var(--text-sub); margin-bottom: 20px; }
+        .price-display { display: flex; align-items: baseline; gap: 15px; margin-bottom: 10px; }
+        .price-val { font-size: 4rem; font-weight: 800; letter-spacing: -3px; }
+        .target-val { font-size: 1rem; font-weight: 600; color: var(--target); }
+        .meta-info { font-size: 0.9rem; color: var(--text-sub); display: flex; justify-content: space-between; }
 
-        h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 3.5rem;
-            color: var(--primary);
-            margin-bottom: 10px;
-            letter-spacing: -1px;
-        }
-
-        .subtitle {
+        /* Recommendations */
+        .section-header { font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 4px; color: var(--text-sub); margin-bottom: 30px; border-top: 1px solid var(--border); padding-top: 40px; }
+        .recommendation-zone { margin-bottom: 80px; }
+        .recommendation-pill { 
+            padding: 20px; 
+            border-left: 4px solid var(--accent); 
+            background: var(--surface); 
+            margin-bottom: 15px; 
+            font-weight: 500;
             font-size: 1.1rem;
-            color: var(--secondary);
-            font-weight: 400;
-            letter-spacing: 2px;
         }
 
-        /* Dashboard Grid */
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
-            gap: 30px;
-        }
-
-        /* Flight Card */
-        .flight-card {
-            background: var(--surface);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-radius: 32px;
-            border: 1px solid var(--glass-border);
-            box-shadow: var(--glass-shadow);
-            padding: 30px;
-            transition: transform 0.3s ease;
-        }
-
-        .flight-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .route-info {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 25px;
-        }
-
-        .route-name {
-            font-size: 2rem;
-            font-weight: 800;
-            color: var(--text);
-        }
-
-        .badge {
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .badge-none {
-            background: #e2e8f0;
-            color: #475569;
-        }
-
-        .badge-trigger {
-            background: #fee2e2;
-            color: #ef4444;
-            border: 1px solid #fecaca;
-        }
-
-        .price-row {
-            display: flex;
-            align-items: baseline;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .current-price {
-            font-size: 3rem;
-            font-weight: 800;
-            color: var(--primary);
-        }
-
-        .airline {
-            font-size: 1.2rem;
-            color: var(--secondary);
-            font-weight: 600;
-        }
-
-        .trend {
-            font-size: 1.5rem;
-        }
-
-        /* Evidence Section */
-        .evidence {
-            margin-top: 25px;
-            border-radius: 20px;
-            overflow: hidden;
-            border: 4px solid white;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-        }
-
-        .evidence img {
-            width: 100%;
-            display: block;
-            filter: grayscale(10%);
-            transition: filter 0.3s;
-        }
-
-        .evidence:hover img {
-            filter: grayscale(0%);
-        }
-
-        footer {
-            text-align: center;
-            margin-top: 60px;
-            color: var(--secondary);
-            font-size: 0.9rem;
-        }
+        /* Visuals */
+        .visual-container { margin-top: 80px; text-align: center; }
+        .trend-image { width: 100%; border-radius: 4px; margin-top: 20px; }
+        
+        footer { margin-top: 100px; padding-top: 40px; border-top: 1px solid var(--border); color: var(--text-sub); font-size: 0.8rem; text-align: center; }
     </style>
 </head>
-
 <body>
     <div class="container">
         <header>
+            <div class="date-badge">Travel Agent From Yidan • January 28, 2026</div>
             <h1>Travel Agent From Yidan</h1>
-            <p class="subtitle">AIR INTELLIGENCE REPORT • January 28, 2026</p>
         </header>
 
-        <div class="dashboard-grid">
-
-            <div class="flight-card">
-                <div class="route-info">
-                    <div>
-                        <div class="route-name">SEA-SFO</div>
-                        <div style="color: var(--secondary); font-size: 0.9rem; font-weight: 600;">2026-03-27 to
-                            2026-03-29</div>
-                    </div>
-                    <span class="badge badge-none">Watching</span>
-                </div>
-                <div class="price-row">
-                    <span class="current-price">$187</span>
-                    <span class="airline">via Delta</span>
-                    <span class="trend">⚪</span>
-                </div>
-                <div class="evidence">
-                    <img src="debug_sf_weekend.png" alt="Flight Evidence">
-                </div>
+        <section class="status-grid">
+            
+        <div class="status-card">
+            <div class="route-label">SEA-SFO • 2026-03-27 to 2026-03-29</div>
+            <div class="price-display">
+                <span class="price-val">$187</span>
+                <span class="target-val">Target: $160</span>
             </div>
-
-            <div class="flight-card">
-                <div class="route-info">
-                    <div>
-                        <div class="route-name">SEA-PSP</div>
-                        <div style="color: var(--secondary); font-size: 0.9rem; font-weight: 600;">2026-04-09 to
-                            2026-04-13</div>
-                    </div>
-                    <span class="badge badge-none">Watching</span>
-                </div>
-                <div class="price-row">
-                    <span class="current-price">$465</span>
-                    <span class="airline">via Alaska</span>
-                    <span class="trend">⚪</span>
-                </div>
-                <div class="evidence">
-                    <img src="debug_desert_escape.png" alt="Flight Evidence">
-                </div>
+            <div class="meta-info">
+                <span>7D Avg: $175.8</span>
+                <span>Delta</span>
             </div>
-
         </div>
+        
+        <div class="status-card">
+            <div class="route-label">SEA-PSP • 2026-04-09 to 2026-04-13</div>
+            <div class="price-display">
+                <span class="price-val">$465</span>
+                <span class="target-val">Target: $400</span>
+            </div>
+            <div class="meta-info">
+                <span>7D Avg: $446.1</span>
+                <span>Alaska</span>
+            </div>
+        </div>
+        
+        </section>
+
+        <section class="recommendation-zone">
+            <div class="section-header">Escape Recommendations</div>
+            <div class="recommendation-pill">Sf Weekend is stable. No immediate rush, monitor for target.</div><div class="recommendation-pill">Desert Escape is stable. No immediate rush, monitor for target.</div>
+        </section>
+
+        <section class="visual-container">
+            <div class="section-header">14-Day Price Trend Analysis</div>
+            <img src="price_trend.png" class="trend-image" alt="Price Trend Chart">
+        </section>
 
         <footer>
-            Generated by Travel Agent • Data synced with Google Flights
+            Generated by Travel Agent From Yidan • Nonstop Flights Only • Focus: Alaska & Delta
         </footer>
     </div>
 </body>
-
 </html>
+    
