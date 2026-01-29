@@ -181,12 +181,12 @@ def get_recommendation(task_id: str, current_price: float, stats: Dict, target: 
     return f"{task_id.replace('_', ' ').title()} is stable. No immediate rush, monitor for target."
 
 def generate_trend_chart(history: Dict):
-    """Generates a monochromatic pink trend chart for the concierge edition."""
+    """Generates a monochromatic pink trend chart for the glassmorphism edition."""
     plt.figure(figsize=(10, 4))
     plt.style.use('seaborn-whitegrid')
     
-    # Monochromatic Pink Palette
-    colors = ['#D81B60', '#F06292', '#F48FB1']
+    # Deep Rose and Soft Pink Palette
+    colors = ['#C2185B', '#F06292', '#F48FB1']
     for i, (task_id, data) in enumerate(history.items()):
         records = data.get("history", [])
         df = pd.DataFrame(records)
@@ -198,15 +198,14 @@ def generate_trend_chart(history: Dict):
         df['date'] = pd.to_datetime(df['date'])
         df = df.sort_values('date').tail(14)
         
-        plt.plot(df['date'], df['price'], color=colors[i % len(colors)], linewidth=5, alpha=0.9, label=task_id)
+        plt.plot(df['date'], df['price'], color=colors[i % len(colors)], linewidth=4, alpha=0.9, label=task_id)
         
-        # Highlight lowest points with soft pink circles
+        # Highlight lowest points
         if len(df) > 2:
             min_p = df['price'].min()
             pts = df[df['price'] == min_p]
-            plt.scatter(pts['date'], pts['price'], color='white', s=150, edgecolors=colors[i % len(colors)], linewidth=3, zorder=5)
+            plt.scatter(pts['date'], pts['price'], color='white', s=150, edgecolors=colors[i % len(colors)], linewidth=2, zorder=5)
 
-    # Clean axes
     plt.axis('off')
     plt.tight_layout(pad=0)
     plt.savefig("price_trend.png", dpi=300, transparent=True)
@@ -249,20 +248,19 @@ def generate_price_spectrum(all_flights: List[Dict]) -> str:
     """
 
 def generate_html_report(reports_data: List[Dict], recommendations: List[str], hotels: List[Dict]):
-    """Generates a Concierge Briefing with '一丹的旅行助理' branding and collage layout."""
+    """Generates a Glassmorphism Edition Briefing with 'Travel Agent from 一丹' branding."""
     today_str = datetime.date.today().strftime("%Y年%m月%d日")
     
-    recommendation_html = "".join([f'<div class="concierge-memo-pill">{rec}</div>' for rec in recommendations])
+    recommendation_html = "".join([f'<div class="concierge-tip">{rec}</div>' for rec in recommendations])
     hotel_html = "".join([f"""
-        <div class="sanctuary-card">
-            <div class="vibe-check-label">VIBE CHECK</div>
+        <div class="sanctuary-frame">
+            <div class="vibe-tag">Atmosphere: {h['vibe']}</div>
             <img src="{'hotel_sfo.png' if h['city'] == 'SFO' else 'hotel_psp.png'}" alt="{h['name']}">
-            <div class="sanctuary-info">
+            <div class="sanctuary-details">
                 <div class="sanctuary-name">{h['name']}</div>
-                <div class="sanctuary-vibe">{h['vibe']}</div>
-                <div class="sanctuary-rate">Curated rate: ${h['rate']}</div>
+                <div class="sanctuary-meta">Curated stay from ${h['rate']}</div>
             </div>
-            <div class="assistant-handwritten">Yidan, {h['tip']}</div>
+            <div class="handwritten-note">"Yidan, {h['tip']}"</div>
         </div>
     """ for h in hotels])
 
@@ -272,151 +270,161 @@ def generate_html_report(reports_data: List[Dict], recommendations: List[str], h
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>一丹的旅行助理 | PRIVATE BRIEFING</title>
-    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Outfit:wght@300;500;800&display=swap" rel="stylesheet">
+    <title>Travel Agent from 一丹 | PRIVATE BRIEFING</title>
+    <link href="https://fonts.googleapis.com/css2?family=Mrs+Saint+Delafield&family=Outfit:wght@300;500;800&display=swap" rel="stylesheet">
     <style>
         :root {{
-            --deep-pink: #D81B60;
-            --soft-pink: #F48FB1;
-            --glass-bg: rgba(255, 255, 255, 0.4);
-            --text-main: #1a1a1a;
+            --rose: #C2185B;
+            --glass: rgba(255, 255, 255, 0.45);
+            --text-main: #2c3e50;
         }}
 
         * {{ margin: 0; padding: 0; box-sizing: border-box; }}
         
         body {{ 
             font-family: 'Outfit', sans-serif; 
-            background: url('hello_kitty_vacation_bg.png') no-repeat center center fixed;
+            background: linear-gradient(rgba(255,255,255,0.2), rgba(255,255,255,0.2)), 
+                        url('hello_kitty_vacation_bg.png') no-repeat center center fixed;
             background-size: cover;
             color: var(--text-main);
             overflow-x: hidden;
-            padding: 100px 50px;
+            padding: 120px 80px;
         }}
 
-        header {{ margin-bottom: 200px; text-align: left; padding-left: 5%; }}
-        .assistant-title {{
-            font-family: 'Ma Shan Zheng', cursive;
+        header {{ margin-bottom: 180px; text-align: left; position: relative; z-index: 100; }}
+        .assistant-signature {{
+            font-family: 'Mrs Saint Delafield', cursive;
             font-size: 6rem;
-            color: var(--deep-pink);
-            text-shadow: 0 0 15px rgba(255, 255, 255, 0.9), 0 0 30px rgba(255, 255, 255, 0.5);
-            margin-bottom: 15px;
+            font-weight: 800;
+            color: var(--rose);
+            text-shadow: 2px 2px 4px rgba(255,255,255,0.8);
+            line-height: 1;
         }}
-        .header-meta {{ font-weight: 800; letter-spacing: 12px; font-size: 0.9rem; color: var(--deep-pink); opacity: 0.7; }}
+        .editorial-label {{ 
+            font-weight: 800; 
+            letter-spacing: 12px; 
+            text-transform: uppercase; 
+            font-size: 0.8rem; 
+            color: var(--rose); 
+            margin-bottom: 20px; 
+            opacity: 0.8;
+        }}
 
-        /* Collage Grid */
-        .collage-container {{
+        /* Ticket Staggered Stack */
+        .ticket-system {{
             position: relative;
             max-width: 1400px;
             margin: 0 auto;
-            height: 1100px;
+            height: 1000px;
+            margin-bottom: 200px;
         }}
 
-        .floating-card {{
+        .info-card {{
             position: absolute;
-            background: var(--glass-bg);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            padding: 50px;
-            border-radius: 4px;
+            background: var(--glass);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            padding: 60px;
+            border-radius: 40px;
             border: 1px solid rgba(255, 255, 255, 0.6);
-            box-shadow: 30px 30px 60px rgba(0,0,0,0.02);
-            width: 500px;
-            transition: transform 0.3s ease;
+            box-shadow: 0 40px 100px rgba(0,0,0,0.03);
+            width: 550px;
+            transition: all 0.4s ease;
         }}
         
-        .floating-card:hover {{ transform: translateY(-10px); z-index: 100 !important; }}
-        
-        .card-left {{ top: 0; left: 0; z-index: 2; }}
-        .card-right {{ top: 400px; right: 0; z-index: 1; }}
+        .card-sfo {{ top: 0; left: 5%; z-index: 10; }}
+        .card-psp {{ top: 350px; right: 5%; z-index: 5; }}
+        .info-card:hover {{ z-index: 100; transform: translateY(-10px); }}
 
-        .meta-label {{ font-size: 0.7rem; font-weight: 800; letter-spacing: 5px; color: #8e8e8e; text-transform: uppercase; margin-bottom: 20px; }}
-        .route-header {{ font-family: 'Ma Shan Zheng', cursive; font-size: 3.5rem; margin-bottom: 30px; border-bottom: 1px solid rgba(216, 27, 96, 0.1); padding-bottom: 15px; }}
+        .meta-context {{ font-size: 0.7rem; font-weight: 800; letter-spacing: 6px; color: #94a3b8; text-transform: uppercase; margin-bottom: 20px; }}
+        .route-accent {{ font-family: 'Mrs Saint Delafield', cursive; font-size: 3.5rem; color: var(--rose); margin-bottom: 20px; }}
         
-        .price-hero {{ display: flex; align-items: baseline; gap: 15px; margin-bottom: 40px; }}
-        .price-val {{ font-size: 6.5rem; font-weight: 800; letter-spacing: -4px; line-height: 1; color: var(--deep-pink); }}
-        .price-curr {{ font-size: 1.5rem; font-weight: 500; color: #94a3b8; }}
+        .price-hero {{ display: flex; align-items: baseline; gap: 20px; margin-bottom: 40px; }}
+        .price-val {{ font-size: 7rem; font-weight: 800; letter-spacing: -6px; line-height: 1; color: var(--rose); }}
+        .price-unit {{ font-size: 1.2rem; font-weight: 500; color: #94a3b8; }}
 
-        .assistant-handwritten {{
-            font-family: 'Ma Shan Zheng', cursive;
-            font-size: 1.8rem;
-            color: var(--deep-pink);
-            line-height: 1.2;
-            margin-top: 30px;
-            padding: 20px;
-            border-left: 2px solid var(--soft-pink);
+        .handwritten-note {{
+            font-family: 'Mrs Saint Delafield', cursive;
+            font-size: 2.2rem;
+            color: var(--rose);
+            margin-top: 25px;
+            padding: 15px 25px;
             background: rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            line-height: 1.2;
         }}
 
-        .comparison-sweep {{ margin-top: 40px; border-top: 1px dashed rgba(0,0,0,0.05); padding-top: 20px; }}
-        .sweep-item {{ display: flex; justify-content: space-between; font-size: 0.85rem; padding: 5px 0; color: #64748b; }}
-        .item-priority {{ color: var(--deep-pink); font-weight: 800; }}
+        .comparison-sweep {{ margin-top: 40px; border-top: 1px dashed rgba(194, 24, 91, 0.1); padding-top: 30px; }}
+        .sweep-row {{ display: flex; justify-content: space-between; font-size: 0.85rem; padding: 6px 0; color: #64748b; font-weight: 600; }}
+        .best-val {{ color: var(--rose); font-weight: 800; }}
 
         /* Sanctuary */
-        .sanctuary-title {{ text-align: center; margin-bottom: 100px; }}
+        .sanctuary-header {{ text-align: center; margin-bottom: 100px; }}
         .sanctuary-grid {{ display: flex; justify-content: center; gap: 80px; margin-bottom: 200px; }}
         
-        .sanctuary-card {{ 
-            width: 450px; 
-            background: white; 
-            padding: 25px; 
-            box-shadow: 50px 50px 100px rgba(0,0,0,0.05); 
-            position: relative; 
+        .sanctuary-frame {{
+            width: 480px;
+            background: white;
+            padding: 30px;
+            border-radius: 50px;
+            box-shadow: 0 40px 100px rgba(0,0,0,0.05);
+            position: relative;
         }}
-        .sanctuary-card img {{ width: 100%; height: 500px; object-fit: cover; filter: sepia(10%) contrast(1.1); }}
-        .sanctuary-info {{ margin-top: 30px; padding: 0 10px; }}
-        .sanctuary-name {{ font-size: 2rem; font-weight: 800; margin-bottom: 10px; }}
-        .sanctuary-vibe {{ font-size: 0.9rem; color: #94a3b8; font-style: italic; margin-bottom: 15px; }}
-        .sanctuary-rate {{ font-weight: 800; color: var(--deep-pink); letter-spacing: 2px; text-transform: uppercase; font-size: 0.8rem; }}
-        .vibe-check-label {{ position: absolute; top: -15px; left: 20px; background: var(--deep-pink); color: white; padding: 5px 15px; font-weight: 800; font-size: 0.7rem; }}
+        .sanctuary-frame img {{ width: 100%; height: 550px; object-fit: cover; border-radius: 40px; filter: contrast(1.1); }}
+        .sanctuary-details {{ margin-top: 30px; text-align: center; }}
+        .sanctuary-name {{ font-size: 2.2rem; font-weight: 800; margin-bottom: 10px; }}
+        .sanctuary-meta {{ font-size: 0.85rem; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: #94a3b8; }}
+        .vibe-tag {{ position: absolute; top: 15px; left: 15px; background: var(--rose); color: white; padding: 8px 20px; border-radius: 30px; font-weight: 800; font-size: 0.7rem; }}
 
         /* Polaroid Trend */
-        .polaroid-frame {{
-            max-width: 900px;
+        .polaroid-trend {{
+            max-width: 950px;
             margin: 0 auto;
             background: white;
-            padding: 30px 30px 100px 30px;
-            box-shadow: 0 40px 80px rgba(0,0,0,0.1);
-            transform: rotate(-3deg);
-            border-radius: 4px;
+            padding: 40px 40px 120px 40px;
+            box-shadow: 0 50px 100px rgba(0,0,0,0.1);
+            transform: rotate(2deg);
+            border-radius: 2px;
             text-align: center;
+            margin-bottom: 150px;
         }}
-        .polaroid-frame img {{ width: 100%; opacity: 0.9; }}
-        .polaroid-caption {{ font-family: 'Ma Shan Zheng', cursive; font-size: 3rem; color: var(--deep-pink); margin-top: 40px; }}
+        .polaroid-trend img {{ width: 100%; opacity: 0.85; }}
+        .trend-caption {{ font-family: 'Mrs Saint Delafield', cursive; font-size: 3.5rem; color: var(--rose); margin-top: 50px; }}
 
-        .memos-section {{ margin-top: 150px; text-align: center; }}
-        .concierge-memo-pill {{ font-family: 'Ma Shan Zheng', cursive; font-size: 2.5rem; color: var(--deep-pink); margin-bottom: 20px; }}
+        .assistant-memo-hub {{ text-align: center; margin-bottom: 150px; }}
+        .concierge-tip {{ font-family: 'Mrs Saint Delafield', cursive; font-size: 2.8rem; color: var(--rose); margin-bottom: 20px; }}
 
-        footer {{ text-align: center; margin-top: 200px; font-weight: 800; letter-spacing: 15px; font-size: 0.7rem; color: var(--deep-pink); text-transform: uppercase; padding-bottom: 100px; }}
+        footer {{ text-align: center; margin-top: 200px; font-weight: 800; letter-spacing: 15px; font-size: 0.8rem; color: var(--rose); text-transform: uppercase; opacity: 0.8; padding-bottom: 100px; }}
     </style>
 </head>
 <body>
     <header>
-        <h1 class="assistant-title">一丹的旅行助理</h1>
-        <div class="header-meta">SPRING BRIEFING • {today_str} • PRIVATE CONCIERGE</div>
+        <div class="editorial-label">Private Intelligence • {today_str}</div>
+        <h1 class="assistant-signature">Travel Agent from 一丹</h1>
     </header>
 
-    <section class="collage-container">
+    <section class="ticket-system">
         {generate_status_cards(reports_data)}
     </section>
 
-    <div class="sanctuary-title">
-        <h2 style="font-family: 'Ma Shan Zheng', cursive; font-size: 4.5rem; color: var(--deep-pink);">THE SANCTUARY</h2>
+    <div class="sanctuary-header">
+        <h2 style="font-family: 'Mrs Saint Delafield', cursive; font-size: 5rem; color: var(--rose);">The Sanctuary Collection</h2>
     </div>
     <section class="sanctuary-grid">
         {hotel_html}
     </section>
 
-    <div class="polaroid-frame">
-        <img src="price_trend.png" alt="Intelligence Pulse">
-        <div class="polaroid-caption">Market Intelligence Pulse</div>
+    <div class="polaroid-trend">
+        <img src="price_trend.png" alt="Intelligence Analytics">
+        <div class="trend-caption">Price Flow Intelligence</div>
     </div>
 
-    <section class="memos-section">
+    <section class="assistant-memo-hub">
         {recommendation_html}
     </section>
 
     <footer>
-        Antigravity Intelligence Systems • For Yidan Yan
+        Curated for Yidan Yan • All Rights Reserved
     </footer>
 </body>
 </html>
@@ -427,34 +435,34 @@ def generate_html_report(reports_data: List[Dict], recommendations: List[str], h
 def generate_status_cards(reports_data: List[Dict]) -> str:
     cards = ""
     for data in reports_data:
-        side_class = "card-left" if "SFO" in data['route_name'] else "card-right"
+        layout_class = "card-sfo" if "SFO" in data['route_name'] else "card-psp"
         
-        # Comparison Sweep
+        # Build comparison list
         picks = [f for f in data['all_flights'] if f.get('is_priority')]
-        others = [f for f in data['all_flights'] if not f.get('is_priority')]
+        alts = [f for f in data['all_flights'] if not f.get('is_priority')]
         
-        comparison_html = ""
-        for p in picks[:2]: comparison_html += f'<div class="sweep-item item-priority"><span>{p["carrier"]} Nonstop</span><span>${p["price"]}</span></div>'
-        for o in others[:2]: comparison_html += f'<div class="sweep-item"><span>{o["carrier"]} Comparison</span><span>${o["price"]}</span></div>'
+        sweep_html = ""
+        for p in picks[:2]: sweep_html += f'<div class="sweep-row best-val"><span>{p["carrier"]} Nonstop</span><span>${p["price"]}</span></div>'
+        for a in alts[:2]: sweep_html += f'<div class="sweep-row"><span>{a["carrier"]} Alternative</span><span>${a["price"]}</span></div>'
 
-        # Assistant memo logic
-        memo_text = "Highly recommended for timing." if "SFO" in data['route_name'] else "Perfect for weekend unwind."
+        # Personal memo
+        personal_tip = "Highly efficient for your schedule." if "SFO" in data['route_name'] else "Perfect for maximum relaxation."
 
         cards += f"""
-        <div class="floating-card {side_class}">
-            <div class="meta-label">{data['dates']}</div>
-            <div class="route-header">{data['route_name']}</div>
+        <div class="info-card {layout_class}">
+            <div class="meta-context">Scheduled transit • {data['dates']}</div>
+            <div class="route-accent">{data['route_name']}</div>
             <div class="price-hero">
                 <span class="price-val">${data['price']}</span>
-                <span class="price-curr">USD / RT</span>
+                <span class="price-unit">Curated Best Value</span>
             </div>
             
             <div class="comparison-sweep">
-                <div class="meta-label" style="font-size:0.6rem; color: #F48FB1;">Market Sweep Intelligence</div>
-                {comparison_html}
+                <div class="meta-context" style="font-size:0.6rem; color: var(--rose);">Assistant's Market Sweep</div>
+                {sweep_html}
             </div>
             
-            <div class="assistant-handwritten">助理提示追踪：{memo_text}</div>
+            <div class="handwritten-note">Assistant's Pick: {personal_tip}</div>
         </div>
         """
     return cards
@@ -467,26 +475,26 @@ async def run_tracker():
         {
             "name": "1 Hotel San Francisco", 
             "city": "SFO", 
-            "vibe": "Nature-inspired luxury on the Embarcadero.", 
-            "tip": "this room has the best natural light for your morning routine.",
+            "vibe": "Sustainable luxury on the waterfront.", 
+            "tip": "the panoramic bay views are best enjoyed at sunset.",
             "rate": 325
         },
         {
             "name": "Korakia Pensione", 
             "city": "PSP", 
-            "vibe": "Moroccan-inspired desert soul.", 
-            "tip": "the courtyard here is perfect for evening unwinding.",
+            "vibe": "Moroccan desert sanctuary.", 
+            "tip": "candlelit courtyards make this the ultimate escape.",
             "rate": 425
         }
     ]
     
-    print(f"--- 一丹的旅行助理: CONCIERGE BRIEFING ({today_str}) ---")
+    print(f"--- Travel Agent from 一丹: GLASSMORPHISM BRIEFING ({today_str}) ---")
     
     reports_data = []
     recommendations = []
 
     for task in TASKS:
-        print(f"Concierge Sweep: {task['route_name']}...")
+        print(f"Glassmorphism Sweep: {task['route_name']}...")
         all_flights = await fetch_flight_price(task)
         
         if not all_flights:
@@ -517,7 +525,7 @@ async def run_tracker():
     save_history(history)
     generate_trend_chart(history)
     generate_html_report(reports_data, recommendations, HOTELS)
-    print("Concierge Update Complete: flight_report.html")
+    print("Glassmorphism Update Complete: flight_report.html")
 
 if __name__ == "__main__":
     asyncio.run(run_tracker())
