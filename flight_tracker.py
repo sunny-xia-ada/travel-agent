@@ -181,12 +181,12 @@ def get_recommendation(task_id: str, current_price: float, stats: Dict, target: 
     return f"{task_id.replace('_', ' ').title()} is stable. No immediate rush, monitor for target."
 
 def generate_trend_chart(history: Dict):
-    """Generates a transparent, floating trend chart for the artistic edition."""
+    """Generates a monochromatic pink trend chart for the concierge edition."""
     plt.figure(figsize=(10, 4))
     plt.style.use('seaborn-whitegrid')
     
-    # Artistic Palette
-    colors = ['#F48FB1', '#FF4081']
+    # Monochromatic Pink Palette
+    colors = ['#D81B60', '#F06292', '#F48FB1']
     for i, (task_id, data) in enumerate(history.items()):
         records = data.get("history", [])
         df = pd.DataFrame(records)
@@ -198,17 +198,15 @@ def generate_trend_chart(history: Dict):
         df['date'] = pd.to_datetime(df['date'])
         df = df.sort_values('date').tail(14)
         
-        plt.plot(df['date'], df['price'], color=colors[i % len(colors)], linewidth=4, alpha=0.9, label=task_id)
+        plt.plot(df['date'], df['price'], color=colors[i % len(colors)], linewidth=5, alpha=0.9, label=task_id)
         
-        # Highlight lowest points
+        # Highlight lowest points with soft pink circles
         if len(df) > 2:
             min_p = df['price'].min()
             pts = df[df['price'] == min_p]
-            plt.scatter(pts['date'], pts['price'], color=colors[i % len(colors)], s=120, edgecolors='white', linewidth=2, zorder=5)
+            plt.scatter(pts['date'], pts['price'], color='white', s=150, edgecolors=colors[i % len(colors)], linewidth=3, zorder=5)
 
-    # Remove background and make transparent
-    ax = plt.gca()
-    ax.set_facecolor('none')
+    # Clean axes
     plt.axis('off')
     plt.tight_layout(pad=0)
     plt.savefig("price_trend.png", dpi=300, transparent=True)
@@ -251,36 +249,37 @@ def generate_price_spectrum(all_flights: List[Dict]) -> str:
     """
 
 def generate_html_report(reports_data: List[Dict], recommendations: List[str], hotels: List[Dict]):
-    """Generates an Artistic Signature Briefing with bold script and localized glass."""
-    today_str = datetime.date.today().strftime("%B %d, %Y")
+    """Generates a Concierge Briefing with '一丹的旅行助理' branding and collage layout."""
+    today_str = datetime.date.today().strftime("%Y年%m月%d日")
     
-    recommendation_html = "".join([f'<div class="recommendation-memo">{rec}</div>' for rec in recommendations])
+    recommendation_html = "".join([f'<div class="concierge-memo-pill">{rec}</div>' for rec in recommendations])
     hotel_html = "".join([f"""
-        <div class="hotel-poster">
-            <div class="assistant-note-tag">Assistant's Pick</div>
+        <div class="sanctuary-card">
+            <div class="vibe-check-label">VIBE CHECK</div>
             <img src="{'hotel_sfo.png' if h['city'] == 'SFO' else 'hotel_psp.png'}" alt="{h['name']}">
-            <div class="hotel-poster-info">
-                <div class="hotel-poster-name">{h['name']}</div>
-                <div class="hotel-poster-vibe">{h['vibe']}</div>
-                <div class="hotel-poster-rate">${h['rate']}/night</div>
+            <div class="sanctuary-info">
+                <div class="sanctuary-name">{h['name']}</div>
+                <div class="sanctuary-vibe">{h['vibe']}</div>
+                <div class="sanctuary-rate">Curated rate: ${h['rate']}</div>
             </div>
-            <div class="handwritten-memo">Yidan, {h['tip']}</div>
+            <div class="assistant-handwritten">Yidan, {h['tip']}</div>
         </div>
     """ for h in hotels])
 
     html_template = f"""
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YIDAN TRAVEL | PRIVATE BRIEFING</title>
-    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Outfit:wght@300;500;800&display=swap" rel="stylesheet">
+    <title>一丹的旅行助理 | PRIVATE BRIEFING</title>
+    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Outfit:wght@300;500;800&display=swap" rel="stylesheet">
     <style>
         :root {{
-            --signature-pink: #F48FB1;
-            --glass-white: rgba(255, 255, 255, 0.4);
-            --text-dark: #2c3e50;
+            --deep-pink: #D81B60;
+            --soft-pink: #F48FB1;
+            --glass-bg: rgba(255, 255, 255, 0.4);
+            --text-main: #1a1a1a;
         }}
 
         * {{ margin: 0; padding: 0; box-sizing: border-box; }}
@@ -289,165 +288,136 @@ def generate_html_report(reports_data: List[Dict], recommendations: List[str], h
             font-family: 'Outfit', sans-serif; 
             background: url('hello_kitty_vacation_bg.png') no-repeat center center fixed;
             background-size: cover;
-            color: var(--text-dark);
-            padding: 80px;
+            color: var(--text-main);
+            overflow-x: hidden;
+            padding: 100px 50px;
         }}
 
-        header {{ margin-bottom: 120px; }}
-        .badge {{ 
-            font-weight: 800; 
-            text-transform: uppercase; 
-            letter-spacing: 8px; 
-            color: var(--signature-pink); 
-            font-size: 0.8rem; 
-            margin-bottom: 20px;
+        header {{ margin-bottom: 200px; text-align: left; padding-left: 5%; }}
+        .assistant-title {{
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 6rem;
+            color: var(--deep-pink);
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.9), 0 0 30px rgba(255, 255, 255, 0.5);
+            margin-bottom: 15px;
         }}
-        h1 {{ 
-            font-family: 'Great Vibes', cursive;
-            font-size: 5rem;
-            font-weight: 900;
-            color: var(--signature-pink);
-            text-shadow: 2px 2px 4px rgba(255,255,255,0.8);
-            line-height: 1.2;
-        }}
+        .header-meta {{ font-weight: 800; letter-spacing: 12px; font-size: 0.9rem; color: var(--deep-pink); opacity: 0.7; }}
 
-        /* ticket Stack */
-        .ticket-stack {{ 
-            display: flex; 
-            flex-direction: column; 
-            gap: 60px; 
-            margin-bottom: 150px; 
-        }}
-
-        .flight-ticket {{
+        /* Collage Grid */
+        .collage-container {{
             position: relative;
-            width: 80%;
-            background: var(--glass-white);
+            max-width: 1400px;
+            margin: 0 auto;
+            height: 1100px;
+        }}
+
+        .floating-card {{
+            position: absolute;
+            background: var(--glass-bg);
             backdrop-filter: blur(10px);
-            padding: 60px;
-            border-radius: 30px;
+            -webkit-backdrop-filter: blur(10px);
+            padding: 50px;
+            border-radius: 4px;
             border: 1px solid rgba(255, 255, 255, 0.6);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+            box-shadow: 30px 30px 60px rgba(0,0,0,0.02);
+            width: 500px;
+            transition: transform 0.3s ease;
         }}
         
-        .ticket-sfo {{ align-self: flex-start; }}
-        .ticket-psp {{ align-self: flex-end; transform: translateX(-50px); }}
+        .floating-card:hover {{ transform: translateY(-10px); z-index: 100 !important; }}
+        
+        .card-left {{ top: 0; left: 0; z-index: 2; }}
+        .card-right {{ top: 400px; right: 0; z-index: 1; }}
 
-        .route-title {{ font-family: 'Outfit', sans-serif; font-weight: 300; font-size: 2.5rem; letter-spacing: 2px; }}
-        .price-tag {{ font-size: 6rem; font-weight: 800; color: var(--signature-pink); margin: 10px 0; }}
+        .meta-label {{ font-size: 0.7rem; font-weight: 800; letter-spacing: 5px; color: #8e8e8e; text-transform: uppercase; margin-bottom: 20px; }}
+        .route-header {{ font-family: 'Ma Shan Zheng', cursive; font-size: 3.5rem; margin-bottom: 30px; border-bottom: 1px solid rgba(216, 27, 96, 0.1); padding-bottom: 15px; }}
+        
+        .price-hero {{ display: flex; align-items: baseline; gap: 15px; margin-bottom: 40px; }}
+        .price-val {{ font-size: 6.5rem; font-weight: 800; letter-spacing: -4px; line-height: 1; color: var(--deep-pink); }}
+        .price-curr {{ font-size: 1.5rem; font-weight: 500; color: #94a3b8; }}
 
-        .handwritten-memo {{
-            position: absolute;
-            font-family: 'Great Vibes', cursive;
-            font-size: 2rem;
-            color: var(--signature-pink);
-            width: 250px;
-            top: 40px;
-            right: -150px;
-            transform: rotate(5deg);
-            background: rgba(255, 255, 255, 0.9);
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 5px 5px 15px rgba(0,0,0,0.05);
-        }}
-
-        .market-sweep {{
+        .assistant-handwritten {{
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 1.8rem;
+            color: var(--deep-pink);
+            line-height: 1.2;
             margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px dashed rgba(255,255,255,0.8);
-            font-size: 0.8rem;
-            font-weight: 500;
-            color: #64748b;
+            padding: 20px;
+            border-left: 2px solid var(--soft-pink);
+            background: rgba(255, 255, 255, 0.2);
         }}
 
-        /* Hotel Posters */
-        .stay-labels {{ text-align: center; margin-bottom: 60px; }}
-        .hotel-grid {{
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 100px;
-            margin-bottom: 200px;
-        }}
+        .comparison-sweep {{ margin-top: 40px; border-top: 1px dashed rgba(0,0,0,0.05); padding-top: 20px; }}
+        .sweep-item {{ display: flex; justify-content: space-between; font-size: 0.85rem; padding: 5px 0; color: #64748b; }}
+        .item-priority {{ color: var(--deep-pink); font-weight: 800; }}
 
-        .hotel-poster {{
-            position: relative;
+        /* Sanctuary */
+        .sanctuary-title {{ text-align: center; margin-bottom: 100px; }}
+        .sanctuary-grid {{ display: flex; justify-content: center; gap: 80px; margin-bottom: 200px; }}
+        
+        .sanctuary-card {{ 
+            width: 450px; 
+            background: white; 
+            padding: 25px; 
+            box-shadow: 50px 50px 100px rgba(0,0,0,0.05); 
+            position: relative; 
+        }}
+        .sanctuary-card img {{ width: 100%; height: 500px; object-fit: cover; filter: sepia(10%) contrast(1.1); }}
+        .sanctuary-info {{ margin-top: 30px; padding: 0 10px; }}
+        .sanctuary-name {{ font-size: 2rem; font-weight: 800; margin-bottom: 10px; }}
+        .sanctuary-vibe {{ font-size: 0.9rem; color: #94a3b8; font-style: italic; margin-bottom: 15px; }}
+        .sanctuary-rate {{ font-weight: 800; color: var(--deep-pink); letter-spacing: 2px; text-transform: uppercase; font-size: 0.8rem; }}
+        .vibe-check-label {{ position: absolute; top: -15px; left: 20px; background: var(--deep-pink); color: white; padding: 5px 15px; font-weight: 800; font-size: 0.7rem; }}
+
+        /* Polaroid Trend */
+        .polaroid-frame {{
+            max-width: 900px;
+            margin: 0 auto;
             background: white;
-            padding: 30px;
-            border-radius: 40px;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.08);
-        }}
-        .hotel-poster img {{
-            width: 100%;
-            height: 550px;
-            object-fit: cover;
-            border-radius: 30px;
-            margin-bottom: 30px;
-        }}
-        .hotel-poster-info {{ padding: 0 10px; }}
-        .hotel-poster-name {{ font-size: 2.2rem; font-weight: 800; margin-bottom: 15px; }}
-        .hotel-poster-vibe {{ font-size: 1rem; color: #94a3b8; font-style: italic; margin-bottom: 20px; }}
-        .hotel-poster-rate {{ font-weight: 800; color: var(--signature-pink); font-size: 1.2rem; }}
-        .assistant-note-tag {{ 
-            position: absolute; top: 10px; left: 10px; 
-            background: var(--signature-pink); color: white; 
-            padding: 8px 15px; border-radius: 20px; 
-            font-size: 0.7rem; font-weight: 800; 
-            text-transform: uppercase; z-index: 10;
-        }}
-
-        /* Floating Trend */
-        .market-pulse {{
-            background: transparent;
-            z-index: 50;
-            position: relative;
+            padding: 30px 30px 100px 30px;
+            box-shadow: 0 40px 80px rgba(0,0,0,0.1);
+            transform: rotate(-3deg);
+            border-radius: 4px;
             text-align: center;
         }}
-        .trend-img {{ width: 100%; max-height: 400px; object-fit: contain; }}
+        .polaroid-frame img {{ width: 100%; opacity: 0.9; }}
+        .polaroid-caption {{ font-family: 'Ma Shan Zheng', cursive; font-size: 3rem; color: var(--deep-pink); margin-top: 40px; }}
 
-        .recommendation-memo {{
-            font-family: 'Great Vibes', cursive;
-            font-size: 2.5rem;
-            color: var(--signature-pink);
-            margin: 40px 0;
-            line-height: 1.4;
-        }}
+        .memos-section {{ margin-top: 150px; text-align: center; }}
+        .concierge-memo-pill {{ font-family: 'Ma Shan Zheng', cursive; font-size: 2.5rem; color: var(--deep-pink); margin-bottom: 20px; }}
 
-        footer {{ 
-            margin-top: 200px; text-align: center; font-weight: 800; letter-spacing: 5px; color: var(--signature-pink); text-transform: uppercase; font-size: 0.7rem;
-        }}
+        footer {{ text-align: center; margin-top: 200px; font-weight: 800; letter-spacing: 15px; font-size: 0.7rem; color: var(--deep-pink); text-transform: uppercase; padding-bottom: 100px; }}
     </style>
 </head>
 <body>
-    <div class="briefing-canvas">
-        <header>
-            <div class="badge">Travel Agent from Yidan • {today_str}</div>
-            <h1>YIDAN TRAVEL: THE PRIVATE BRIEFING</h1>
-        </header>
+    <header>
+        <h1 class="assistant-title">一丹的旅行助理</h1>
+        <div class="header-meta">SPRING BRIEFING • {today_str} • PRIVATE CONCIERGE</div>
+    </header>
 
-        <section class="ticket-stack">
-            {generate_status_cards(reports_data)}
-        </section>
+    <section class="collage-container">
+        {generate_status_cards(reports_data)}
+    </section>
 
-        <div class="stay-labels">
-            <div class="badge">Curated Stays</div>
-            <h2 style="font-family: 'Great Vibes', cursive; font-size: 4rem; color: var(--signature-pink);">The Sanctuary</h2>
-        </div>
-        <section class="hotel-grid">
-            {hotel_html}
-        </section>
-
-        <section class="market-pulse">
-            <div class="badge">Price Intelligence</div>
-            <img src="price_trend.png" class="trend-img" alt="Market Pulse">
-            <div class="recommendations">
-                {recommendation_html}
-            </div>
-        </section>
-
-        <footer>
-            Hand-curated with care for Yidan Yan • Spring 2026
-        </footer>
+    <div class="sanctuary-title">
+        <h2 style="font-family: 'Ma Shan Zheng', cursive; font-size: 4.5rem; color: var(--deep-pink);">THE SANCTUARY</h2>
     </div>
+    <section class="sanctuary-grid">
+        {hotel_html}
+    </section>
+
+    <div class="polaroid-frame">
+        <img src="price_trend.png" alt="Intelligence Pulse">
+        <div class="polaroid-caption">Market Intelligence Pulse</div>
+    </div>
+
+    <section class="memos-section">
+        {recommendation_html}
+    </section>
+
+    <footer>
+        Antigravity Intelligence Systems • For Yidan Yan
+    </footer>
 </body>
 </html>
     """
@@ -457,23 +427,34 @@ def generate_html_report(reports_data: List[Dict], recommendations: List[str], h
 def generate_status_cards(reports_data: List[Dict]) -> str:
     cards = ""
     for data in reports_data:
-        ticket_class = "ticket-sfo" if "SFO" in data['route_name'] else "ticket-psp"
+        side_class = "card-left" if "SFO" in data['route_name'] else "card-right"
         
-        # Build market sweep list
-        alts = [f for f in data['all_flights'] if f['carrier'] != data['carrier']]
-        sweep_text = ", ".join([f"{f['carrier']} (${f['price']})" for f in sorted(alts, key=lambda x: x['price'])[:3]])
+        # Comparison Sweep
+        picks = [f for f in data['all_flights'] if f.get('is_priority')]
+        others = [f for f in data['all_flights'] if not f.get('is_priority')]
         
+        comparison_html = ""
+        for p in picks[:2]: comparison_html += f'<div class="sweep-item item-priority"><span>{p["carrier"]} Nonstop</span><span>${p["price"]}</span></div>'
+        for o in others[:2]: comparison_html += f'<div class="sweep-item"><span>{o["carrier"]} Comparison</span><span>${o["price"]}</span></div>'
+
+        # Assistant memo logic
+        memo_text = "Highly recommended for timing." if "SFO" in data['route_name'] else "Perfect for weekend unwind."
+
         cards += f"""
-        <div class="flight-ticket {ticket_class}">
-            <div class="handwritten-memo">Best pick for balance & comfort.</div>
-            <div class="route-title">{data['route_name']}</div>
-            <div style="font-weight: 800; font-size: 0.8rem; color: #94a3b8; letter-spacing: 3px;">{data['dates']}</div>
-            <div class="price-tag">${data['price']}</div>
-            <div style="font-weight: 800; text-transform: uppercase; color: var(--signature-pink); font-size: 0.7rem;">Primary: {data['carrier']} Nonstop</div>
-            
-            <div class="market-sweep">
-                Market Sweep: {sweep_text}
+        <div class="floating-card {side_class}">
+            <div class="meta-label">{data['dates']}</div>
+            <div class="route-header">{data['route_name']}</div>
+            <div class="price-hero">
+                <span class="price-val">${data['price']}</span>
+                <span class="price-curr">USD / RT</span>
             </div>
+            
+            <div class="comparison-sweep">
+                <div class="meta-label" style="font-size:0.6rem; color: #F48FB1;">Market Sweep Intelligence</div>
+                {comparison_html}
+            </div>
+            
+            <div class="assistant-handwritten">助理提示追踪：{memo_text}</div>
         </div>
         """
     return cards
@@ -499,13 +480,13 @@ async def run_tracker():
         }
     ]
     
-    print(f"--- YIDAN TRAVEL: ARTISTIC BRIEFING ({today_str}) ---")
+    print(f"--- 一丹的旅行助理: CONCIERGE BRIEFING ({today_str}) ---")
     
     reports_data = []
     recommendations = []
 
     for task in TASKS:
-        print(f"Artistic Sweep: {task['route_name']}...")
+        print(f"Concierge Sweep: {task['route_name']}...")
         all_flights = await fetch_flight_price(task)
         
         if not all_flights:
@@ -536,7 +517,7 @@ async def run_tracker():
     save_history(history)
     generate_trend_chart(history)
     generate_html_report(reports_data, recommendations, HOTELS)
-    print("Artistic Update Complete: flight_report.html")
+    print("Concierge Update Complete: flight_report.html")
 
 if __name__ == "__main__":
     asyncio.run(run_tracker())
