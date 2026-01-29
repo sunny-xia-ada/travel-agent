@@ -4,15 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Personal Briefing for Yidan</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Playfair+Display:ital,wght@1,700&display=swap" rel="stylesheet">
+    <title>YIDAN TRAVEL | THE PRIVATE BRIEFING</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #ff69b4;
             --secondary: #ff1493;
-            --accent: #d81b60;
-            --glass: rgba(255, 255, 255, 0.85);
-            --text: #333333;
+            --glass: rgba(255, 255, 255, 0.7);
+            --text: #2c3e50;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -21,152 +20,159 @@
             background: url('hello_kitty_vacation_bg.png') no-repeat center center fixed;
             background-size: cover;
             color: var(--text);
-            padding: 60px 20px;
+            overflow-x: hidden;
+            padding-bottom: 200px;
         }
 
-        .briefing-container { 
-            max-width: 900px; 
-            margin: 0 auto; 
-            background: var(--glass);
-            backdrop-filter: blur(20px);
-            padding: 80px;
-            border-radius: 60px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
-            border: 5px solid white;
-        }
-
-        header { margin-bottom: 60px; text-align: center; }
-        .signature { 
-            font-family: 'Playfair Display', serif; 
-            font-style: italic; 
-            font-size: 3.5rem; 
-            color: var(--secondary); 
-            margin-bottom: 10px;
-        }
-        .briefing-date { font-weight: 800; text-transform: uppercase; letter-spacing: 5px; color: var(--primary); font-size: 0.8rem; }
-
-        /* Choices for You */
-        .choices-section { margin-bottom: 80px; }
-        .section-header { font-size: 1.2rem; font-weight: 800; text-transform: uppercase; letter-spacing: 4px; color: var(--accent); margin-bottom: 40px; text-align: center; }
-        
-        .flight-choice { background: white; padding: 40px; border-radius: 30px; margin-bottom: 30px; box-shadow: 0 10px 20px rgba(0,0,0,0.02); }
-        .choice-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 20px; }
-        .choice-route { font-size: 1.5rem; font-weight: 800; color: var(--text); }
-        .choice-price { font-size: 2.5rem; font-weight: 800; color: var(--secondary); }
-        
-        .market-alt { font-size: 0.85rem; color: #94a3b8; font-weight: 600; border-top: 1px dashed #eee; padding-top: 15px; margin-top: 15px; }
-
-        /* Everywhere You'll Stay */
-        .stay-section { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 80px; }
-        .hotel-polaroid { 
-            background: white; 
-            padding: 20px 20px 40px; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05); 
+        .editorial-canvas {
+            max-width: 1400px;
+            margin: 0 auto;
             position: relative;
-            transform: rotate(-1deg);
-        }
-        .hotel-polaroid:nth-child(even) { transform: rotate(1deg); }
-        .ribbon { position: absolute; top: -15px; right: -15px; font-size: 2.5rem; z-index: 10; }
-        .hotel-img img { width: 100%; height: 250px; object-fit: cover; border-radius: 4px; }
-        .hotel-info { margin-top: 20px; }
-        .hotel-name { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--text); }
-        .hotel-vibe { font-size: 0.8rem; color: #64748b; margin: 10px 0; font-style: italic; }
-        .hotel-rate { font-weight: 800; color: var(--accent); }
-
-        /* Market Pulse */
-        .pulse-memo { 
-            background: white; 
-            padding: 50px; 
-            border-radius: 40px; 
-            box-shadow: 0 10px 40px rgba(255, 105, 180, 0.1); 
-            border: 2px solid #fff5f8;
-        }
-        .pulse-chart { width: 100%; border-radius: 20px; }
-
-        .briefing-pill { 
-            background: #fff5f8; 
-            padding: 20px 30px; 
-            border-radius: 20px; 
-            font-weight: 600; 
-            margin-bottom: 15px;
-            color: var(--accent);
-            border-left: 5px solid var(--primary);
+            padding: 100px 40px;
         }
 
-        footer { text-align: center; margin-top: 80px; font-weight: 800; color: var(--primary); letter-spacing: 3px; font-size: 0.7rem; text-transform: uppercase; }
+        header { margin-bottom: 150px; text-align: left; position: relative; z-index: 100; }
+        .badge { font-weight: 800; text-transform: uppercase; letter-spacing: 8px; color: var(--primary); font-size: 0.9rem; margin-bottom: 20px; }
+        h1 { 
+            font-family: 'Playfair Display', serif; 
+            font-size: 6.5rem; 
+            font-weight: 900; 
+            line-height: 0.9; 
+            color: var(--secondary); 
+            text-shadow: 10px 10px 0px rgba(255, 105, 180, 0.1);
+        }
+
+        /* The Anti-Grid Staggered Layout */
+        .flight-container { position: relative; height: 1000px; margin-bottom: 200px; }
+        .flight-card {
+            position: absolute;
+            background: var(--glass);
+            backdrop-filter: blur(25px);
+            padding: 60px;
+            border-radius: 4px;
+            box-shadow: 30px 30px 60px rgba(0,0,0,0.05);
+            border: 1px solid rgba(255,255,255,0.4);
+            transition: all 0.5s ease;
+        }
+        
+        .card-sfo { width: 550px; top: 0; left: 0; z-index: 2; }
+        .card-psp { width: 550px; bottom: 0; right: 0; z-index: 1; }
+        .flight-card:hover { z-index: 10; transform: translateY(-10px); }
+
+        .route-label { font-family: 'Playfair Display', serif; font-size: 3rem; margin-bottom: 30px; }
+        .price-hero { font-size: 5rem; font-weight: 900; color: var(--secondary); margin: 20px 0; }
+        
+        .sweep-section { margin-top: 40px; border-top: 1px dashed rgba(255, 105, 180, 0.3); padding-top: 30px; }
+        .sweep-title { font-weight: 800; text-transform: uppercase; letter-spacing: 4px; font-size: 0.7rem; color: var(--primary); margin-bottom: 20px; }
+        
+        .assistant-pick { background: white; padding: 20px; border-radius: 15px; border-left: 6px solid var(--secondary); margin-bottom: 15px; }
+        .other-options { font-size: 0.8rem; color: #94a3b8; font-weight: 600; display: flex; gap: 15px; }
+
+        /* Sanctuary Spotlight */
+        .stay-header { font-family: 'Playfair Display', serif; font-size: 4rem; text-align: center; margin-bottom: 100px; }
+        .hotel-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; margin-bottom: 200px; }
+        
+        .hotel-block { background: white; padding: 30px; box-shadow: 20px 20px 50px rgba(0,0,0,0.05); }
+        .hotel-canvas img { width: 100%; height: 400px; object-fit: cover; filter: sepia(20%); }
+        .hotel-editorial { margin-top: 40px; }
+        .hotel-title { font-family: 'Playfair Display', serif; font-size: 2.5rem; margin-bottom: 15px; }
+        .assistant-note { font-style: italic; color: var(--primary); font-size: 1.1rem; margin: 20px 0; border-left: 3px solid #eee; padding-left: 20px; }
+        .hotel-meta { font-weight: 800; letter-spacing: 2px; text-transform: uppercase; font-size: 0.8rem; color: #94a3b8; }
+
+        /* Visual Trend Integration */
+        .trend-frame {
+            background: var(--glass);
+            backdrop-filter: blur(25px);
+            padding: 80px;
+            transform: rotate(-2deg);
+            border: 10px solid white;
+            box-shadow: 0 40px 100px rgba(0,0,0,0.1);
+        }
+        .pulse-header { font-family: 'Playfair Display', serif; font-size: 3rem; margin-bottom: 40px; text-align: center; }
+        
+        footer { text-align: center; margin-top: 150px; font-weight: 800; letter-spacing: 12px; font-size: 0.7rem; color: var(--primary); text-transform: uppercase; }
     </style>
 </head>
 <body>
-    <div class="briefing-container">
+    <div class="editorial-canvas">
         <header>
-            <div class="signature">A Personal Travel Briefing for Yidan</div>
-            <div class="briefing-date">January 28, 2026</div>
+            <div class="badge">January 28, 2026 • Private Briefing</div>
+            <h1>YIDAN TRAVEL:<br>THE PRIVATE BRIEFING</h1>
         </header>
 
-        <section class="choices-section">
-            <div class="section-header">Choices curated for you</div>
+        <section class="flight-container">
             
-        <div class="flight-choice">
-            <div class="choice-top">
-                <div class="choice-route">SEA-SFO</div>
-                <div class="choice-price">$187</div>
+        <div class="flight-card card-sfo">
+            <div class="route-label">SEA-SFO</div>
+            <div style="font-weight: 800; font-size: 0.8rem; letter-spacing: 3px; color: var(--primary);">2026-03-27 to 2026-03-29</div>
+            <div class="price-hero">$187</div>
+            
+            <div class="sweep-section">
+                <div class="sweep-title">Assistant's Market Sweep</div>
+                <div class="assistant-pick"><strong>Delta</strong>: $187 (2 hr 12 min)</div><div class="assistant-pick"><strong>Delta</strong>: $257 (2 hr 26 min)</div>
+                <div class="other-options">
+                    <span>Others Considered:</span>
+                    <span>United ($237), United ($278)</span>
+                </div>
             </div>
-            <div style="font-weight: 800; color: var(--primary); font-size: 0.9rem; margin-bottom: 10px;">Primary Pick: Delta (Nonstop)</div>
-            <div style="color: #64748b; font-size: 0.85rem; margin-bottom: 20px;">2026-03-27 to 2026-03-29</div>
-            <div class="market-alt">Market Alternatives: United ($237), Alaska ($277)</div>
         </div>
         
-        <div class="flight-choice">
-            <div class="choice-top">
-                <div class="choice-route">SEA-PSP</div>
-                <div class="choice-price">$465</div>
+        <div class="flight-card card-psp">
+            <div class="route-label">SEA-PSP</div>
+            <div style="font-weight: 800; font-size: 0.8rem; letter-spacing: 3px; color: var(--primary);">2026-04-09 to 2026-04-13</div>
+            <div class="price-hero">$465</div>
+            
+            <div class="sweep-section">
+                <div class="sweep-title">Assistant's Market Sweep</div>
+                <div class="assistant-pick"><strong>Alaska</strong>: $567 (2 hr 47 min)</div><div class="assistant-pick"><strong>Alaska</strong>: $567 (2 hr 51 min)</div>
+                <div class="other-options">
+                    <span>Others Considered:</span>
+                    <span>Southwest ($580), Southwest ($580)</span>
+                </div>
             </div>
-            <div style="font-weight: 800; color: var(--primary); font-size: 0.9rem; margin-bottom: 10px;">Primary Pick: Alaska (Nonstop)</div>
-            <div style="color: #64748b; font-size: 0.85rem; margin-bottom: 20px;">2026-04-09 to 2026-04-13</div>
-            <div class="market-alt">Market Alternatives: Southwest ($580), Delta ($918)</div>
         </div>
         
         </section>
 
-        <div class="section-header">Where You'll Stay</div>
-        <section class="stay-section">
+        <div class="stay-header">Sanctuary Spotlight</div>
+        <section class="hotel-grid">
             
-        <div class="hotel-polaroid">
-            <div class="ribbon">🎀</div>
-            <div class="hotel-img">
+        <div class="hotel-block">
+            <div class="hotel-canvas">
                 <img src="hotel_sfo.png" alt="1 Hotel San Francisco">
             </div>
-            <div class="hotel-info">
-                <div class="hotel-name">1 Hotel San Francisco</div>
+            <div class="hotel-editorial">
+                <div class="hotel-title">1 Hotel San Francisco</div>
                 <div class="hotel-vibe">Nature-inspired luxury on the Embarcadero.</div>
-                <div class="hotel-rate">From $325/night</div>
+                <div class="assistant-note">"Yidan, this room has the best natural light for your morning routine."</div>
+                <div class="hotel-meta">From $325/nt</div>
             </div>
         </div>
     
-        <div class="hotel-polaroid">
-            <div class="ribbon">🎀</div>
-            <div class="hotel-img">
+        <div class="hotel-block">
+            <div class="hotel-canvas">
                 <img src="hotel_psp.png" alt="Korakia Pensione">
             </div>
-            <div class="hotel-info">
-                <div class="hotel-name">Korakia Pensione</div>
-                <div class="hotel-vibe">Moroccan-inspired desert soul and architectural beauty.</div>
-                <div class="hotel-rate">From $425/night</div>
+            <div class="hotel-editorial">
+                <div class="hotel-title">Korakia Pensione</div>
+                <div class="hotel-vibe">Moroccan-inspired desert soul.</div>
+                <div class="assistant-note">"Yidan, the courtyard here is perfect for evening unwinding."</div>
+                <div class="hotel-meta">From $425/nt</div>
             </div>
         </div>
     
         </section>
 
-        <section class="pulse-memo">
-            <div class="section-header">Market Pulse</div>
-            <img src="price_trend.png" class="pulse-chart" alt="Market Intelligence">
-            <div style="margin-top: 40px;">
+        <section class="trend-frame">
+            <div class="pulse-header">Market Pulse & Intelligence</div>
+            <img src="price_trend.png" style="width:100%;" alt="Trend Data">
+            <div style="margin-top: 60px;">
                 <div class="briefing-pill">⭐ Sf Weekend is stable. No immediate rush, monitor for target.</div><div class="briefing-pill">⭐ Desert Escape is stable. No immediate rush, monitor for target.</div>
             </div>
         </section>
 
         <footer>
-            Generated for Yidan | Antigravity AI Travel Assistant
+            Antigravity Private Assistant Edition
         </footer>
     </div>
 </body>

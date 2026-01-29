@@ -181,11 +181,10 @@ def get_recommendation(task_id: str, current_price: float, stats: Dict, target: 
     return f"{task_id.replace('_', ' ').title()} is stable. No immediate rush, monitor for target."
 
 def generate_trend_chart(history: Dict):
-    """Generates a 14-day line chart with the Kitty Pink palette."""
+    """Generates a 14-day line chart with ribbon markers for buy points."""
     plt.figure(figsize=(10, 6))
     plt.style.use('seaborn-whitegrid')
     
-    # Kitty Pink Palette
     colors = ['#ff69b4', '#ff1493']
     for i, (task_id, data) in enumerate(history.items()):
         records = data.get("history", [])
@@ -199,12 +198,20 @@ def generate_trend_chart(history: Dict):
         df = df.sort_values('date').tail(14)
         
         label = task_id.replace('_', ' ').title()
-        plt.plot(df['date'], df['price'], marker='o', markersize=8, label=f"{label}", color=colors[i % len(colors)], linewidth=3)
         
+        # Plot main line
+        plt.plot(df['date'], df['price'], color=colors[i % len(colors)], linewidth=3, label=f"{label}")
+        
+        # Mark potential "buy" points (local minima or below target)
+        if len(df) > 2:
+            buy_points = df[df['price'] == df['price'].min()]
+            # Using $🎀$ directly without the backslash or just 'o' with a label if emoji fails
+            plt.plot(buy_points['date'], buy_points['price'], marker='$\heartsuit$', markersize=15, linestyle='None', color='#ff69b4')
+
         if 'market_avg' in df.columns:
             plt.plot(df['date'], df['market_avg'], linestyle='--', alpha=0.3, color='#f472b6', label=f"{label} Avg")
 
-    plt.title("Price Momentum Analysis", fontsize=16, fontweight='bold', color='#ff1493', pad=25)
+    plt.title("Market Pulse Analysis", fontsize=16, fontweight='bold', color='#ff1493', pad=25)
     plt.xlabel("Timeline", fontsize=11, color='#db2777')
     plt.ylabel("Value (USD)", fontsize=11, color='#db2777')
     plt.legend(frameon=True, facecolor='white', framealpha=0.9)
@@ -249,20 +256,20 @@ def generate_price_spectrum(all_flights: List[Dict]) -> str:
     """
 
 def generate_html_report(reports_data: List[Dict], recommendations: List[str], hotels: List[Dict]):
-    """Generates a Kitty-anchored Private Travel Briefing."""
+    """Generates YIDAN TRAVEL: THE PRIVATE BRIEFING with asymmetric logic."""
     today_str = datetime.date.today().strftime("%B %d, %Y")
     
     recommendation_html = "".join([f'<div class="briefing-pill">⭐ {rec}</div>' for rec in recommendations])
     hotel_html = "".join([f"""
-        <div class="hotel-polaroid">
-            <div class="ribbon">🎀</div>
-            <div class="hotel-img">
+        <div class="hotel-block">
+            <div class="hotel-canvas">
                 <img src="{'hotel_sfo.png' if h['city'] == 'SFO' else 'hotel_psp.png'}" alt="{h['name']}">
             </div>
-            <div class="hotel-info">
-                <div class="hotel-name">{h['name']}</div>
+            <div class="hotel-editorial">
+                <div class="hotel-title">{h['name']}</div>
                 <div class="hotel-vibe">{h['vibe']}</div>
-                <div class="hotel-rate">From ${h['rate']}/night</div>
+                <div class="assistant-note">"Yidan, {h['tip']}"</div>
+                <div class="hotel-meta">From ${h['rate']}/nt</div>
             </div>
         </div>
     """ for h in hotels])
@@ -273,15 +280,14 @@ def generate_html_report(reports_data: List[Dict], recommendations: List[str], h
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Personal Briefing for Yidan</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Playfair+Display:ital,wght@1,700&display=swap" rel="stylesheet">
+    <title>YIDAN TRAVEL | THE PRIVATE BRIEFING</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
     <style>
         :root {{
             --primary: #ff69b4;
             --secondary: #ff1493;
-            --accent: #d81b60;
-            --glass: rgba(255, 255, 255, 0.85);
-            --text: #333333;
+            --glass: rgba(255, 255, 255, 0.7);
+            --text: #2c3e50;
         }}
 
         * {{ margin: 0; padding: 0; box-sizing: border-box; }}
@@ -290,108 +296,105 @@ def generate_html_report(reports_data: List[Dict], recommendations: List[str], h
             background: url('hello_kitty_vacation_bg.png') no-repeat center center fixed;
             background-size: cover;
             color: var(--text);
-            padding: 60px 20px;
+            overflow-x: hidden;
+            padding-bottom: 200px;
         }}
 
-        .briefing-container {{ 
-            max-width: 900px; 
-            margin: 0 auto; 
-            background: var(--glass);
-            backdrop-filter: blur(20px);
-            padding: 80px;
-            border-radius: 60px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
-            border: 5px solid white;
-        }}
-
-        header {{ margin-bottom: 60px; text-align: center; }}
-        .signature {{ 
-            font-family: 'Playfair Display', serif; 
-            font-style: italic; 
-            font-size: 3.5rem; 
-            color: var(--secondary); 
-            margin-bottom: 10px;
-        }}
-        .briefing-date {{ font-weight: 800; text-transform: uppercase; letter-spacing: 5px; color: var(--primary); font-size: 0.8rem; }}
-
-        /* Choices for You */
-        .choices-section {{ margin-bottom: 80px; }}
-        .section-header {{ font-size: 1.2rem; font-weight: 800; text-transform: uppercase; letter-spacing: 4px; color: var(--accent); margin-bottom: 40px; text-align: center; }}
-        
-        .flight-choice {{ background: white; padding: 40px; border-radius: 30px; margin-bottom: 30px; box-shadow: 0 10px 20px rgba(0,0,0,0.02); }}
-        .choice-top {{ display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 20px; }}
-        .choice-route {{ font-size: 1.5rem; font-weight: 800; color: var(--text); }}
-        .choice-price {{ font-size: 2.5rem; font-weight: 800; color: var(--secondary); }}
-        
-        .market-alt {{ font-size: 0.85rem; color: #94a3b8; font-weight: 600; border-top: 1px dashed #eee; padding-top: 15px; margin-top: 15px; }}
-
-        /* Everywhere You'll Stay */
-        .stay-section {{ display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 80px; }}
-        .hotel-polaroid {{ 
-            background: white; 
-            padding: 20px 20px 40px; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05); 
+        .editorial-canvas {{
+            max-width: 1400px;
+            margin: 0 auto;
             position: relative;
-            transform: rotate(-1deg);
-        }}
-        .hotel-polaroid:nth-child(even) {{ transform: rotate(1deg); }}
-        .ribbon {{ position: absolute; top: -15px; right: -15px; font-size: 2.5rem; z-index: 10; }}
-        .hotel-img img {{ width: 100%; height: 250px; object-fit: cover; border-radius: 4px; }}
-        .hotel-info {{ margin-top: 20px; }}
-        .hotel-name {{ font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--text); }}
-        .hotel-vibe {{ font-size: 0.8rem; color: #64748b; margin: 10px 0; font-style: italic; }}
-        .hotel-rate {{ font-weight: 800; color: var(--accent); }}
-
-        /* Market Pulse */
-        .pulse-memo {{ 
-            background: white; 
-            padding: 50px; 
-            border-radius: 40px; 
-            box-shadow: 0 10px 40px rgba(255, 105, 180, 0.1); 
-            border: 2px solid #fff5f8;
-        }}
-        .pulse-chart {{ width: 100%; border-radius: 20px; }}
-
-        .briefing-pill {{ 
-            background: #fff5f8; 
-            padding: 20px 30px; 
-            border-radius: 20px; 
-            font-weight: 600; 
-            margin-bottom: 15px;
-            color: var(--accent);
-            border-left: 5px solid var(--primary);
+            padding: 100px 40px;
         }}
 
-        footer {{ text-align: center; margin-top: 80px; font-weight: 800; color: var(--primary); letter-spacing: 3px; font-size: 0.7rem; text-transform: uppercase; }}
+        header {{ margin-bottom: 150px; text-align: left; position: relative; z-index: 100; }}
+        .badge {{ font-weight: 800; text-transform: uppercase; letter-spacing: 8px; color: var(--primary); font-size: 0.9rem; margin-bottom: 20px; }}
+        h1 {{ 
+            font-family: 'Playfair Display', serif; 
+            font-size: 6.5rem; 
+            font-weight: 900; 
+            line-height: 0.9; 
+            color: var(--secondary); 
+            text-shadow: 10px 10px 0px rgba(255, 105, 180, 0.1);
+        }}
+
+        /* The Anti-Grid Staggered Layout */
+        .flight-container {{ position: relative; height: 1000px; margin-bottom: 200px; }}
+        .flight-card {{
+            position: absolute;
+            background: var(--glass);
+            backdrop-filter: blur(25px);
+            padding: 60px;
+            border-radius: 4px;
+            box-shadow: 30px 30px 60px rgba(0,0,0,0.05);
+            border: 1px solid rgba(255,255,255,0.4);
+            transition: all 0.5s ease;
+        }}
+        
+        .card-sfo {{ width: 550px; top: 0; left: 0; z-index: 2; }}
+        .card-psp {{ width: 550px; bottom: 0; right: 0; z-index: 1; }}
+        .flight-card:hover {{ z-index: 10; transform: translateY(-10px); }}
+
+        .route-label {{ font-family: 'Playfair Display', serif; font-size: 3rem; margin-bottom: 30px; }}
+        .price-hero {{ font-size: 5rem; font-weight: 900; color: var(--secondary); margin: 20px 0; }}
+        
+        .sweep-section {{ margin-top: 40px; border-top: 1px dashed rgba(255, 105, 180, 0.3); padding-top: 30px; }}
+        .sweep-title {{ font-weight: 800; text-transform: uppercase; letter-spacing: 4px; font-size: 0.7rem; color: var(--primary); margin-bottom: 20px; }}
+        
+        .assistant-pick {{ background: white; padding: 20px; border-radius: 15px; border-left: 6px solid var(--secondary); margin-bottom: 15px; }}
+        .other-options {{ font-size: 0.8rem; color: #94a3b8; font-weight: 600; display: flex; gap: 15px; }}
+
+        /* Sanctuary Spotlight */
+        .stay-header {{ font-family: 'Playfair Display', serif; font-size: 4rem; text-align: center; margin-bottom: 100px; }}
+        .hotel-grid {{ display: grid; grid-template-columns: 1fr 1fr; gap: 80px; margin-bottom: 200px; }}
+        
+        .hotel-block {{ background: white; padding: 30px; box-shadow: 20px 20px 50px rgba(0,0,0,0.05); }}
+        .hotel-canvas img {{ width: 100%; height: 400px; object-fit: cover; filter: sepia(20%); }}
+        .hotel-editorial {{ margin-top: 40px; }}
+        .hotel-title {{ font-family: 'Playfair Display', serif; font-size: 2.5rem; margin-bottom: 15px; }}
+        .assistant-note {{ font-style: italic; color: var(--primary); font-size: 1.1rem; margin: 20px 0; border-left: 3px solid #eee; padding-left: 20px; }}
+        .hotel-meta {{ font-weight: 800; letter-spacing: 2px; text-transform: uppercase; font-size: 0.8rem; color: #94a3b8; }}
+
+        /* Visual Trend Integration */
+        .trend-frame {{
+            background: var(--glass);
+            backdrop-filter: blur(25px);
+            padding: 80px;
+            transform: rotate(-2deg);
+            border: 10px solid white;
+            box-shadow: 0 40px 100px rgba(0,0,0,0.1);
+        }}
+        .pulse-header {{ font-family: 'Playfair Display', serif; font-size: 3rem; margin-bottom: 40px; text-align: center; }}
+        
+        footer {{ text-align: center; margin-top: 150px; font-weight: 800; letter-spacing: 12px; font-size: 0.7rem; color: var(--primary); text-transform: uppercase; }}
     </style>
 </head>
 <body>
-    <div class="briefing-container">
+    <div class="editorial-canvas">
         <header>
-            <div class="signature">A Personal Travel Briefing for Yidan</div>
-            <div class="briefing-date">{today_str}</div>
+            <div class="badge">{today_str} • Private Briefing</div>
+            <h1>YIDAN TRAVEL:<br>THE PRIVATE BRIEFING</h1>
         </header>
 
-        <section class="choices-section">
-            <div class="section-header">Choices curated for you</div>
+        <section class="flight-container">
             {generate_status_cards(reports_data)}
         </section>
 
-        <div class="section-header">Where You'll Stay</div>
-        <section class="stay-section">
+        <div class="stay-header">Sanctuary Spotlight</div>
+        <section class="hotel-grid">
             {hotel_html}
         </section>
 
-        <section class="pulse-memo">
-            <div class="section-header">Market Pulse</div>
-            <img src="price_trend.png" class="pulse-chart" alt="Market Intelligence">
-            <div style="margin-top: 40px;">
+        <section class="trend-frame">
+            <div class="pulse-header">Market Pulse & Intelligence</div>
+            <img src="price_trend.png" style="width:100%;" alt="Trend Data">
+            <div style="margin-top: 60px;">
                 {recommendation_html}
             </div>
         </section>
 
         <footer>
-            Generated for Yidan | Antigravity AI Travel Assistant
+            Antigravity Private Assistant Edition
         </footer>
     </div>
 </body>
@@ -403,27 +406,30 @@ def generate_html_report(reports_data: List[Dict], recommendations: List[str], h
 def generate_status_cards(reports_data: List[Dict]) -> str:
     cards = ""
     for data in reports_data:
-        # Build market alternatives sub-text
-        alt_texts = []
-        best_carrier = data['carrier']
-        carriers_seen = set([best_carrier])
+        card_class = "card-sfo" if "SFO" in data['route_name'] else "card-psp"
         
-        for f in sorted(data['all_flights'], key=lambda x: x['price']):
-            if f['carrier'] not in carriers_seen:
-                alt_texts.append(f"{f['carrier']} (${f['price']})")
-                carriers_seen.add(f['carrier'])
-                
-        alt_html = f'<div class="market-alt">Market Alternatives: {", ".join(alt_texts[:3])}</div>' if alt_texts else ""
+        # asistente picks (alaska/delta)
+        picks = [f for f in data['all_flights'] if f.get('is_priority')]
+        picks_html = "".join([f'<div class="assistant-pick"><strong>{p["carrier"]}</strong>: ${p["price"]} ({p["duration"]})</div>' for p in picks[:2]])
+        
+        # other options
+        others = [f for f in data['all_flights'] if not f.get('is_priority')]
+        others_html = ", ".join([f'{o["carrier"]} (${o["price"]})' for o in others[:2]])
         
         cards += f"""
-        <div class="flight-choice">
-            <div class="choice-top">
-                <div class="choice-route">{data['route_name']}</div>
-                <div class="choice-price">${data['price']}</div>
+        <div class="flight-card {card_class}">
+            <div class="route-label">{data['route_name']}</div>
+            <div style="font-weight: 800; font-size: 0.8rem; letter-spacing: 3px; color: var(--primary);">{data['dates']}</div>
+            <div class="price-hero">${data['price']}</div>
+            
+            <div class="sweep-section">
+                <div class="sweep-title">Assistant's Market Sweep</div>
+                {picks_html}
+                <div class="other-options">
+                    <span>Others Considered:</span>
+                    <span>{others_html}</span>
+                </div>
             </div>
-            <div style="font-weight: 800; color: var(--primary); font-size: 0.9rem; margin-bottom: 10px;">Primary Pick: {best_carrier} (Nonstop)</div>
-            <div style="color: #64748b; font-size: 0.85rem; margin-bottom: 20px;">{data['dates']}</div>
-            {alt_html}
         </div>
         """
     return cards
@@ -437,23 +443,25 @@ async def run_tracker():
             "name": "1 Hotel San Francisco", 
             "city": "SFO", 
             "vibe": "Nature-inspired luxury on the Embarcadero.", 
+            "tip": "this room has the best natural light for your morning routine.",
             "rate": 325
         },
         {
             "name": "Korakia Pensione", 
             "city": "PSP", 
-            "vibe": "Moroccan-inspired desert soul and architectural beauty.", 
+            "vibe": "Moroccan-inspired desert soul.", 
+            "tip": "the courtyard here is perfect for evening unwinding.",
             "rate": 425
         }
     ]
     
-    print(f"--- Yidan's Private Briefing Refinement ({today_str}) ---")
+    print(f"--- YIDAN TRAVEL: THE PRIVATE BRIEFING ({today_str}) ---")
     
     reports_data = []
     recommendations = []
 
     for task in TASKS:
-        print(f"Briefing Update: Sweeping {task['route_name']}...")
+        print(f"Editorial Sweep: {task['route_name']}...")
         all_flights = await fetch_flight_price(task)
         
         if not all_flights:
@@ -484,7 +492,7 @@ async def run_tracker():
     save_history(history)
     generate_trend_chart(history)
     generate_html_report(reports_data, recommendations, HOTELS)
-    print("Briefing Optimized: flight_report.html")
+    print("Editorial Update Complete: flight_report.html")
 
 if __name__ == "__main__":
     asyncio.run(run_tracker())
