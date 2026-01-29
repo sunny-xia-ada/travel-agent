@@ -4,175 +4,288 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YIDAN TRAVEL | THE PRIVATE BRIEFING</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+    <title>YIDAN TRAVEL | PRIVATE BRIEFING</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Outfit:wght@300;500;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #ff69b4;
-            --secondary: #ff1493;
-            --glass: rgba(255, 255, 255, 0.7);
-            --text: #2c3e50;
+            --pastel-pink: #FFD1DC;
+            --soft-white: rgba(255, 255, 255, 0.4);
+            --text-main: #3d3d3d;
+            --text-muted: #8e8e8e;
+            --accent: #FADADD;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         body { 
             font-family: 'Outfit', sans-serif; 
             background: url('hello_kitty_vacation_bg.png') no-repeat center center fixed;
             background-size: cover;
-            color: var(--text);
+            color: var(--text-main);
             overflow-x: hidden;
-            padding-bottom: 200px;
+            min-height: 200vh;
         }
 
-        .editorial-canvas {
+        /* Grain Texture Overlay */
+        .grain {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.04;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .editorial-wrapper {
+            position: relative;
+            width: 100%;
+            backdrop-filter: blur(15px) brightness(1.05);
+            -webkit-backdrop-filter: blur(15px) brightness(1.05);
+            background: rgba(255, 255, 255, 0.1);
+            padding: 120px 80px;
+        }
+
+        header { 
+            margin-bottom: 200px;
+            padding-left: 10%;
+        }
+
+        .briefing-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 5.5rem;
+            font-weight: 300;
+            letter-spacing: 4px;
+            color: var(--pastel-pink);
+            line-height: 1;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        .signature-line {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            font-style: italic;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+        }
+
+        /* Asymmetric Layout */
+        .travel-grid {
+            position: relative;
             max-width: 1400px;
             margin: 0 auto;
-            position: relative;
-            padding: 100px 40px;
+            height: 1200px;
         }
 
-        header { margin-bottom: 150px; text-align: left; position: relative; z-index: 100; }
-        .badge { font-weight: 800; text-transform: uppercase; letter-spacing: 8px; color: var(--primary); font-size: 0.9rem; margin-bottom: 20px; }
-        h1 { 
-            font-family: 'Playfair Display', serif; 
-            font-size: 6.5rem; 
-            font-weight: 900; 
-            line-height: 0.9; 
-            color: var(--secondary); 
-            text-shadow: 10px 10px 0px rgba(255, 105, 180, 0.1);
-        }
-
-        /* The Anti-Grid Staggered Layout */
-        .flight-container { position: relative; height: 1000px; margin-bottom: 200px; }
-        .flight-card {
+        .route-article {
             position: absolute;
-            background: var(--glass);
-            backdrop-filter: blur(25px);
+            width: 38%;
+            background: var(--soft-white);
             padding: 60px;
-            border-radius: 4px;
-            box-shadow: 30px 30px 60px rgba(0,0,0,0.05);
-            border: 1px solid rgba(255,255,255,0.4);
-            transition: all 0.5s ease;
+            border-radius: 2px;
+            box-shadow: 0 40px 100px rgba(0,0,0,0.03);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
-        
-        .card-sfo { width: 550px; top: 0; left: 0; z-index: 2; }
-        .card-psp { width: 550px; bottom: 0; right: 0; z-index: 1; }
-        .flight-card:hover { z-index: 10; transform: translateY(-10px); }
 
-        .route-label { font-family: 'Playfair Display', serif; font-size: 3rem; margin-bottom: 30px; }
-        .price-hero { font-size: 5rem; font-weight: 900; color: var(--secondary); margin: 20px 0; }
-        
-        .sweep-section { margin-top: 40px; border-top: 1px dashed rgba(255, 105, 180, 0.3); padding-top: 30px; }
-        .sweep-title { font-weight: 800; text-transform: uppercase; letter-spacing: 4px; font-size: 0.7rem; color: var(--primary); margin-bottom: 20px; }
-        
-        .assistant-pick { background: white; padding: 20px; border-radius: 15px; border-left: 6px solid var(--secondary); margin-bottom: 15px; }
-        .other-options { font-size: 0.8rem; color: #94a3b8; font-weight: 600; display: flex; gap: 15px; }
+        .route-sfo { top: 0; left: 5%; }
+        .route-psp { top: 500px; right: 5%; }
 
-        /* Sanctuary Spotlight */
-        .stay-header { font-family: 'Playfair Display', serif; font-size: 4rem; text-align: center; margin-bottom: 100px; }
-        .hotel-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; margin-bottom: 200px; }
-        
-        .hotel-block { background: white; padding: 30px; box-shadow: 20px 20px 50px rgba(0,0,0,0.05); }
-        .hotel-canvas img { width: 100%; height: 400px; object-fit: cover; filter: sepia(20%); }
-        .hotel-editorial { margin-top: 40px; }
-        .hotel-title { font-family: 'Playfair Display', serif; font-size: 2.5rem; margin-bottom: 15px; }
-        .assistant-note { font-style: italic; color: var(--primary); font-size: 1.1rem; margin: 20px 0; border-left: 3px solid #eee; padding-left: 20px; }
-        .hotel-meta { font-weight: 800; letter-spacing: 2px; text-transform: uppercase; font-size: 0.8rem; color: #94a3b8; }
-
-        /* Visual Trend Integration */
-        .trend-frame {
-            background: var(--glass);
-            backdrop-filter: blur(25px);
-            padding: 80px;
-            transform: rotate(-2deg);
-            border: 10px solid white;
-            box-shadow: 0 40px 100px rgba(0,0,0,0.1);
+        .label {
+            font-size: 0.7rem;
+            font-weight: 800;
+            letter-spacing: 4px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-bottom: 20px;
         }
-        .pulse-header { font-family: 'Playfair Display', serif; font-size: 3rem; margin-bottom: 40px; text-align: center; }
-        
-        footer { text-align: center; margin-top: 150px; font-weight: 800; letter-spacing: 12px; font-size: 0.7rem; color: var(--primary); text-transform: uppercase; }
+
+        .route-name {
+            font-family: Cormorant Garamond;
+            font-size: 3rem;
+            font-weight: 300;
+            margin-bottom: 40px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 20px;
+        }
+
+        .price-display {
+            display: flex;
+            align-items: baseline;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .price-val {
+            font-size: 6rem;
+            font-weight: 300;
+            color: var(--pastel-pink);
+            line-height: 1;
+        }
+
+        .price-unit {
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+
+        /* Market Comparison */
+        .comparison-list { margin-top: 40px; }
+        .compare-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            font-size: 0.85rem;
+            border-bottom: 1px solid rgba(0,0,0,0.03);
+        }
+        .highlighted {
+            color: var(--text-main);
+            font-weight: 800;
+            text-shadow: 0 0 15px rgba(255, 209, 220, 0.6);
+        }
+        .muted-pink { color: #d6b8be; }
+
+        /* Hotel Vertical Column */
+        .stay-section {
+            margin-top: 300px;
+            display: flex;
+            gap: 100px;
+            justify-content: center;
+        }
+
+        .hotel-magazine-card {
+            width: 400px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .hotel-magazine-img img {
+            width: 100%;
+            height: 600px; /* 2:3 approx */
+            object-fit: cover;
+            filter: brightness(0.95) contrast(0.9);
+        }
+
+        .hotel-magazine-content { padding: 0 20px; }
+        .magazine-label { font-size: 0.7rem; font-weight: 800; letter-spacing: 5px; color: var(--pastel-pink); margin-bottom: 10px; }
+        .magazine-hotel-name { font-family: 'Cormorant Garamond'; font-size: 2.5rem; margin-bottom: 15px; }
+        .magazine-vibe { font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 20px; }
+        .magazine-tip { font-style: italic; color: var(--text-main); font-weight: 500; }
+
+        /* Pulse Section */
+        .pulse-section {
+            margin-top: 400px;
+            text-align: center;
+            padding: 0 100px;
+        }
+
+        .trend-chart-img {
+            width: 100%;
+            opacity: 0.6;
+            margin-bottom: 80px;
+        }
+
+        .briefing-pill {
+            font-family: Cormorant Garamond;
+            font-size: 1.8rem;
+            color: var(--text-main);
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        footer {
+            margin-top: 200px;
+            text-align: center;
+            font-size: 0.7rem;
+            font-weight: 800;
+            letter-spacing: 6px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
     </style>
 </head>
 <body>
-    <div class="editorial-canvas">
+    <div class="grain"></div>
+    <div class="editorial-wrapper">
         <header>
-            <div class="badge">January 28, 2026 • Private Briefing</div>
-            <h1>YIDAN TRAVEL:<br>THE PRIVATE BRIEFING</h1>
+            <div class="signature-line">London Edition • Spring 2026</div>
+            <h1 class="briefing-title">YIDAN TRAVEL:<br>THE PRIVATE BRIEFING</h1>
+            <div class="signature-line">Curated by Antigravity for your Spring escape.</div>
         </header>
 
-        <section class="flight-container">
+        <section class="travel-grid">
             
-        <div class="flight-card card-sfo">
-            <div class="route-label">SEA-SFO</div>
-            <div style="font-weight: 800; font-size: 0.8rem; letter-spacing: 3px; color: var(--primary);">2026-03-27 to 2026-03-29</div>
-            <div class="price-hero">$187</div>
-            
-            <div class="sweep-section">
-                <div class="sweep-title">Assistant's Market Sweep</div>
-                <div class="assistant-pick"><strong>Delta</strong>: $187 (2 hr 12 min)</div><div class="assistant-pick"><strong>Delta</strong>: $257 (2 hr 26 min)</div>
-                <div class="other-options">
-                    <span>Others Considered:</span>
-                    <span>United ($237), United ($278)</span>
-                </div>
+        <article class="route-article route-sfo">
+            <div class="label">TRANSIT • 2026-03-27 to 2026-03-29</div>
+            <div class="route-name">SEA-SFO</div>
+            <div class="price-display">
+                <span class="price-val">$187</span>
+                <span class="price-unit">Curated Best Value</span>
             </div>
-        </div>
+            
+            <div class="comparison-list">
+                <div class="label" style="font-size:0.6rem; color:var(--pastel-pink)">MARKET COMPARISON</div>
+                <div class="compare-item highlighted"><span>Delta</span><span>$187</span></div><div class="compare-item highlighted"><span>Delta</span><span>$257</span></div>
+                <div class="compare-item muted-pink"><span>United</span><span>$237</span></div><div class="compare-item muted-pink"><span>United</span><span>$278</span></div>
+            </div>
+        </article>
         
-        <div class="flight-card card-psp">
-            <div class="route-label">SEA-PSP</div>
-            <div style="font-weight: 800; font-size: 0.8rem; letter-spacing: 3px; color: var(--primary);">2026-04-09 to 2026-04-13</div>
-            <div class="price-hero">$465</div>
-            
-            <div class="sweep-section">
-                <div class="sweep-title">Assistant's Market Sweep</div>
-                <div class="assistant-pick"><strong>Alaska</strong>: $567 (2 hr 47 min)</div><div class="assistant-pick"><strong>Alaska</strong>: $567 (2 hr 51 min)</div>
-                <div class="other-options">
-                    <span>Others Considered:</span>
-                    <span>Southwest ($580), Southwest ($580)</span>
-                </div>
+        <article class="route-article route-psp">
+            <div class="label">TRANSIT • 2026-04-09 to 2026-04-13</div>
+            <div class="route-name">SEA-PSP</div>
+            <div class="price-display">
+                <span class="price-val">$487</span>
+                <span class="price-unit">Curated Best Value</span>
             </div>
-        </div>
+            
+            <div class="comparison-list">
+                <div class="label" style="font-size:0.6rem; color:var(--pastel-pink)">MARKET COMPARISON</div>
+                <div class="compare-item highlighted"><span>Alaska</span><span>$567</span></div><div class="compare-item highlighted"><span>Alaska</span><span>$567</span></div>
+                <div class="compare-item muted-pink"><span>Southwest</span><span>$580</span></div><div class="compare-item muted-pink"><span>Southwest</span><span>$580</span></div>
+            </div>
+        </article>
         
         </section>
 
-        <div class="stay-header">Sanctuary Spotlight</div>
-        <section class="hotel-grid">
+        <div class="label" style="text-align:center; margin-bottom: 60px;">THE SANCTUARY</div>
+        <section class="stay-section">
             
-        <div class="hotel-block">
-            <div class="hotel-canvas">
+        <div class="hotel-magazine-card">
+            <div class="hotel-magazine-img">
                 <img src="hotel_sfo.png" alt="1 Hotel San Francisco">
             </div>
-            <div class="hotel-editorial">
-                <div class="hotel-title">1 Hotel San Francisco</div>
-                <div class="hotel-vibe">Nature-inspired luxury on the Embarcadero.</div>
-                <div class="assistant-note">"Yidan, this room has the best natural light for your morning routine."</div>
-                <div class="hotel-meta">From $325/nt</div>
+            <div class="hotel-magazine-content">
+                <div class="magazine-label">THE STAY</div>
+                <div class="magazine-hotel-name">1 Hotel San Francisco</div>
+                <div class="magazine-vibe">Nature-inspired luxury on the Embarcadero.</div>
+                <div class="magazine-tip">“this room has the best natural light for your morning routine.”</div>
             </div>
         </div>
     
-        <div class="hotel-block">
-            <div class="hotel-canvas">
+        <div class="hotel-magazine-card">
+            <div class="hotel-magazine-img">
                 <img src="hotel_psp.png" alt="Korakia Pensione">
             </div>
-            <div class="hotel-editorial">
-                <div class="hotel-title">Korakia Pensione</div>
-                <div class="hotel-vibe">Moroccan-inspired desert soul.</div>
-                <div class="assistant-note">"Yidan, the courtyard here is perfect for evening unwinding."</div>
-                <div class="hotel-meta">From $425/nt</div>
+            <div class="hotel-magazine-content">
+                <div class="magazine-label">THE STAY</div>
+                <div class="magazine-hotel-name">Korakia Pensione</div>
+                <div class="magazine-vibe">Moroccan-inspired desert soul.</div>
+                <div class="magazine-tip">“the courtyard here is perfect for evening unwinding.”</div>
             </div>
         </div>
     
         </section>
 
-        <section class="trend-frame">
-            <div class="pulse-header">Market Pulse & Intelligence</div>
-            <img src="price_trend.png" style="width:100%;" alt="Trend Data">
-            <div style="margin-top: 60px;">
-                <div class="briefing-pill">⭐ Sf Weekend is stable. No immediate rush, monitor for target.</div><div class="briefing-pill">⭐ Desert Escape is stable. No immediate rush, monitor for target.</div>
+        <section class="pulse-section">
+            <div class="label">MARKET PULSE</div>
+            <img src="price_trend.png" class="trend-chart-img" alt="Pulse">
+            <div class="recommendations">
+                <div class="briefing-pill">Sf Weekend is stable. No immediate rush, monitor for target.</div><div class="briefing-pill">Desert Escape is stable. No immediate rush, monitor for target.</div>
             </div>
         </section>
 
         <footer>
-            Antigravity Private Assistant Edition
+            A Private Publication for Yidan Yan • All Rights Reserved
         </footer>
     </div>
 </body>

@@ -3,7 +3,7 @@
         "latest": {
             "date": "2026-01-28",
             "price": 187,
-            "market_avg": 304.72
+            "market_avg": 306.39
         },
         "history": [
             {
@@ -162,14 +162,20 @@
                 "price": 187,
                 "carrier": "Delta",
                 "market_avg": 304.72
+            },
+            {
+                "date": "2026-01-28",
+                "price": 187,
+                "carrier": "Delta",
+                "market_avg": 306.39
             }
         ]
     },
     "desert_escape": {
         "latest": {
             "date": "2026-01-28",
-            "price": 465,
-            "market_avg": 647.91
+            "price": 487,
+            "market_avg": 648.91
         },
         "history": [
             {
@@ -328,6 +334,12 @@
                 "price": 465,
                 "carrier": "Alaska",
                 "market_avg": 647.91
+            },
+            {
+                "date": "2026-01-28",
+                "price": 487,
+                "carrier": "Alaska",
+                "market_avg": 648.91
             }
         ]
     }

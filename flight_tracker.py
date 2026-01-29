@@ -181,11 +181,12 @@ def get_recommendation(task_id: str, current_price: float, stats: Dict, target: 
     return f"{task_id.replace('_', ' ').title()} is stable. No immediate rush, monitor for target."
 
 def generate_trend_chart(history: Dict):
-    """Generates a 14-day line chart with ribbon markers for buy points."""
-    plt.figure(figsize=(10, 6))
+    """Generates a minimal, axe-less trend chart for the editorial edition."""
+    plt.figure(figsize=(10, 4))
     plt.style.use('seaborn-whitegrid')
     
-    colors = ['#ff69b4', '#ff1493']
+    # Soft Pastel Palette
+    colors = ['#FFD1DC', '#FADADD']
     for i, (task_id, data) in enumerate(history.items()):
         records = data.get("history", [])
         df = pd.DataFrame(records)
@@ -197,25 +198,17 @@ def generate_trend_chart(history: Dict):
         df['date'] = pd.to_datetime(df['date'])
         df = df.sort_values('date').tail(14)
         
-        label = task_id.replace('_', ' ').title()
+        plt.plot(df['date'], df['price'], color=colors[i % len(colors)], linewidth=4, alpha=0.8)
         
-        # Plot main line
-        plt.plot(df['date'], df['price'], color=colors[i % len(colors)], linewidth=3, label=f"{label}")
-        
-        # Mark potential "buy" points (local minima or below target)
+        # Mark local minima with a soft heart
         if len(df) > 2:
-            buy_points = df[df['price'] == df['price'].min()]
-            # Using $🎀$ directly without the backslash or just 'o' with a label if emoji fails
-            plt.plot(buy_points['date'], buy_points['price'], marker='$\heartsuit$', markersize=15, linestyle='None', color='#ff69b4')
+            min_price = df['price'].min()
+            min_points = df[df['price'] == min_price]
+            plt.scatter(min_points['date'], min_points['price'], color='#FFD1DC', s=100, alpha=0.5, edgecolors='none')
 
-        if 'market_avg' in df.columns:
-            plt.plot(df['date'], df['market_avg'], linestyle='--', alpha=0.3, color='#f472b6', label=f"{label} Avg")
-
-    plt.title("Market Pulse Analysis", fontsize=16, fontweight='bold', color='#ff1493', pad=25)
-    plt.xlabel("Timeline", fontsize=11, color='#db2777')
-    plt.ylabel("Value (USD)", fontsize=11, color='#db2777')
-    plt.legend(frameon=True, facecolor='white', framealpha=0.9)
-    plt.tight_layout()
+    # Remove all axes for minimalist look
+    plt.axis('off')
+    plt.tight_layout(pad=0)
     plt.savefig("price_trend.png", dpi=300, transparent=True)
     plt.close()
 
@@ -256,20 +249,20 @@ def generate_price_spectrum(all_flights: List[Dict]) -> str:
     """
 
 def generate_html_report(reports_data: List[Dict], recommendations: List[str], hotels: List[Dict]):
-    """Generates YIDAN TRAVEL: THE PRIVATE BRIEFING with asymmetric logic."""
+    """Generates a Soft-Focus Editorial Briefing with asymmetric layout."""
     today_str = datetime.date.today().strftime("%B %d, %Y")
     
-    recommendation_html = "".join([f'<div class="briefing-pill">⭐ {rec}</div>' for rec in recommendations])
+    recommendation_html = "".join([f'<div class="briefing-pill">{rec}</div>' for rec in recommendations])
     hotel_html = "".join([f"""
-        <div class="hotel-block">
-            <div class="hotel-canvas">
+        <div class="hotel-magazine-card">
+            <div class="hotel-magazine-img">
                 <img src="{'hotel_sfo.png' if h['city'] == 'SFO' else 'hotel_psp.png'}" alt="{h['name']}">
             </div>
-            <div class="hotel-editorial">
-                <div class="hotel-title">{h['name']}</div>
-                <div class="hotel-vibe">{h['vibe']}</div>
-                <div class="assistant-note">"Yidan, {h['tip']}"</div>
-                <div class="hotel-meta">From ${h['rate']}/nt</div>
+            <div class="hotel-magazine-content">
+                <div class="magazine-label">THE STAY</div>
+                <div class="magazine-hotel-name">{h['name']}</div>
+                <div class="magazine-vibe">{h['vibe']}</div>
+                <div class="magazine-tip">“{h['tip']}”</div>
             </div>
         </div>
     """ for h in hotels])
@@ -280,121 +273,234 @@ def generate_html_report(reports_data: List[Dict], recommendations: List[str], h
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YIDAN TRAVEL | THE PRIVATE BRIEFING</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+    <title>YIDAN TRAVEL | PRIVATE BRIEFING</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Outfit:wght@300;500;800&display=swap" rel="stylesheet">
     <style>
         :root {{
-            --primary: #ff69b4;
-            --secondary: #ff1493;
-            --glass: rgba(255, 255, 255, 0.7);
-            --text: #2c3e50;
+            --pastel-pink: #FFD1DC;
+            --soft-white: rgba(255, 255, 255, 0.4);
+            --text-main: #3d3d3d;
+            --text-muted: #8e8e8e;
+            --accent: #FADADD;
         }}
 
         * {{ margin: 0; padding: 0; box-sizing: border-box; }}
+        
         body {{ 
             font-family: 'Outfit', sans-serif; 
             background: url('hello_kitty_vacation_bg.png') no-repeat center center fixed;
             background-size: cover;
-            color: var(--text);
+            color: var(--text-main);
             overflow-x: hidden;
-            padding-bottom: 200px;
+            min-height: 200vh;
         }}
 
-        .editorial-canvas {{
+        /* Grain Texture Overlay */
+        .grain {{
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.04;
+            pointer-events: none;
+            z-index: 1000;
+        }}
+
+        .editorial-wrapper {{
+            position: relative;
+            width: 100%;
+            backdrop-filter: blur(15px) brightness(1.05);
+            -webkit-backdrop-filter: blur(15px) brightness(1.05);
+            background: rgba(255, 255, 255, 0.1);
+            padding: 120px 80px;
+        }}
+
+        header {{ 
+            margin-bottom: 200px;
+            padding-left: 10%;
+        }}
+
+        .briefing-title {{
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 5.5rem;
+            font-weight: 300;
+            letter-spacing: 4px;
+            color: var(--pastel-pink);
+            line-height: 1;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }}
+
+        .signature-line {{
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            font-style: italic;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+        }}
+
+        /* Asymmetric Layout */
+        .travel-grid {{
+            position: relative;
             max-width: 1400px;
             margin: 0 auto;
-            position: relative;
-            padding: 100px 40px;
+            height: 1200px;
         }}
 
-        header {{ margin-bottom: 150px; text-align: left; position: relative; z-index: 100; }}
-        .badge {{ font-weight: 800; text-transform: uppercase; letter-spacing: 8px; color: var(--primary); font-size: 0.9rem; margin-bottom: 20px; }}
-        h1 {{ 
-            font-family: 'Playfair Display', serif; 
-            font-size: 6.5rem; 
-            font-weight: 900; 
-            line-height: 0.9; 
-            color: var(--secondary); 
-            text-shadow: 10px 10px 0px rgba(255, 105, 180, 0.1);
-        }}
-
-        /* The Anti-Grid Staggered Layout */
-        .flight-container {{ position: relative; height: 1000px; margin-bottom: 200px; }}
-        .flight-card {{
+        .route-article {{
             position: absolute;
-            background: var(--glass);
-            backdrop-filter: blur(25px);
+            width: 38%;
+            background: var(--soft-white);
             padding: 60px;
-            border-radius: 4px;
-            box-shadow: 30px 30px 60px rgba(0,0,0,0.05);
-            border: 1px solid rgba(255,255,255,0.4);
-            transition: all 0.5s ease;
+            border-radius: 2px;
+            box-shadow: 0 40px 100px rgba(0,0,0,0.03);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }}
-        
-        .card-sfo {{ width: 550px; top: 0; left: 0; z-index: 2; }}
-        .card-psp {{ width: 550px; bottom: 0; right: 0; z-index: 1; }}
-        .flight-card:hover {{ z-index: 10; transform: translateY(-10px); }}
 
-        .route-label {{ font-family: 'Playfair Display', serif; font-size: 3rem; margin-bottom: 30px; }}
-        .price-hero {{ font-size: 5rem; font-weight: 900; color: var(--secondary); margin: 20px 0; }}
-        
-        .sweep-section {{ margin-top: 40px; border-top: 1px dashed rgba(255, 105, 180, 0.3); padding-top: 30px; }}
-        .sweep-title {{ font-weight: 800; text-transform: uppercase; letter-spacing: 4px; font-size: 0.7rem; color: var(--primary); margin-bottom: 20px; }}
-        
-        .assistant-pick {{ background: white; padding: 20px; border-radius: 15px; border-left: 6px solid var(--secondary); margin-bottom: 15px; }}
-        .other-options {{ font-size: 0.8rem; color: #94a3b8; font-weight: 600; display: flex; gap: 15px; }}
+        .route-sfo {{ top: 0; left: 5%; }}
+        .route-psp {{ top: 500px; right: 5%; }}
 
-        /* Sanctuary Spotlight */
-        .stay-header {{ font-family: 'Playfair Display', serif; font-size: 4rem; text-align: center; margin-bottom: 100px; }}
-        .hotel-grid {{ display: grid; grid-template-columns: 1fr 1fr; gap: 80px; margin-bottom: 200px; }}
-        
-        .hotel-block {{ background: white; padding: 30px; box-shadow: 20px 20px 50px rgba(0,0,0,0.05); }}
-        .hotel-canvas img {{ width: 100%; height: 400px; object-fit: cover; filter: sepia(20%); }}
-        .hotel-editorial {{ margin-top: 40px; }}
-        .hotel-title {{ font-family: 'Playfair Display', serif; font-size: 2.5rem; margin-bottom: 15px; }}
-        .assistant-note {{ font-style: italic; color: var(--primary); font-size: 1.1rem; margin: 20px 0; border-left: 3px solid #eee; padding-left: 20px; }}
-        .hotel-meta {{ font-weight: 800; letter-spacing: 2px; text-transform: uppercase; font-size: 0.8rem; color: #94a3b8; }}
-
-        /* Visual Trend Integration */
-        .trend-frame {{
-            background: var(--glass);
-            backdrop-filter: blur(25px);
-            padding: 80px;
-            transform: rotate(-2deg);
-            border: 10px solid white;
-            box-shadow: 0 40px 100px rgba(0,0,0,0.1);
+        .label {{
+            font-size: 0.7rem;
+            font-weight: 800;
+            letter-spacing: 4px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-bottom: 20px;
         }}
-        .pulse-header {{ font-family: 'Playfair Display', serif; font-size: 3rem; margin-bottom: 40px; text-align: center; }}
-        
-        footer {{ text-align: center; margin-top: 150px; font-weight: 800; letter-spacing: 12px; font-size: 0.7rem; color: var(--primary); text-transform: uppercase; }}
+
+        .route-name {{
+            font-family: Cormorant Garamond;
+            font-size: 3rem;
+            font-weight: 300;
+            margin-bottom: 40px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 20px;
+        }}
+
+        .price-display {{
+            display: flex;
+            align-items: baseline;
+            gap: 20px;
+            margin-bottom: 40px;
+        }}
+
+        .price-val {{
+            font-size: 6rem;
+            font-weight: 300;
+            color: var(--pastel-pink);
+            line-height: 1;
+        }}
+
+        .price-unit {{
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: var(--text-muted);
+        }}
+
+        /* Market Comparison */
+        .comparison-list {{ margin-top: 40px; }}
+        .compare-item {{
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            font-size: 0.85rem;
+            border-bottom: 1px solid rgba(0,0,0,0.03);
+        }}
+        .highlighted {{
+            color: var(--text-main);
+            font-weight: 800;
+            text-shadow: 0 0 15px rgba(255, 209, 220, 0.6);
+        }}
+        .muted-pink {{ color: #d6b8be; }}
+
+        /* Hotel Vertical Column */
+        .stay-section {{
+            margin-top: 300px;
+            display: flex;
+            gap: 100px;
+            justify-content: center;
+        }}
+
+        .hotel-magazine-card {{
+            width: 400px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }}
+
+        .hotel-magazine-img img {{
+            width: 100%;
+            height: 600px; /* 2:3 approx */
+            object-fit: cover;
+            filter: brightness(0.95) contrast(0.9);
+        }}
+
+        .hotel-magazine-content {{ padding: 0 20px; }}
+        .magazine-label {{ font-size: 0.7rem; font-weight: 800; letter-spacing: 5px; color: var(--pastel-pink); margin-bottom: 10px; }}
+        .magazine-hotel-name {{ font-family: 'Cormorant Garamond'; font-size: 2.5rem; margin-bottom: 15px; }}
+        .magazine-vibe {{ font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 20px; }}
+        .magazine-tip {{ font-style: italic; color: var(--text-main); font-weight: 500; }}
+
+        /* Pulse Section */
+        .pulse-section {{
+            margin-top: 400px;
+            text-align: center;
+            padding: 0 100px;
+        }}
+
+        .trend-chart-img {{
+            width: 100%;
+            opacity: 0.6;
+            margin-bottom: 80px;
+        }}
+
+        .briefing-pill {{
+            font-family: Cormorant Garamond;
+            font-size: 1.8rem;
+            color: var(--text-main);
+            margin-bottom: 20px;
+            font-style: italic;
+        }}
+
+        footer {{
+            margin-top: 200px;
+            text-align: center;
+            font-size: 0.7rem;
+            font-weight: 800;
+            letter-spacing: 6px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }}
     </style>
 </head>
 <body>
-    <div class="editorial-canvas">
+    <div class="grain"></div>
+    <div class="editorial-wrapper">
         <header>
-            <div class="badge">{today_str} • Private Briefing</div>
-            <h1>YIDAN TRAVEL:<br>THE PRIVATE BRIEFING</h1>
+            <div class="signature-line">London Edition • Spring 2026</div>
+            <h1 class="briefing-title">YIDAN TRAVEL:<br>THE PRIVATE BRIEFING</h1>
+            <div class="signature-line">Curated by Antigravity for your Spring escape.</div>
         </header>
 
-        <section class="flight-container">
+        <section class="travel-grid">
             {generate_status_cards(reports_data)}
         </section>
 
-        <div class="stay-header">Sanctuary Spotlight</div>
-        <section class="hotel-grid">
+        <div class="label" style="text-align:center; margin-bottom: 60px;">THE SANCTUARY</div>
+        <section class="stay-section">
             {hotel_html}
         </section>
 
-        <section class="trend-frame">
-            <div class="pulse-header">Market Pulse & Intelligence</div>
-            <img src="price_trend.png" style="width:100%;" alt="Trend Data">
-            <div style="margin-top: 60px;">
+        <section class="pulse-section">
+            <div class="label">MARKET PULSE</div>
+            <img src="price_trend.png" class="trend-chart-img" alt="Pulse">
+            <div class="recommendations">
                 {recommendation_html}
             </div>
         </section>
 
         <footer>
-            Antigravity Private Assistant Edition
+            A Private Publication for Yidan Yan • All Rights Reserved
         </footer>
     </div>
 </body>
@@ -406,31 +512,30 @@ def generate_html_report(reports_data: List[Dict], recommendations: List[str], h
 def generate_status_cards(reports_data: List[Dict]) -> str:
     cards = ""
     for data in reports_data:
-        card_class = "card-sfo" if "SFO" in data['route_name'] else "card-psp"
+        route_class = "route-sfo" if "SFO" in data['route_name'] else "route-psp"
         
-        # asistente picks (alaska/delta)
+        # picks vs alts
         picks = [f for f in data['all_flights'] if f.get('is_priority')]
-        picks_html = "".join([f'<div class="assistant-pick"><strong>{p["carrier"]}</strong>: ${p["price"]} ({p["duration"]})</div>' for p in picks[:2]])
+        alts = [f for f in data['all_flights'] if not f.get('is_priority')]
         
-        # other options
-        others = [f for f in data['all_flights'] if not f.get('is_priority')]
-        others_html = ", ".join([f'{o["carrier"]} (${o["price"]})' for o in others[:2]])
-        
+        picks_html = "".join([f'<div class="compare-item highlighted"><span>{p["carrier"]}</span><span>${p["price"]}</span></div>' for p in picks[:2]])
+        alts_html = "".join([f'<div class="compare-item muted-pink"><span>{a["carrier"]}</span><span>${a["price"]}</span></div>' for a in alts[:2]])
+
         cards += f"""
-        <div class="flight-card {card_class}">
-            <div class="route-label">{data['route_name']}</div>
-            <div style="font-weight: 800; font-size: 0.8rem; letter-spacing: 3px; color: var(--primary);">{data['dates']}</div>
-            <div class="price-hero">${data['price']}</div>
-            
-            <div class="sweep-section">
-                <div class="sweep-title">Assistant's Market Sweep</div>
-                {picks_html}
-                <div class="other-options">
-                    <span>Others Considered:</span>
-                    <span>{others_html}</span>
-                </div>
+        <article class="route-article {route_class}">
+            <div class="label">TRANSIT • {data['dates']}</div>
+            <div class="route-name">{data['route_name']}</div>
+            <div class="price-display">
+                <span class="price-val">${data['price']}</span>
+                <span class="price-unit">Curated Best Value</span>
             </div>
-        </div>
+            
+            <div class="comparison-list">
+                <div class="label" style="font-size:0.6rem; color:var(--pastel-pink)">MARKET COMPARISON</div>
+                {picks_html}
+                {alts_html}
+            </div>
+        </article>
         """
     return cards
 
