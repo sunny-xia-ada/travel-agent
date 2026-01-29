@@ -181,11 +181,12 @@ def get_recommendation(task_id: str, current_price: float, stats: Dict, target: 
     return f"{task_id.replace('_', ' ').title()} is stable. No immediate rush, monitor for target."
 
 def generate_trend_chart(history: Dict):
-    """Generates a 14-day line chart with market averages."""
-    plt.figure(figsize=(10, 5))
+    """Generates a 14-day line chart with market averages and editorial styling."""
+    plt.figure(figsize=(10, 6))
     plt.style.use('seaborn-whitegrid')
     
-    for task_id, data in history.items():
+    colors = ['#ff69b4', '#ff1493']
+    for i, (task_id, data) in enumerate(history.items()):
         records = data.get("history", [])
         df = pd.DataFrame(records)
         if df.empty: continue
@@ -197,55 +198,71 @@ def generate_trend_chart(history: Dict):
         df = df.sort_values('date').tail(14)
         
         label = task_id.replace('_', ' ').title()
-        plt.plot(df['date'], df['price'], marker='o', label=f"{label} (Best)", linewidth=2)
+        # Using a star marker as a placeholder for the "Kitty style"
+        plt.plot(df['date'], df['price'], marker='*', markersize=12, label=f"{label} (Best)", color=colors[i % len(colors)], linewidth=3)
         
         if 'market_avg' in df.columns:
-            plt.plot(df['date'], df['market_avg'], linestyle='--', alpha=0.5, label=f"{label} (Market Avg)")
+            plt.plot(df['date'], df['market_avg'], linestyle='--', alpha=0.3, color='#94a3b8', label=f"{label} (Market Avg)")
 
-    plt.title("14-Day Price Analysis: Best vs Market Average", fontsize=14, fontweight='bold', pad=20)
-    plt.xlabel("Date", fontsize=10)
-    plt.ylabel("Price (USD)", fontsize=10)
-    plt.legend()
+    plt.title("Price Intelligence Trends", fontsize=16, fontweight='bold', color='#ff1493', pad=25)
+    plt.xlabel("Timeline", fontsize=11, color='#64748b')
+    plt.ylabel("USD Value", fontsize=11, color='#64748b')
+    plt.legend(frameon=True, facecolor='white', framealpha=0.9)
     plt.tight_layout()
-    plt.savefig("price_trend.png", dpi=300, transparent=False)
+    plt.savefig("price_trend.png", dpi=300, transparent=True)
     plt.close()
 
 def format_status(route: str, carrier: str, price: float, trend: str) -> str:
     price_display = f"${price}" if price > 0 else "N/A"
     return f"Travel Agent Status: {route} | {carrier} | {price_display} | [Trend: {trend}]"
 
-def generate_comparison_table(all_flights: List[Dict]) -> str:
-    rows = ""
-    # Deduplicate by carrier and keep cheapest
-    best_per_carrier = {}
+def generate_price_spectrum(all_flights: List[Dict]) -> str:
+    """Generates a horizontal spectrum line showing airline positioning."""
+    if not all_flights: return ""
+    prices = [f['price'] for f in all_flights]
+    min_p = min(prices)
+    max_p = max(prices)
+    range_p = (max_p - min_p) or 1
+    
+    # Deduplicate by carrier
+    carriers = {}
     for f in all_flights:
         c = f['carrier']
-        if c not in best_per_carrier or f['price'] < best_per_carrier[c]['price']:
-            best_per_carrier[c] = f
+        if c not in carriers or f['price'] < carriers[c]['price']:
+            carriers[c] = f
             
-    sorted_flights = sorted(best_per_carrier.values(), key=lambda x: x['price'])[:4] # Top 4
-    for f in sorted_flights:
-        rows += f"""
-        <tr>
-            <td>{f['carrier']}</td>
-            <td>${f['price']}</td>
-            <td>{f['duration']}</td>
-        </tr>
+    markers_html = ""
+    for c, f in carriers.items():
+        pos = ((f['price'] - min_p) / range_p) * 90 + 5 # 5% to 95%
+        style = "background:var(--accent); z-index:10;" if f.get('is_priority') else "background:#94a3b8; opacity:0.6;"
+        markers_html += f"""
+        <div class="spectrum-point" style="left: {pos}%; {style}">
+            <div class="spectrum-label">{c}<br>${f['price']}</div>
+        </div>
         """
-    return f"""<table class="flight-comparison">{rows}</table>"""
+        
+    return f"""
+    <div class="spectrum-container">
+        <div class="spectrum-line"></div>
+        {markers_html}
+    </div>
+    """
 
 def generate_html_report(reports_data: List[Dict], recommendations: List[str], hotels: List[Dict]):
-    """Generates a high-aesthetic dashboard with real-time stats, hotel curation, and trend visualization."""
+    """Generates The Editorial Edition: A digital travel magazine."""
     today_str = datetime.date.today().strftime("%B %d, %Y")
     
-    recommendation_html = "".join([f'<div class="recommendation-pill">{rec}</div>' for rec in recommendations])
+    recommendation_html = "".join([f'<div class="recommendation-pill">⭐ {rec}</div>' for rec in recommendations])
     hotel_html = "".join([f"""
-        <div class="hotel-card">
-            <div class="hotel-info">
-                <div class="hotel-name">🏨 {h['name']}</div>
-                <div class="hotel-vibe">{h['vibe']}</div>
+        <div class="hotel-editorial">
+            <div class="hotel-image-wrapper">
+                <img src="{'hotel_sfo.png' if h['city'] == 'SFO' else 'hotel_psp.png'}" alt="{h['name']}">
             </div>
-            <div class="hotel-rate">From ${h['rate']}/nt</div>
+            <div class="hotel-body">
+                <div class="hotel-name">{h['name']}</div>
+                <div class="hotel-vibe">"{h['vibe']}"</div>
+                <div class="hotel-meta">Curated Rate: From ${h['rate']}/night</div>
+            </div>
         </div>
     """ for h in hotels])
 
@@ -255,18 +272,16 @@ def generate_html_report(reports_data: List[Dict], recommendations: List[str], h
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Travel Agent | Intelligence Dashboard</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+    <title>Antigravity | The Editorial Edition</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet">
     <style>
         :root {{
-            --bg: #fff5f8;
-            --surface: rgba(255, 255, 255, 0.95);
-            --primary: #ff69b4;
+            --primary: #ff1493;
+            --secondary: #ff69b4;
             --accent: #d81b60;
-            --target: #ff1493;
-            --border: #ffc0cb;
-            --text-main: #333333;
-            --text-sub: #ff69b4;
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --gradient: linear-gradient(135deg, #ff69b4, #ffb6c1);
+            --text: #2c3e50;
         }}
 
         * {{ margin: 0; padding: 0; box-sizing: border-box; }}
@@ -274,86 +289,185 @@ def generate_html_report(reports_data: List[Dict], recommendations: List[str], h
             font-family: 'Outfit', sans-serif; 
             background: url('hello_kitty_vacation_bg.png') no-repeat center center fixed;
             background-size: cover;
-            color: var(--text-main);
-            padding: 60px 20px;
-            line-height: 1.6;
+            color: var(--text);
+            padding: 40px;
+            overflow-x: hidden;
         }}
 
-        .container {{ 
-            max-width: 1000px; 
-            margin: 0 auto; 
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(15px);
-            padding: 60px;
-            border-radius: 50px;
-            border: 5px solid white;
-            box-shadow: 0 10px 40px rgba(255, 105, 180, 0.4);
+        /* The Editorial Grid */
+        .magazine-canvas {{
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 60px;
+            max-width: 1400px;
+            margin: 0 auto;
         }}
 
-        header {{ margin-bottom: 60px; text-align: center; border-bottom: 2px dashed var(--border); padding-bottom: 40px; }}
-        h1 {{ font-family: 'Playfair Display', serif; font-size: 4.5rem; color: var(--primary); margin-bottom: 10px; }}
-        .date-badge {{ font-size: 0.9rem; font-weight: 800; text-transform: uppercase; letter-spacing: 5px; color: var(--accent); }}
+        /* Floating Sidebar */
+        aside {{
+            position: sticky;
+            top: 40px;
+            height: calc(100vh - 80px);
+            background: var(--glass-bg);
+            backdrop-filter: blur(25px);
+            border-radius: 40px;
+            padding: 60px 40px;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 20px 0 50px rgba(0,0,0,0.05);
+        }}
 
-        /* Status Cards */
-        .status-grid {{ display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 60px; }}
-        .status-card {{ background: var(--surface); border: 2px solid white; padding: 40px; border-radius: 40px; box-shadow: 0 10px 20px rgba(0,0,0,0.05); }}
-        .route-label {{ font-size: 0.8rem; font-weight: 800; text-transform: uppercase; color: var(--text-sub); margin-bottom: 20px; }}
-        .price-display {{ display: flex; align-items: baseline; gap: 15px; margin-bottom: 15px; }}
-        .price-val {{ font-size: 4rem; font-weight: 800; color: var(--accent); }}
-        .leader-badge {{ background: #fdf2f8; padding: 4px 10px; border-radius: 20px; font-size: 0.7rem; font-weight: 800; text-transform: uppercase; color: var(--primary); }}
+        .branding h2 {{ font-family: 'Playfair Display', serif; font-size: 2.5rem; line-height: 1; color: var(--primary); }}
+        .branding p {{ font-weight: 800; text-transform: uppercase; letter-spacing: 4px; font-size: 0.7rem; color: var(--accent); margin-top: 20px; }}
 
-        /* Comparison Table */
-        .flight-comparison {{ width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 0.8rem; }}
-        .flight-comparison td {{ padding: 8px 0; border-bottom: 1px solid #fee2e2; }}
-        .flight-comparison td:nth-child(2) {{ font-weight: 800; color: var(--accent); text-align: right; }}
-        .flight-comparison td:nth-child(3) {{ text-align: right; color: #94a3b8; }}
+        /* The Main Content */
+        main {{ display: flex; flex-direction: column; gap: 80px; }}
 
-        /* Stay Section */
-        .section-header {{ font-size: 1rem; font-weight: 800; text-transform: uppercase; letter-spacing: 6px; color: var(--accent); text-align: center; margin: 60px 0 30px; }}
-        .hotel-grid {{ display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 60px; }}
-        .hotel-card {{ background: white; border: 2px solid var(--border); padding: 30px; border-radius: 30px; display: flex; justify-content: space-between; align-items: center; }}
-        .hotel-name {{ font-weight: 800; font-size: 1.2rem; color: var(--primary); }}
-        .hotel-vibe {{ font-size: 0.85rem; color: #64748b; font-style: italic; }}
-        .hotel-rate {{ font-weight: 800; color: var(--accent); font-size: 1.1rem; }}
+        /* Polaroid Flight Cards */
+        .flight-stack {{ display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; }}
+        .polaroid-card {{
+            background: white;
+            padding: 25px 25px 60px;
+            border-radius: 4px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transform: rotate(-1deg);
+            transition: transform 0.3s ease;
+            position: relative;
+        }}
+        .polaroid-card:nth-child(even) {{ transform: rotate(1deg); }}
+        .polaroid-card:hover {{ transform: scale(1.02) rotate(0); z-index: 10; }}
 
-        /* Visuals */
-        .trend-container {{ text-align: center; margin-top: 80px; }}
-        .trend-image {{ width: 100%; border-radius: 40px; border: 10px solid white; box-shadow: 0 15px 30px rgba(0,0,0,0.1); }}
-        
-        footer {{ margin-top: 100px; padding-top: 40px; border-top: 2px dashed var(--border); color: var(--text-sub); font-size: 0.8rem; text-align: center; font-weight: 800; }}
+        .card-header {{ 
+            background: #f8fafc; 
+            height: 200px; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            margin-bottom: 20px;
+            border-radius: 4px;
+            position: relative;
+        }}
+        .route-title {{ font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 900; }}
+        .price-badge {{ 
+            position: absolute; 
+            bottom: -20px; 
+            right: 20px; 
+            background: var(--gradient); 
+            color: white; 
+            padding: 15px 25px; 
+            font-size: 2rem; 
+            font-weight: 800; 
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(255, 105, 180, 0.4);
+        }}
+
+        /* Price Spectrum */
+        .spectrum-container {{ position: relative; height: 80px; margin-top: 40px; padding: 0 20px; }}
+        .spectrum-line {{ position: absolute; top: 40px; left: 0; width: 100%; height: 2px; background: #eee; }}
+        .spectrum-point {{ 
+            position: absolute; 
+            width: 12px; 
+            height: 12px; 
+            background: var(--primary); 
+            border-radius: 50%; 
+            top: 35px;
+            cursor: pointer;
+        }}
+        .spectrum-label {{ 
+            position: absolute; 
+            top: -45px; 
+            left: 50%; 
+            transform: translateX(-50%); 
+            font-size: 0.65rem; 
+            font-weight: 800; 
+            text-align: center; 
+            white-space: nowrap; 
+            color: #64748b;
+        }}
+
+        /* Sanctuary Sidebar Inspiration */
+        .sanctuary-section h3 {{ font-family: 'Playfair Display', serif; font-size: 3rem; margin-bottom: 40px; }}
+        .hotel-editorial {{ 
+            background: var(--glass-bg); 
+            backdrop-filter: blur(25px); 
+            border-radius: 50px; 
+            padding: 40px; 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 40px; 
+            align-items: center; 
+            border: 1px solid rgba(255,255,255,0.4);
+            margin-bottom: 40px;
+        }}
+        .hotel-image-wrapper img {{ width: 100%; border-radius: 30px; box-shadow: 0 20px 40px rgba(0,0,0,0.15); }}
+        .hotel-name {{ font-family: 'Playfair Display', serif; font-size: 2.5rem; color: var(--primary); }}
+        .hotel-vibe {{ font-style: italic; font-size: 1.2rem; color: #64748b; margin: 20px 0; }}
+        .hotel-meta {{ font-weight: 800; color: var(--accent); text-transform: uppercase; letter-spacing: 2px; }}
+
+        /* Trend Box */
+        .trend-frame {{ 
+            background: white; 
+            padding: 40px; 
+            border-radius: 50px; 
+            transform: rotate(-0.5deg); 
+            box-shadow: 0 30px 60px rgba(0,0,0,0.05); 
+            margin-top: 40px;
+        }}
+        .trend-frame h4 {{ font-family: 'Playfair Display', serif; font-size: 2rem; margin-bottom: 20px; }}
+        .trend-image {{ width: 100%; filter: saturate(1.2); }}
+
+        .rec-stack {{ display: flex; flex-direction: column; gap: 15px; margin-top: 40px; }}
+        .recommendation-pill {{ 
+            background: white; 
+            padding: 20px 30px; 
+            border-radius: 20px; 
+            font-weight: 600; 
+            border-left: 5px solid var(--primary);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.02);
+        }}
+
+        footer {{ margin-top: 100px; font-size: 0.7rem; letter-spacing: 4px; color: var(--accent); font-weight: 800; }}
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <div class="date-badge">Travel Agent From Yidan • {today_str}</div>
-            <h1>Travel Agent From Yidan</h1>
-        </header>
-
-        <section class="status-grid">
-            {generate_status_cards(reports_data)}
-        </section>
-
-        <section class="recommendation-zone">
-            <div class="section-header">✈️ Intelligence Report</div>
-            {recommendation_html}
-        </section>
-
-        <section class="stay-zone">
-            <div class="section-header">🏨 Curated Sanctuary</div>
-            <div class="hotel-grid">
-                {hotel_html}
+    <div class="magazine-canvas">
+        <aside>
+            <div class="branding">
+                <h2>The Editorial Edition</h2>
+                <p>Curated by Yidan & Antigravity</p>
             </div>
-        </section>
+            <div class="date-marker">
+                <div style="font-size: 0.8rem; font-weight: 800; color: var(--text)">{today_str}</div>
+                <div style="font-size: 12rem; font-family: 'Playfair Display', serif; color: rgba(255,20,147,0.05); position: absolute; bottom:-40px; left:-20px;">26</div>
+            </div>
+        </aside>
 
-        <section class="trend-container">
-            <div class="section-header">📈 Market Sweep Analysis</div>
-            <img src="price_trend.png" class="trend-image" alt="Trend Chart">
-        </section>
+        <main>
+            <section class="flight-stack">
+                {generate_status_cards(reports_data)}
+            </section>
 
-        <footer>
-            Generated by Antigravity Final Build | Major Carriers Sweep | Aesthetic Leaders Flagged
-        </footer>
+            <section class="rec-stack">
+                {recommendation_html}
+            </section>
+
+            <section class="sanctuary-section">
+                <h3>Curated Sanctuary</h3>
+                {hotel_html}
+            </section>
+
+            <section class="trend-frame">
+                <h4>Market Intelligence Trends</h4>
+                <img src="price_trend.png" class="trend-image" alt="Visual Intelligence">
+            </section>
+
+            <footer>
+                © 2026 ANTIGRAVITY TRAVEL CURATION • ALL RIGHTS RESERVED
+            </footer>
+        </main>
     </div>
 </body>
 </html>
@@ -364,21 +478,17 @@ def generate_html_report(reports_data: List[Dict], recommendations: List[str], h
 def generate_status_cards(reports_data: List[Dict]) -> str:
     cards = ""
     for data in reports_data:
-        aesthetic_leader_html = f'<div class="leader-badge">✨ Aesthetic: {data["aesthetic_leader"]}</div>' if data["aesthetic_leader"] else ""
         cards += f"""
-        <div class="status-card">
-            <div class="route-label">{data['route_name']} • {data['dates']}</div>
-            <div class="price-display">
-                <span class="price-val">${data['price']}</span>
-                <div style="display:flex; flex-direction:column; gap:5px;">
-                    <div class="leader-badge">💎 Value: {data['carrier']}</div>
-                    {aesthetic_leader_html}
-                </div>
+        <div class="polaroid-card">
+            <div class="card-header">
+                <div class="route-title">{data['route_name']}</div>
+                <div style="color: #64748b; font-weight: 800; letter-spacing: 2px;">{data['dates']}</div>
             </div>
-            <div class="meta-info">
-                <span>Market Avg: ${data['market_avg']}</span>
+            <div class="price-badge">${data['price']}</div>
+            <div style="margin-top: 40px;">
+                <div style="font-size: 0.7rem; font-weight: 800; text-transform: uppercase; color: var(--accent); letter-spacing: 1px;">Market Positioning</div>
+                {generate_price_spectrum(data['all_flights'])}
             </div>
-            {generate_comparison_table(data['all_flights'])}
         </div>
         """
     return cards

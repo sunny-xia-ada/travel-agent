@@ -4,18 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Travel Agent | Intelligence Dashboard</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+    <title>Antigravity | The Editorial Edition</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #fff5f8;
-            --surface: rgba(255, 255, 255, 0.95);
-            --primary: #ff69b4;
+            --primary: #ff1493;
+            --secondary: #ff69b4;
             --accent: #d81b60;
-            --target: #ff1493;
-            --border: #ffc0cb;
-            --text-main: #333333;
-            --text-sub: #ff69b4;
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --gradient: linear-gradient(135deg, #ff69b4, #ffb6c1);
+            --text: #2c3e50;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -23,168 +21,265 @@
             font-family: 'Outfit', sans-serif; 
             background: url('hello_kitty_vacation_bg.png') no-repeat center center fixed;
             background-size: cover;
-            color: var(--text-main);
-            padding: 60px 20px;
-            line-height: 1.6;
+            color: var(--text);
+            padding: 40px;
+            overflow-x: hidden;
         }
 
-        .container { 
-            max-width: 1000px; 
-            margin: 0 auto; 
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(15px);
-            padding: 60px;
-            border-radius: 50px;
-            border: 5px solid white;
-            box-shadow: 0 10px 40px rgba(255, 105, 180, 0.4);
+        /* The Editorial Grid */
+        .magazine-canvas {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 60px;
+            max-width: 1400px;
+            margin: 0 auto;
         }
 
-        header { margin-bottom: 60px; text-align: center; border-bottom: 2px dashed var(--border); padding-bottom: 40px; }
-        h1 { font-family: 'Playfair Display', serif; font-size: 4.5rem; color: var(--primary); margin-bottom: 10px; }
-        .date-badge { font-size: 0.9rem; font-weight: 800; text-transform: uppercase; letter-spacing: 5px; color: var(--accent); }
+        /* Floating Sidebar */
+        aside {
+            position: sticky;
+            top: 40px;
+            height: calc(100vh - 80px);
+            background: var(--glass-bg);
+            backdrop-filter: blur(25px);
+            border-radius: 40px;
+            padding: 60px 40px;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 20px 0 50px rgba(0,0,0,0.05);
+        }
 
-        /* Status Cards */
-        .status-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 60px; }
-        .status-card { background: var(--surface); border: 2px solid white; padding: 40px; border-radius: 40px; box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
-        .route-label { font-size: 0.8rem; font-weight: 800; text-transform: uppercase; color: var(--text-sub); margin-bottom: 20px; }
-        .price-display { display: flex; align-items: baseline; gap: 15px; margin-bottom: 15px; }
-        .price-val { font-size: 4rem; font-weight: 800; color: var(--accent); }
-        .leader-badge { background: #fdf2f8; padding: 4px 10px; border-radius: 20px; font-size: 0.7rem; font-weight: 800; text-transform: uppercase; color: var(--primary); }
+        .branding h2 { font-family: 'Playfair Display', serif; font-size: 2.5rem; line-height: 1; color: var(--primary); }
+        .branding p { font-weight: 800; text-transform: uppercase; letter-spacing: 4px; font-size: 0.7rem; color: var(--accent); margin-top: 20px; }
 
-        /* Comparison Table */
-        .flight-comparison { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 0.8rem; }
-        .flight-comparison td { padding: 8px 0; border-bottom: 1px solid #fee2e2; }
-        .flight-comparison td:nth-child(2) { font-weight: 800; color: var(--accent); text-align: right; }
-        .flight-comparison td:nth-child(3) { text-align: right; color: #94a3b8; }
+        /* The Main Content */
+        main { display: flex; flex-direction: column; gap: 80px; }
 
-        /* Stay Section */
-        .section-header { font-size: 1rem; font-weight: 800; text-transform: uppercase; letter-spacing: 6px; color: var(--accent); text-align: center; margin: 60px 0 30px; }
-        .hotel-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 60px; }
-        .hotel-card { background: white; border: 2px solid var(--border); padding: 30px; border-radius: 30px; display: flex; justify-content: space-between; align-items: center; }
-        .hotel-name { font-weight: 800; font-size: 1.2rem; color: var(--primary); }
-        .hotel-vibe { font-size: 0.85rem; color: #64748b; font-style: italic; }
-        .hotel-rate { font-weight: 800; color: var(--accent); font-size: 1.1rem; }
+        /* Polaroid Flight Cards */
+        .flight-stack { display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; }
+        .polaroid-card {
+            background: white;
+            padding: 25px 25px 60px;
+            border-radius: 4px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transform: rotate(-1deg);
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+        .polaroid-card:nth-child(even) { transform: rotate(1deg); }
+        .polaroid-card:hover { transform: scale(1.02) rotate(0); z-index: 10; }
 
-        /* Visuals */
-        .trend-container { text-align: center; margin-top: 80px; }
-        .trend-image { width: 100%; border-radius: 40px; border: 10px solid white; box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
-        
-        footer { margin-top: 100px; padding-top: 40px; border-top: 2px dashed var(--border); color: var(--text-sub); font-size: 0.8rem; text-align: center; font-weight: 800; }
+        .card-header { 
+            background: #f8fafc; 
+            height: 200px; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            margin-bottom: 20px;
+            border-radius: 4px;
+            position: relative;
+        }
+        .route-title { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 900; }
+        .price-badge { 
+            position: absolute; 
+            bottom: -20px; 
+            right: 20px; 
+            background: var(--gradient); 
+            color: white; 
+            padding: 15px 25px; 
+            font-size: 2rem; 
+            font-weight: 800; 
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(255, 105, 180, 0.4);
+        }
+
+        /* Price Spectrum */
+        .spectrum-container { position: relative; height: 80px; margin-top: 40px; padding: 0 20px; }
+        .spectrum-line { position: absolute; top: 40px; left: 0; width: 100%; height: 2px; background: #eee; }
+        .spectrum-point { 
+            position: absolute; 
+            width: 12px; 
+            height: 12px; 
+            background: var(--primary); 
+            border-radius: 50%; 
+            top: 35px;
+            cursor: pointer;
+        }
+        .spectrum-label { 
+            position: absolute; 
+            top: -45px; 
+            left: 50%; 
+            transform: translateX(-50%); 
+            font-size: 0.65rem; 
+            font-weight: 800; 
+            text-align: center; 
+            white-space: nowrap; 
+            color: #64748b;
+        }
+
+        /* Sanctuary Sidebar Inspiration */
+        .sanctuary-section h3 { font-family: 'Playfair Display', serif; font-size: 3rem; margin-bottom: 40px; }
+        .hotel-editorial { 
+            background: var(--glass-bg); 
+            backdrop-filter: blur(25px); 
+            border-radius: 50px; 
+            padding: 40px; 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 40px; 
+            align-items: center; 
+            border: 1px solid rgba(255,255,255,0.4);
+            margin-bottom: 40px;
+        }
+        .hotel-image-wrapper img { width: 100%; border-radius: 30px; box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
+        .hotel-name { font-family: 'Playfair Display', serif; font-size: 2.5rem; color: var(--primary); }
+        .hotel-vibe { font-style: italic; font-size: 1.2rem; color: #64748b; margin: 20px 0; }
+        .hotel-meta { font-weight: 800; color: var(--accent); text-transform: uppercase; letter-spacing: 2px; }
+
+        /* Trend Box */
+        .trend-frame { 
+            background: white; 
+            padding: 40px; 
+            border-radius: 50px; 
+            transform: rotate(-0.5deg); 
+            box-shadow: 0 30px 60px rgba(0,0,0,0.05); 
+            margin-top: 40px;
+        }
+        .trend-frame h4 { font-family: 'Playfair Display', serif; font-size: 2rem; margin-bottom: 20px; }
+        .trend-image { width: 100%; filter: saturate(1.2); }
+
+        .rec-stack { display: flex; flex-direction: column; gap: 15px; margin-top: 40px; }
+        .recommendation-pill { 
+            background: white; 
+            padding: 20px 30px; 
+            border-radius: 20px; 
+            font-weight: 600; 
+            border-left: 5px solid var(--primary);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.02);
+        }
+
+        footer { margin-top: 100px; font-size: 0.7rem; letter-spacing: 4px; color: var(--accent); font-weight: 800; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <div class="date-badge">Travel Agent From Yidan • January 28, 2026</div>
-            <h1>Travel Agent From Yidan</h1>
-        </header>
+    <div class="magazine-canvas">
+        <aside>
+            <div class="branding">
+                <h2>The Editorial Edition</h2>
+                <p>Curated by Yidan & Antigravity</p>
+            </div>
+            <div class="date-marker">
+                <div style="font-size: 0.8rem; font-weight: 800; color: var(--text)">January 28, 2026</div>
+                <div style="font-size: 12rem; font-family: 'Playfair Display', serif; color: rgba(255,20,147,0.05); position: absolute; bottom:-40px; left:-20px;">26</div>
+            </div>
+        </aside>
 
-        <section class="status-grid">
-            
-        <div class="status-card">
-            <div class="route-label">SEA-SFO • 2026-03-27 to 2026-03-29</div>
-            <div class="price-display">
-                <span class="price-val">$187</span>
-                <div style="display:flex; flex-direction:column; gap:5px;">
-                    <div class="leader-badge">💎 Value: Delta</div>
-                    <div class="leader-badge">✨ Aesthetic: Delta</div>
-                </div>
-            </div>
-            <div class="meta-info">
-                <span>Market Avg: $304.72</span>
-            </div>
-            <table class="flight-comparison">
-        <tr>
-            <td>Delta</td>
-            <td>$187</td>
-            <td>2 hr 12 min</td>
-        </tr>
-        
-        <tr>
-            <td>United</td>
-            <td>$237</td>
-            <td>2 hr 19 min</td>
-        </tr>
-        
-        <tr>
-            <td>Alaska</td>
-            <td>$277</td>
-            <td>2 hr 17 min</td>
-        </tr>
-        </table>
-        </div>
-        
-        <div class="status-card">
-            <div class="route-label">SEA-PSP • 2026-04-09 to 2026-04-13</div>
-            <div class="price-display">
-                <span class="price-val">$465</span>
-                <div style="display:flex; flex-direction:column; gap:5px;">
-                    <div class="leader-badge">💎 Value: Alaska</div>
-                    <div class="leader-badge">✨ Aesthetic: Alaska</div>
-                </div>
-            </div>
-            <div class="meta-info">
-                <span>Market Avg: $647.91</span>
-            </div>
-            <table class="flight-comparison">
-        <tr>
-            <td>Alaska</td>
-            <td>$465</td>
-            <td>17 hr 21 min</td>
-        </tr>
-        
-        <tr>
-            <td>Southwest</td>
-            <td>$580</td>
-            <td>4 hr 10 min</td>
-        </tr>
-        
-        <tr>
-            <td>Delta</td>
-            <td>$918</td>
-            <td>2 hr 44 min</td>
-        </tr>
-        </table>
-        </div>
-        
-        </section>
-
-        <section class="recommendation-zone">
-            <div class="section-header">✈️ Intelligence Report</div>
-            <div class="recommendation-pill">Sf Weekend is stable. No immediate rush, monitor for target.</div><div class="recommendation-pill">Desert Escape is stable. No immediate rush, monitor for target.</div>
-        </section>
-
-        <section class="stay-zone">
-            <div class="section-header">🏨 Curated Sanctuary</div>
-            <div class="hotel-grid">
+        <main>
+            <section class="flight-stack">
                 
-        <div class="hotel-card">
-            <div class="hotel-info">
-                <div class="hotel-name">🏨 Proper Hotel</div>
-                <div class="hotel-vibe">Kelly Wearstler maximalism in a historic landmark.</div>
+        <div class="polaroid-card">
+            <div class="card-header">
+                <div class="route-title">SEA-SFO</div>
+                <div style="color: #64748b; font-weight: 800; letter-spacing: 2px;">2026-03-27 to 2026-03-29</div>
             </div>
-            <div class="hotel-rate">From $295/nt</div>
+            <div class="price-badge">$187</div>
+            <div style="margin-top: 40px;">
+                <div style="font-size: 0.7rem; font-weight: 800; text-transform: uppercase; color: var(--accent); letter-spacing: 1px;">Market Positioning</div>
+                
+    <div class="spectrum-container">
+        <div class="spectrum-line"></div>
+        
+        <div class="spectrum-point" style="left: 5.0%; background:var(--accent); z-index:10;">
+            <div class="spectrum-label">Delta<br>$187</div>
+        </div>
+        
+        <div class="spectrum-point" style="left: 30.71428571428571%; background:#94a3b8; opacity:0.6;">
+            <div class="spectrum-label">United<br>$237</div>
+        </div>
+        
+        <div class="spectrum-point" style="left: 51.28571428571428%; background:var(--accent); z-index:10;">
+            <div class="spectrum-label">Alaska<br>$277</div>
+        </div>
+        
+    </div>
+    
+            </div>
+        </div>
+        
+        <div class="polaroid-card">
+            <div class="card-header">
+                <div class="route-title">SEA-PSP</div>
+                <div style="color: #64748b; font-weight: 800; letter-spacing: 2px;">2026-04-09 to 2026-04-13</div>
+            </div>
+            <div class="price-badge">$465</div>
+            <div style="margin-top: 40px;">
+                <div style="font-size: 0.7rem; font-weight: 800; text-transform: uppercase; color: var(--accent); letter-spacing: 1px;">Market Positioning</div>
+                
+    <div class="spectrum-container">
+        <div class="spectrum-line"></div>
+        
+        <div class="spectrum-point" style="left: 5.0%; background:var(--accent); z-index:10;">
+            <div class="spectrum-label">Alaska<br>$465</div>
+        </div>
+        
+        <div class="spectrum-point" style="left: 27.8476821192053%; background:#94a3b8; opacity:0.6;">
+            <div class="spectrum-label">Southwest<br>$580</div>
+        </div>
+        
+        <div class="spectrum-point" style="left: 95.0%; background:var(--accent); z-index:10;">
+            <div class="spectrum-label">Delta<br>$918</div>
+        </div>
+        
+    </div>
+    
+            </div>
+        </div>
+        
+            </section>
+
+            <section class="rec-stack">
+                <div class="recommendation-pill">⭐ Sf Weekend is stable. No immediate rush, monitor for target.</div><div class="recommendation-pill">⭐ Desert Escape is stable. No immediate rush, monitor for target.</div>
+            </section>
+
+            <section class="sanctuary-section">
+                <h3>Curated Sanctuary</h3>
+                
+        <div class="hotel-editorial">
+            <div class="hotel-image-wrapper">
+                <img src="hotel_sfo.png" alt="Proper Hotel">
+            </div>
+            <div class="hotel-body">
+                <div class="hotel-name">Proper Hotel</div>
+                <div class="hotel-vibe">"Kelly Wearstler maximalism in a historic landmark."</div>
+                <div class="hotel-meta">Curated Rate: From $295/night</div>
+            </div>
         </div>
     
-        <div class="hotel-card">
-            <div class="hotel-info">
-                <div class="hotel-name">🏨 Korakia Pensione</div>
-                <div class="hotel-vibe">Moroccan-inspired desert soul and architectural beauty.</div>
+        <div class="hotel-editorial">
+            <div class="hotel-image-wrapper">
+                <img src="hotel_psp.png" alt="Korakia Pensione">
             </div>
-            <div class="hotel-rate">From $425/nt</div>
+            <div class="hotel-body">
+                <div class="hotel-name">Korakia Pensione</div>
+                <div class="hotel-vibe">"Moroccan-inspired desert soul and architectural beauty."</div>
+                <div class="hotel-meta">Curated Rate: From $425/night</div>
+            </div>
         </div>
     
-            </div>
-        </section>
+            </section>
 
-        <section class="trend-container">
-            <div class="section-header">📈 Market Sweep Analysis</div>
-            <img src="price_trend.png" class="trend-image" alt="Trend Chart">
-        </section>
+            <section class="trend-frame">
+                <h4>Market Intelligence Trends</h4>
+                <img src="price_trend.png" class="trend-image" alt="Visual Intelligence">
+            </section>
 
-        <footer>
-            Generated by Antigravity Final Build | Major Carriers Sweep | Aesthetic Leaders Flagged
-        </footer>
+            <footer>
+                © 2026 ANTIGRAVITY TRAVEL CURATION • ALL RIGHTS RESERVED
+            </footer>
+        </main>
     </div>
 </body>
 </html>
