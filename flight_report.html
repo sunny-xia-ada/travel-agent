@@ -11,12 +11,11 @@
             --bg: #fff5f8;
             --surface: rgba(255, 255, 255, 0.95);
             --primary: #ff69b4;
-            --accent: #d81b60;  /* Higher contrast pink */
+            --accent: #d81b60;
             --target: #ff1493;
             --border: #ffc0cb;
             --text-main: #333333;
             --text-sub: #ff69b4;
-            --kitty-pink: #ff69b4;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -30,119 +29,47 @@
         }
 
         .container { 
-            max-width: 900px; 
+            max-width: 1000px; 
             margin: 0 auto; 
-            background: rgba(255, 255, 255, 0.85); /* Slightly less transparent */
+            background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(15px);
-            padding: 40px;
-            border-radius: 40px;
+            padding: 60px;
+            border-radius: 50px;
             border: 5px solid white;
             box-shadow: 0 10px 40px rgba(255, 105, 180, 0.4);
         }
 
-        header { 
-            margin-bottom: 60px; 
-            text-align: center; 
-            border-bottom: 2px dashed var(--border); 
-            padding-bottom: 40px; 
-            position: relative;
-        }
-        header::after {
-            content: "🎀";
-            position: absolute;
-            bottom: -20px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 2rem;
-            background: white;
-            padding: 0 15px;
-        }
-
-        h1 { 
-            font-family: 'Playfair Display', serif; 
-            font-size: 4rem; 
-            letter-spacing: -1px; 
-            line-height: 1.1; 
-            margin-bottom: 15px;
-            color: var(--primary);
-            text-shadow: 2px 2px 0px white;
-        }
-        .date-badge { font-size: 0.9rem; font-weight: 800; text-transform: uppercase; letter-spacing: 4px; color: var(--accent); margin-bottom: 10px; display: block; }
+        header { margin-bottom: 60px; text-align: center; border-bottom: 2px dashed var(--border); padding-bottom: 40px; }
+        h1 { font-family: 'Playfair Display', serif; font-size: 4.5rem; color: var(--primary); margin-bottom: 10px; }
+        .date-badge { font-size: 0.9rem; font-weight: 800; text-transform: uppercase; letter-spacing: 5px; color: var(--accent); }
 
         /* Status Cards */
-        .status-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 60px; }
-        .status-card { 
-            background: var(--surface);
-            border: 3px solid white; 
-            padding: 30px; 
-            border-radius: 30px;
-            box-shadow: 0 8px 15px rgba(255, 182, 193, 0.3);
-            transition: transform 0.3s ease;
-        }
-        .status-card:hover { transform: scale(1.02); }
+        .status-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 60px; }
+        .status-card { background: var(--surface); border: 2px solid white; padding: 40px; border-radius: 40px; box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+        .route-label { font-size: 0.8rem; font-weight: 800; text-transform: uppercase; color: var(--text-sub); margin-bottom: 20px; }
+        .price-display { display: flex; align-items: baseline; gap: 15px; margin-bottom: 15px; }
+        .price-val { font-size: 4rem; font-weight: 800; color: var(--accent); }
+        .leader-badge { background: #fdf2f8; padding: 4px 10px; border-radius: 20px; font-size: 0.7rem; font-weight: 800; text-transform: uppercase; color: var(--primary); }
 
-        .route-label { font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; color: var(--text-sub); margin-bottom: 15px; }
-        .price-display { display: flex; align-items: baseline; gap: 15px; margin-bottom: 10px; }
-        .price-val { font-size: 3.5rem; font-weight: 800; color: var(--accent); }
-        .target-val { font-size: 1rem; font-weight: 600; color: var(--target); }
-        .meta-info { font-size: 0.9rem; color: var(--text-sub); display: flex; justify-content: space-between; font-weight: 600; }
+        /* Comparison Table */
+        .flight-comparison { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 0.8rem; }
+        .flight-comparison td { padding: 8px 0; border-bottom: 1px solid #fee2e2; }
+        .flight-comparison td:nth-child(2) { font-weight: 800; color: var(--accent); text-align: right; }
+        .flight-comparison td:nth-child(3) { text-align: right; color: #94a3b8; }
 
-        /* Recommendations */
-        .section-header { 
-            font-size: 0.9rem; 
-            font-weight: 800; 
-            text-transform: uppercase; 
-            letter-spacing: 4px; 
-            color: var(--accent); 
-            margin-bottom: 30px; 
-            text-align: center;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-        }
-        .section-header::before, .section-header::after {
-            content: "";
-            height: 2px;
-            width: 50px;
-            background: var(--border);
-        }
-
-        .recommendation-zone { margin-bottom: 60px; }
-        .recommendation-pill { 
-            padding: 20px 30px; 
-            border-radius: 20px;
-            background: white; 
-            border: 2px solid var(--border);
-            margin-bottom: 15px; 
-            font-weight: 600;
-            font-size: 1.1rem;
-            color: var(--text-main);
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        .recommendation-pill::before { content: "🏝️"; }
+        /* Stay Section */
+        .section-header { font-size: 1rem; font-weight: 800; text-transform: uppercase; letter-spacing: 6px; color: var(--accent); text-align: center; margin: 60px 0 30px; }
+        .hotel-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 60px; }
+        .hotel-card { background: white; border: 2px solid var(--border); padding: 30px; border-radius: 30px; display: flex; justify-content: space-between; align-items: center; }
+        .hotel-name { font-weight: 800; font-size: 1.2rem; color: var(--primary); }
+        .hotel-vibe { font-size: 0.85rem; color: #64748b; font-style: italic; }
+        .hotel-rate { font-weight: 800; color: var(--accent); font-size: 1.1rem; }
 
         /* Visuals */
-        .visual-container { margin-top: 60px; text-align: center; }
-        .trend-image { 
-            width: 100%; 
-            border-radius: 25px; 
-            margin-top: 20px; 
-            border: 5px solid white;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-        }
+        .trend-container { text-align: center; margin-top: 80px; }
+        .trend-image { width: 100%; border-radius: 40px; border: 10px solid white; box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
         
-        footer { 
-            margin-top: 80px; 
-            padding-top: 30px; 
-            border-top: 2px dashed var(--border); 
-            color: var(--text-sub); 
-            font-size: 0.85rem; 
-            text-align: center; 
-            font-weight: 600;
-        }
+        footer { margin-top: 100px; padding-top: 40px; border-top: 2px dashed var(--border); color: var(--text-sub); font-size: 0.8rem; text-align: center; font-weight: 800; }
     </style>
 </head>
 <body>
@@ -158,40 +85,105 @@
             <div class="route-label">SEA-SFO • 2026-03-27 to 2026-03-29</div>
             <div class="price-display">
                 <span class="price-val">$187</span>
-                <span class="target-val">Target: $160</span>
+                <div style="display:flex; flex-direction:column; gap:5px;">
+                    <div class="leader-badge">💎 Value: Delta</div>
+                    <div class="leader-badge">✨ Aesthetic: Delta</div>
+                </div>
             </div>
             <div class="meta-info">
-                <span>7D Avg: $180.0</span>
-                <span>Delta</span>
+                <span>Market Avg: $304.72</span>
             </div>
+            <table class="flight-comparison">
+        <tr>
+            <td>Delta</td>
+            <td>$187</td>
+            <td>2 hr 12 min</td>
+        </tr>
+        
+        <tr>
+            <td>United</td>
+            <td>$237</td>
+            <td>2 hr 19 min</td>
+        </tr>
+        
+        <tr>
+            <td>Alaska</td>
+            <td>$277</td>
+            <td>2 hr 17 min</td>
+        </tr>
+        </table>
         </div>
         
         <div class="status-card">
             <div class="route-label">SEA-PSP • 2026-04-09 to 2026-04-13</div>
             <div class="price-display">
                 <span class="price-val">$465</span>
-                <span class="target-val">Target: $400</span>
+                <div style="display:flex; flex-direction:column; gap:5px;">
+                    <div class="leader-badge">💎 Value: Alaska</div>
+                    <div class="leader-badge">✨ Aesthetic: Alaska</div>
+                </div>
             </div>
             <div class="meta-info">
-                <span>7D Avg: $453.19</span>
-                <span>Alaska</span>
+                <span>Market Avg: $647.91</span>
             </div>
+            <table class="flight-comparison">
+        <tr>
+            <td>Alaska</td>
+            <td>$465</td>
+            <td>17 hr 21 min</td>
+        </tr>
+        
+        <tr>
+            <td>Southwest</td>
+            <td>$580</td>
+            <td>4 hr 10 min</td>
+        </tr>
+        
+        <tr>
+            <td>Delta</td>
+            <td>$918</td>
+            <td>2 hr 44 min</td>
+        </tr>
+        </table>
         </div>
         
         </section>
 
         <section class="recommendation-zone">
-            <div class="section-header">Escape Recommendations</div>
+            <div class="section-header">✈️ Intelligence Report</div>
             <div class="recommendation-pill">Sf Weekend is stable. No immediate rush, monitor for target.</div><div class="recommendation-pill">Desert Escape is stable. No immediate rush, monitor for target.</div>
         </section>
 
-        <section class="visual-container">
-            <div class="section-header">14-Day Price Trend Analysis</div>
-            <img src="price_trend.png" class="trend-image" alt="Price Trend Chart">
+        <section class="stay-zone">
+            <div class="section-header">🏨 Curated Sanctuary</div>
+            <div class="hotel-grid">
+                
+        <div class="hotel-card">
+            <div class="hotel-info">
+                <div class="hotel-name">🏨 Proper Hotel</div>
+                <div class="hotel-vibe">Kelly Wearstler maximalism in a historic landmark.</div>
+            </div>
+            <div class="hotel-rate">From $295/nt</div>
+        </div>
+    
+        <div class="hotel-card">
+            <div class="hotel-info">
+                <div class="hotel-name">🏨 Korakia Pensione</div>
+                <div class="hotel-vibe">Moroccan-inspired desert soul and architectural beauty.</div>
+            </div>
+            <div class="hotel-rate">From $425/nt</div>
+        </div>
+    
+            </div>
+        </section>
+
+        <section class="trend-container">
+            <div class="section-header">📈 Market Sweep Analysis</div>
+            <img src="price_trend.png" class="trend-image" alt="Trend Chart">
         </section>
 
         <footer>
-            Generated by Travel Agent From Yidan • Nonstop Flights Only • Major Carriers Tracked
+            Generated by Antigravity Final Build | Major Carriers Sweep | Aesthetic Leaders Flagged
         </footer>
     </div>
 </body>

@@ -94,55 +94,45 @@ async def fetch_flight_price(task: Dict) -> Dict:
         
         for row in rows:
             try:
-                # Find the element with aria-label (could be the row or a child)
-                aria_label = await row.get_attribute('aria-label')
-                if not aria_label:
-                    label_el = await row.query_selector('[aria-label]')
-                    if label_el:
-                        aria_label = await label_el.get_attribute('aria-label')
+                aria_label = await row.get_attribute('aria-label') or ""
+                label_el = await row.query_selector('[aria-label]')
+                if not aria_label and label_el:
+                    aria_label = await label_el.get_attribute('aria-label') or ""
                 
-                aria_label = aria_label or ""
+                airline_text = (await row.inner_text()) + " " + aria_label
                 
-                # Airline detection from visible text OR aria-label
-                airline_text = await row.inner_text()
-                airline_text += " " + aria_label
-                
-                # Robust Price extraction with regex
-                # Examples: "From 187 US dollars", "567 US dollars", "$187"
+                # Robust Price extraction
                 price = 0
-                # Priority 1: "XXX US dollars"
                 price_match = re.search(r'(\d{1,4}(?:,\d{3})?)\s+US\s+dollars', aria_label)
                 if price_match:
                     price = int(price_match.group(1).replace(',', ''))
-                
-                # Priority 2: Any dollar amount like $567
-                if price == 0:
+                elif price == 0:
                     price_match = re.search(r'\$(\d{1,4}(?:,\d{3})?)', aria_label + airline_text)
                     if price_match:
                         price = int(price_match.group(1).replace(',', ''))
 
-                # Carrier matching
+                # Duration extraction
+                duration_match = re.search(r'(\d+)\s+hr\s+(\d+)\s+min', airline_text)
+                duration = duration_match.group(0) if duration_match else "N/A"
+
                 matched_carrier = "Unknown"
                 for airline in task['priority_airlines']:
                     if airline.lower() in airline_text.lower():
                         matched_carrier = airline
                         break
                 
-                if matched_carrier != "Unknown" and price > 0:
-                    results.append({"price": price, "carrier": matched_carrier})
+                if price > 0:
+                    results.append({
+                        "price": price, 
+                        "carrier": matched_carrier, 
+                        "duration": duration,
+                        "is_priority": matched_carrier in ["Alaska", "Delta"]
+                    })
             except:
                 continue
 
         await browser.close()
-        
-        if not results:
-            print(f"   - No prices found for {task['route_name']}")
-            return {"price": 0, "carrier": "N/A"}
-        
-        # Return cheapest from priority list
-        best = min(results, key=lambda x: x["price"])
-        print(f"   - Found: ${best['price']} on {best['carrier']}")
-        return best
+        return results # Return all flights found
 
 # Analytics & Intelligence
 def calculate_stats(history: Dict, task_id: str) -> Dict:
@@ -191,7 +181,7 @@ def get_recommendation(task_id: str, current_price: float, stats: Dict, target: 
     return f"{task_id.replace('_', ' ').title()} is stable. No immediate rush, monitor for target."
 
 def generate_trend_chart(history: Dict):
-    """Generates a 14-day line chart for price trends."""
+    """Generates a 14-day line chart with market averages."""
     plt.figure(figsize=(10, 5))
     plt.style.use('seaborn-whitegrid')
     
@@ -204,11 +194,15 @@ def generate_trend_chart(history: Dict):
         if df.empty: continue
         
         df['date'] = pd.to_datetime(df['date'])
-        df = df.sort_values('date').tail(14) # Last 14 days
+        df = df.sort_values('date').tail(14)
         
-        plt.plot(df['date'], df['price'], marker='o', label=task_id.replace('_', ' ').title(), linewidth=2)
+        label = task_id.replace('_', ' ').title()
+        plt.plot(df['date'], df['price'], marker='o', label=f"{label} (Best)", linewidth=2)
+        
+        if 'market_avg' in df.columns:
+            plt.plot(df['date'], df['market_avg'], linestyle='--', alpha=0.5, label=f"{label} (Market Avg)")
 
-    plt.title("14-Day Price Trend Analysis", fontsize=14, fontweight='bold', pad=20)
+    plt.title("14-Day Price Analysis: Best vs Market Average", fontsize=14, fontweight='bold', pad=20)
     plt.xlabel("Date", fontsize=10)
     plt.ylabel("Price (USD)", fontsize=10)
     plt.legend()
@@ -220,11 +214,40 @@ def format_status(route: str, carrier: str, price: float, trend: str) -> str:
     price_display = f"${price}" if price > 0 else "N/A"
     return f"Travel Agent Status: {route} | {carrier} | {price_display} | [Trend: {trend}]"
 
-def generate_html_report(reports_data: List[Dict], recommendations: List[str]):
-    """Generates a high-aesthetic dashboard with real-time stats and trend visualization."""
+def generate_comparison_table(all_flights: List[Dict]) -> str:
+    rows = ""
+    # Deduplicate by carrier and keep cheapest
+    best_per_carrier = {}
+    for f in all_flights:
+        c = f['carrier']
+        if c not in best_per_carrier or f['price'] < best_per_carrier[c]['price']:
+            best_per_carrier[c] = f
+            
+    sorted_flights = sorted(best_per_carrier.values(), key=lambda x: x['price'])[:4] # Top 4
+    for f in sorted_flights:
+        rows += f"""
+        <tr>
+            <td>{f['carrier']}</td>
+            <td>${f['price']}</td>
+            <td>{f['duration']}</td>
+        </tr>
+        """
+    return f"""<table class="flight-comparison">{rows}</table>"""
+
+def generate_html_report(reports_data: List[Dict], recommendations: List[str], hotels: List[Dict]):
+    """Generates a high-aesthetic dashboard with real-time stats, hotel curation, and trend visualization."""
     today_str = datetime.date.today().strftime("%B %d, %Y")
     
     recommendation_html = "".join([f'<div class="recommendation-pill">{rec}</div>' for rec in recommendations])
+    hotel_html = "".join([f"""
+        <div class="hotel-card">
+            <div class="hotel-info">
+                <div class="hotel-name">🏨 {h['name']}</div>
+                <div class="hotel-vibe">{h['vibe']}</div>
+            </div>
+            <div class="hotel-rate">From ${h['rate']}/nt</div>
+        </div>
+    """ for h in hotels])
 
     html_template = f"""
 <!DOCTYPE html>
@@ -239,12 +262,11 @@ def generate_html_report(reports_data: List[Dict], recommendations: List[str]):
             --bg: #fff5f8;
             --surface: rgba(255, 255, 255, 0.95);
             --primary: #ff69b4;
-            --accent: #d81b60;  /* Higher contrast pink */
+            --accent: #d81b60;
             --target: #ff1493;
             --border: #ffc0cb;
             --text-main: #333333;
             --text-sub: #ff69b4;
-            --kitty-pink: #ff69b4;
         }}
 
         * {{ margin: 0; padding: 0; box-sizing: border-box; }}
@@ -258,119 +280,47 @@ def generate_html_report(reports_data: List[Dict], recommendations: List[str]):
         }}
 
         .container {{ 
-            max-width: 900px; 
+            max-width: 1000px; 
             margin: 0 auto; 
-            background: rgba(255, 255, 255, 0.85); /* Slightly less transparent */
+            background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(15px);
-            padding: 40px;
-            border-radius: 40px;
+            padding: 60px;
+            border-radius: 50px;
             border: 5px solid white;
             box-shadow: 0 10px 40px rgba(255, 105, 180, 0.4);
         }}
 
-        header {{ 
-            margin-bottom: 60px; 
-            text-align: center; 
-            border-bottom: 2px dashed var(--border); 
-            padding-bottom: 40px; 
-            position: relative;
-        }}
-        header::after {{
-            content: "🎀";
-            position: absolute;
-            bottom: -20px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 2rem;
-            background: white;
-            padding: 0 15px;
-        }}
-
-        h1 {{ 
-            font-family: 'Playfair Display', serif; 
-            font-size: 4rem; 
-            letter-spacing: -1px; 
-            line-height: 1.1; 
-            margin-bottom: 15px;
-            color: var(--primary);
-            text-shadow: 2px 2px 0px white;
-        }}
-        .date-badge {{ font-size: 0.9rem; font-weight: 800; text-transform: uppercase; letter-spacing: 4px; color: var(--accent); margin-bottom: 10px; display: block; }}
+        header {{ margin-bottom: 60px; text-align: center; border-bottom: 2px dashed var(--border); padding-bottom: 40px; }}
+        h1 {{ font-family: 'Playfair Display', serif; font-size: 4.5rem; color: var(--primary); margin-bottom: 10px; }}
+        .date-badge {{ font-size: 0.9rem; font-weight: 800; text-transform: uppercase; letter-spacing: 5px; color: var(--accent); }}
 
         /* Status Cards */
-        .status-grid {{ display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 60px; }}
-        .status-card {{ 
-            background: var(--surface);
-            border: 3px solid white; 
-            padding: 30px; 
-            border-radius: 30px;
-            box-shadow: 0 8px 15px rgba(255, 182, 193, 0.3);
-            transition: transform 0.3s ease;
-        }}
-        .status-card:hover {{ transform: scale(1.02); }}
+        .status-grid {{ display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 60px; }}
+        .status-card {{ background: var(--surface); border: 2px solid white; padding: 40px; border-radius: 40px; box-shadow: 0 10px 20px rgba(0,0,0,0.05); }}
+        .route-label {{ font-size: 0.8rem; font-weight: 800; text-transform: uppercase; color: var(--text-sub); margin-bottom: 20px; }}
+        .price-display {{ display: flex; align-items: baseline; gap: 15px; margin-bottom: 15px; }}
+        .price-val {{ font-size: 4rem; font-weight: 800; color: var(--accent); }}
+        .leader-badge {{ background: #fdf2f8; padding: 4px 10px; border-radius: 20px; font-size: 0.7rem; font-weight: 800; text-transform: uppercase; color: var(--primary); }}
 
-        .route-label {{ font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; color: var(--text-sub); margin-bottom: 15px; }}
-        .price-display {{ display: flex; align-items: baseline; gap: 15px; margin-bottom: 10px; }}
-        .price-val {{ font-size: 3.5rem; font-weight: 800; color: var(--accent); }}
-        .target-val {{ font-size: 1rem; font-weight: 600; color: var(--target); }}
-        .meta-info {{ font-size: 0.9rem; color: var(--text-sub); display: flex; justify-content: space-between; font-weight: 600; }}
+        /* Comparison Table */
+        .flight-comparison {{ width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 0.8rem; }}
+        .flight-comparison td {{ padding: 8px 0; border-bottom: 1px solid #fee2e2; }}
+        .flight-comparison td:nth-child(2) {{ font-weight: 800; color: var(--accent); text-align: right; }}
+        .flight-comparison td:nth-child(3) {{ text-align: right; color: #94a3b8; }}
 
-        /* Recommendations */
-        .section-header {{ 
-            font-size: 0.9rem; 
-            font-weight: 800; 
-            text-transform: uppercase; 
-            letter-spacing: 4px; 
-            color: var(--accent); 
-            margin-bottom: 30px; 
-            text-align: center;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-        }}
-        .section-header::before, .section-header::after {{
-            content: "";
-            height: 2px;
-            width: 50px;
-            background: var(--border);
-        }}
-
-        .recommendation-zone {{ margin-bottom: 60px; }}
-        .recommendation-pill {{ 
-            padding: 20px 30px; 
-            border-radius: 20px;
-            background: white; 
-            border: 2px solid var(--border);
-            margin-bottom: 15px; 
-            font-weight: 600;
-            font-size: 1.1rem;
-            color: var(--text-main);
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }}
-        .recommendation-pill::before {{ content: "🏝️"; }}
+        /* Stay Section */
+        .section-header {{ font-size: 1rem; font-weight: 800; text-transform: uppercase; letter-spacing: 6px; color: var(--accent); text-align: center; margin: 60px 0 30px; }}
+        .hotel-grid {{ display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 60px; }}
+        .hotel-card {{ background: white; border: 2px solid var(--border); padding: 30px; border-radius: 30px; display: flex; justify-content: space-between; align-items: center; }}
+        .hotel-name {{ font-weight: 800; font-size: 1.2rem; color: var(--primary); }}
+        .hotel-vibe {{ font-size: 0.85rem; color: #64748b; font-style: italic; }}
+        .hotel-rate {{ font-weight: 800; color: var(--accent); font-size: 1.1rem; }}
 
         /* Visuals */
-        .visual-container {{ margin-top: 60px; text-align: center; }}
-        .trend-image {{ 
-            width: 100%; 
-            border-radius: 25px; 
-            margin-top: 20px; 
-            border: 5px solid white;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-        }}
+        .trend-container {{ text-align: center; margin-top: 80px; }}
+        .trend-image {{ width: 100%; border-radius: 40px; border: 10px solid white; box-shadow: 0 15px 30px rgba(0,0,0,0.1); }}
         
-        footer {{ 
-            margin-top: 80px; 
-            padding-top: 30px; 
-            border-top: 2px dashed var(--border); 
-            color: var(--text-sub); 
-            font-size: 0.85rem; 
-            text-align: center; 
-            font-weight: 600;
-        }}
+        footer {{ margin-top: 100px; padding-top: 40px; border-top: 2px dashed var(--border); color: var(--text-sub); font-size: 0.8rem; text-align: center; font-weight: 800; }}
     </style>
 </head>
 <body>
@@ -385,17 +335,24 @@ def generate_html_report(reports_data: List[Dict], recommendations: List[str]):
         </section>
 
         <section class="recommendation-zone">
-            <div class="section-header">Escape Recommendations</div>
+            <div class="section-header">✈️ Intelligence Report</div>
             {recommendation_html}
         </section>
 
-        <section class="visual-container">
-            <div class="section-header">14-Day Price Trend Analysis</div>
-            <img src="price_trend.png" class="trend-image" alt="Price Trend Chart">
+        <section class="stay-zone">
+            <div class="section-header">🏨 Curated Sanctuary</div>
+            <div class="hotel-grid">
+                {hotel_html}
+            </div>
+        </section>
+
+        <section class="trend-container">
+            <div class="section-header">📈 Market Sweep Analysis</div>
+            <img src="price_trend.png" class="trend-image" alt="Trend Chart">
         </section>
 
         <footer>
-            Generated by Travel Agent From Yidan • Nonstop Flights Only • Major Carriers Tracked
+            Generated by Antigravity Final Build | Major Carriers Sweep | Aesthetic Leaders Flagged
         </footer>
     </div>
 </body>
@@ -407,17 +364,21 @@ def generate_html_report(reports_data: List[Dict], recommendations: List[str]):
 def generate_status_cards(reports_data: List[Dict]) -> str:
     cards = ""
     for data in reports_data:
+        aesthetic_leader_html = f'<div class="leader-badge">✨ Aesthetic: {data["aesthetic_leader"]}</div>' if data["aesthetic_leader"] else ""
         cards += f"""
         <div class="status-card">
             <div class="route-label">{data['route_name']} • {data['dates']}</div>
             <div class="price-display">
                 <span class="price-val">${data['price']}</span>
-                <span class="target-val">Target: ${data['trigger']}</span>
+                <div style="display:flex; flex-direction:column; gap:5px;">
+                    <div class="leader-badge">💎 Value: {data['carrier']}</div>
+                    {aesthetic_leader_html}
+                </div>
             </div>
             <div class="meta-info">
-                <span>7D Avg: ${data['avg_7d']}</span>
-                <span>{data['carrier']}</span>
+                <span>Market Avg: ${data['market_avg']}</span>
             </div>
+            {generate_comparison_table(data['all_flights'])}
         </div>
         """
     return cards
@@ -426,63 +387,67 @@ async def run_tracker():
     history = load_history()
     today_str = datetime.date.today().isoformat()
     
-    print(f"--- Travel Agent Tracker ({today_str}) ---")
+    HOTELS = [
+        {"name": "Proper Hotel", "city": "SFO", "vibe": "Kelly Wearstler maximalism in a historic landmark.", "rate": 295},
+        {"name": "Korakia Pensione", "city": "PSP", "vibe": "Moroccan-inspired desert soul and architectural beauty.", "rate": 425}
+    ]
+    
+    print(f"--- Travel Agent Tracker Comprehensive Sweep ({today_str}) ---")
     
     reports_data = []
     recommendations = []
 
     for task in TASKS:
-        print(f"Tracking {task['route_name']}...")
-        result = await fetch_flight_price(task)
-        current_price = result["price"]
-        best_carrier = result["carrier"]
+        print(f"Sweeping Market for {task['route_name']}...")
+        all_flights = await fetch_flight_price(task)
+        
+        if not all_flights:
+            print(f"!! No flights found for {task['route_name']}")
+            continue
+            
+        value_leader = min(all_flights, key=lambda x: x['price'])
+        market_avg = round(sum(f['price'] for f in all_flights) / len(all_flights), 2)
+        
+        # Aesthetic Leader: Cheapest among Alaska/Delta
+        priority_flights = [f for f in all_flights if f.get('is_priority')]
+        aesthetic_leader = min(priority_flights, key=lambda x: x['price']) if priority_flights else None
         
         task_id = task["id"]
         
-        # Update history FIRST to include current price in stats
-        if task_id not in history:
-            history[task_id] = {"latest": {}, "history": []}
-        
-        history[task_id]["latest"] = {
-            "date": today_str,
-            "price": current_price,
-            "carrier": best_carrier
-        }
-        history[task_id]["history"].append({
-            "date": today_str,
-            "price": current_price,
-            "carrier": best_carrier
-        })
+        # Undercut check
+        united_undercut = False
+        if aesthetic_leader:
+            united_flights = [f for f in all_flights if f['carrier'] == 'United']
+            if united_flights:
+                best_united = min(united_flights, key=lambda x: x['price'])
+                if best_united['price'] < aesthetic_leader['price'] * 0.85:
+                    united_undercut = True
+                    rec = f"⚠️ United is significantly undercutting Alaska/Delta for {task['route_name']} (${best_united['price']} vs ${aesthetic_leader['price']})."
+                    recommendations.append(rec)
 
-        # Calculate Stats & Recommendations
+        # Update history
+        if task_id not in history: history[task_id] = {"latest": {}, "history": []}
+        history[task_id]["latest"] = {"date": today_str, "price": value_leader["price"], "market_avg": market_avg}
+        history[task_id]["history"].append({"date": today_str, "price": value_leader["price"], "carrier": value_leader["carrier"], "market_avg": market_avg})
+
         stats = calculate_stats(history, task_id)
-        rec = get_recommendation(task_id, current_price, stats, task["price_trigger"])
-        recommendations.append(rec)
-        
-        prev_data = history.get(task_id, {}).get("history", [])[:-1]
-        prev_price = prev_data[-1].get("price") if prev_data else None
-        trend = get_trend_emoji(current_price, prev_price)
-        
-        # Check Triggers for console
-        if current_price > 0 and current_price < task["price_trigger"]:
-            print(f"🚨 TARGET HIT: {task['route_name']} is ${current_price}")
-
-        # Prepare data for HTML report
         reports_data.append({
             "route_name": task['route_name'],
             "dates": f"{task['depart_date']} to {task['return_date']}",
-            "price": current_price if current_price > 0 else "N/A",
-            "carrier": best_carrier,
-            "trend_val": trend,
-            "trigger": task['price_trigger'],
-            "avg_7d": stats['avg_7d'],
-            "screenshot": f"debug_{task['id']}.png"
+            "price": value_leader["price"],
+            "carrier": value_leader["carrier"],
+            "aesthetic_leader": aesthetic_leader["carrier"] if aesthetic_leader else "N/A",
+            "market_avg": market_avg,
+            "all_flights": all_flights,
+            "trigger": task['price_trigger']
         })
+        
+        recommendations.append(get_recommendation(task_id, value_leader["price"], stats, task["price_trigger"]))
 
     save_history(history)
     generate_trend_chart(history)
-    generate_html_report(reports_data, recommendations)
-    print("Dashboard report generated: flight_report.html")
+    generate_html_report(reports_data, recommendations, HOTELS)
+    print("Market Sweep Complete: flight_report.html")
 
 if __name__ == "__main__":
     asyncio.run(run_tracker())
