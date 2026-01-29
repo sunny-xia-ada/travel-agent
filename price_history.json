@@ -105,6 +105,11 @@
                 "date": "2026-01-28",
                 "price": 187,
                 "carrier": "Delta"
+            },
+            {
+                "date": "2026-01-28",
+                "price": 187,
+                "carrier": "Delta"
             }
         ]
     },
@@ -188,6 +193,11 @@
             {
                 "date": "2026-01-28",
                 "price": 463,
+                "carrier": "Alaska"
+            },
+            {
+                "date": "2026-01-28",
+                "price": 465,
                 "carrier": "Alaska"
             },
             {
