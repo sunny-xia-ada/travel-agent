@@ -186,6 +186,12 @@
                 "price": 187,
                 "carrier": "Delta",
                 "market_avg": 306.39
+            },
+            {
+                "date": "2026-01-28",
+                "price": 187,
+                "carrier": "Delta",
+                "market_avg": 306.39
             }
         ]
     },
@@ -358,6 +364,12 @@
                 "price": 487,
                 "carrier": "Alaska",
                 "market_avg": 648.91
+            },
+            {
+                "date": "2026-01-28",
+                "price": 505,
+                "carrier": "Alaska",
+                "market_avg": 650.55
             },
             {
                 "date": "2026-01-28",

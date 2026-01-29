@@ -8,209 +8,206 @@
     <link href="https://fonts.googleapis.com/css2?family=Mrs+Saint+Delafield&family=Outfit:wght@300;500;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --rose: #C2185B;
-            --glass: rgba(255, 255, 255, 0.45);
-            --text-main: #2c3e50;
+            --cream-pink: #FADADD;
+            --dusty-rose: #B06C7E;
+            --loopy-glow: rgba(255, 248, 245, 0.4);
+            --text-dark: #4a4a4a;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body { 
             font-family: 'Outfit', sans-serif; 
-            background: linear-gradient(rgba(255,255,255,0.2), rgba(255,255,255,0.2)), 
-                        url('hello_kitty_vacation_bg.png') no-repeat center center fixed;
+            background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 250, 250, 0.5)), 
+                        url('loopy_vacation_bg.png') no-repeat center center fixed;
             background-size: cover;
-            color: var(--text-main);
+            color: var(--text-dark);
             overflow-x: hidden;
-            padding: 120px 80px;
+            padding: 100px 60px;
         }
 
-        header { margin-bottom: 180px; text-align: left; position: relative; z-index: 100; }
-        .assistant-signature {
+        header { margin-bottom: 220px; text-align: left; padding-left: 4%; }
+        .header-title {
             font-family: 'Mrs Saint Delafield', cursive;
-            font-size: 6rem;
-            font-weight: 800;
-            color: var(--rose);
-            text-shadow: 2px 2px 4px rgba(255,255,255,0.8);
-            line-height: 1;
+            font-size: 7rem;
+            color: var(--dusty-rose);
+            text-shadow: 0 0 10px rgba(255,255,255,0.9);
+            margin-bottom: 10px;
         }
-        .editorial-label { 
-            font-weight: 800; 
-            letter-spacing: 12px; 
-            text-transform: uppercase; 
-            font-size: 0.8rem; 
-            color: var(--rose); 
-            margin-bottom: 20px; 
-            opacity: 0.8;
-        }
+        .header-subtitle { font-weight: 800; letter-spacing: 10px; font-size: 0.9rem; color: var(--dusty-rose); opacity: 0.8; }
 
-        /* Ticket Staggered Stack */
-        .ticket-system {
+        /* Collage Grid */
+        .collage-wrapper {
             position: relative;
-            max-width: 1400px;
+            max-width: 1300px;
             margin: 0 auto;
             height: 1000px;
-            margin-bottom: 200px;
-        }
-
-        .info-card {
-            position: absolute;
-            background: var(--glass);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            padding: 60px;
-            border-radius: 40px;
-            border: 1px solid rgba(255, 255, 255, 0.6);
-            box-shadow: 0 40px 100px rgba(0,0,0,0.03);
-            width: 550px;
-            transition: all 0.4s ease;
-        }
-        
-        .card-sfo { top: 0; left: 5%; z-index: 10; }
-        .card-psp { top: 350px; right: 5%; z-index: 5; }
-        .info-card:hover { z-index: 100; transform: translateY(-10px); }
-
-        .meta-context { font-size: 0.7rem; font-weight: 800; letter-spacing: 6px; color: #94a3b8; text-transform: uppercase; margin-bottom: 20px; }
-        .route-accent { font-family: 'Mrs Saint Delafield', cursive; font-size: 3.5rem; color: var(--rose); margin-bottom: 20px; }
-        
-        .price-hero { display: flex; align-items: baseline; gap: 20px; margin-bottom: 40px; }
-        .price-val { font-size: 7rem; font-weight: 800; letter-spacing: -6px; line-height: 1; color: var(--rose); }
-        .price-unit { font-size: 1.2rem; font-weight: 500; color: #94a3b8; }
-
-        .handwritten-note {
-            font-family: 'Mrs Saint Delafield', cursive;
-            font-size: 2.2rem;
-            color: var(--rose);
-            margin-top: 25px;
-            padding: 15px 25px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 20px;
-            line-height: 1.2;
-        }
-
-        .comparison-sweep { margin-top: 40px; border-top: 1px dashed rgba(194, 24, 91, 0.1); padding-top: 30px; }
-        .sweep-row { display: flex; justify-content: space-between; font-size: 0.85rem; padding: 6px 0; color: #64748b; font-weight: 600; }
-        .best-val { color: var(--rose); font-weight: 800; }
-
-        /* Sanctuary */
-        .sanctuary-header { text-align: center; margin-bottom: 100px; }
-        .sanctuary-grid { display: flex; justify-content: center; gap: 80px; margin-bottom: 200px; }
-        
-        .sanctuary-frame {
-            width: 480px;
-            background: white;
-            padding: 30px;
-            border-radius: 50px;
-            box-shadow: 0 40px 100px rgba(0,0,0,0.05);
-            position: relative;
-        }
-        .sanctuary-frame img { width: 100%; height: 550px; object-fit: cover; border-radius: 40px; filter: contrast(1.1); }
-        .sanctuary-details { margin-top: 30px; text-align: center; }
-        .sanctuary-name { font-size: 2.2rem; font-weight: 800; margin-bottom: 10px; }
-        .sanctuary-meta { font-size: 0.85rem; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: #94a3b8; }
-        .vibe-tag { position: absolute; top: 15px; left: 15px; background: var(--rose); color: white; padding: 8px 20px; border-radius: 30px; font-weight: 800; font-size: 0.7rem; }
-
-        /* Polaroid Trend */
-        .polaroid-trend {
-            max-width: 950px;
-            margin: 0 auto;
-            background: white;
-            padding: 40px 40px 120px 40px;
-            box-shadow: 0 50px 100px rgba(0,0,0,0.1);
-            transform: rotate(2deg);
-            border-radius: 2px;
-            text-align: center;
             margin-bottom: 150px;
         }
-        .polaroid-trend img { width: 100%; opacity: 0.85; }
-        .trend-caption { font-family: 'Mrs Saint Delafield', cursive; font-size: 3.5rem; color: var(--rose); margin-top: 50px; }
 
-        .assistant-memo-hub { text-align: center; margin-bottom: 150px; }
-        .concierge-tip { font-family: 'Mrs Saint Delafield', cursive; font-size: 2.8rem; color: var(--rose); margin-bottom: 20px; }
+        .collage-card {
+            position: absolute;
+            background: var(--loopy-glow);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 50px;
+            border-radius: 60px;
+            border: 2px solid rgba(255, 255, 255, 0.7);
+            box-shadow: 20px 20px 40px rgba(176, 108, 126, 0.05);
+            width: 520px;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .collage-card:hover { transform: scale(1.02) rotate(1deg); z-index: 50; }
+        
+        .pos-left { top: 0; left: 0; z-index: 10; }
+        .pos-right { top: 380px; right: 0; z-index: 5; }
 
-        footer { text-align: center; margin-top: 200px; font-weight: 800; letter-spacing: 15px; font-size: 0.8rem; color: var(--rose); text-transform: uppercase; opacity: 0.8; padding-bottom: 100px; }
+        .tag-label { font-size: 0.75rem; font-weight: 800; letter-spacing: 4px; color: var(--dusty-rose); text-transform: uppercase; margin-bottom: 25px; }
+        .route-accent { font-family: 'Mrs Saint Delafield', cursive; font-size: 4rem; color: var(--dusty-rose); margin-bottom: 15px; }
+        
+        .hero-price { display: flex; align-items: baseline; gap: 15px; margin-bottom: 35px; }
+        .price-big { font-size: 7.5rem; font-weight: 800; letter-spacing: -5px; line-height: 1; color: var(--dusty-rose); }
+        .price-sub { font-size: 1.4rem; font-weight: 500; color: #a1a1a1; }
+
+        .assistant-memo {
+            font-family: 'Mrs Saint Delafield', cursive;
+            font-size: 2.2rem;
+            color: var(--dusty-rose);
+            line-height: 1.1;
+            margin-top: 25px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 30px;
+        }
+
+        .market-comparison { margin-top: 35px; border-top: 1px dashed rgba(176, 108, 126, 0.2); padding-top: 25px; }
+        .comparison-row { display: flex; justify-content: space-between; font-size: 0.9rem; padding: 4px 0; color: #888; }
+        .best-pick { color: var(--dusty-rose); font-weight: 800; }
+
+        /* Sanctuary */
+        .sanctuary-title-box { text-align: center; margin-bottom: 100px; }
+        .sanctuary-grid { display: flex; justify-content: center; gap: 70px; margin-bottom: 200px; }
+        
+        .sanctuary-collage-card { 
+            width: 460px; 
+            background: white; 
+            padding: 25px; 
+            border-radius: 70px;
+            box-shadow: 0 40px 80px rgba(176, 108, 126, 0.08); 
+            position: relative; 
+            overflow: hidden;
+        }
+        .sanctuary-collage-card img { width: 100%; height: 520px; object-fit: cover; border-radius: 50px; }
+        .sanctuary-info { margin-top: 25px; text-align: center; }
+        .sanctuary-name { font-size: 2rem; font-weight: 800; margin-bottom: 8px; color: var(--dusty-rose); }
+        .sanctuary-vibe { font-size: 0.85rem; color: #a1a1a1; font-style: italic; margin-bottom: 12px; }
+        .sanctuary-price { font-weight: 800; color: var(--dusty-rose); letter-spacing: 2px; text-transform: uppercase; font-size: 0.75rem; }
+        .memo-tag { position: absolute; top: 15px; left: 30px; background: var(--cream-pink); color: var(--dusty-rose); padding: 5px 15px; border-radius: 20px; font-weight: 800; font-size: 0.7rem; }
+
+        /* Polaroid Polaroid */
+        .polaroid-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #fffcfb;
+            padding: 35px 35px 110px 35px;
+            box-shadow: 0 50px 100px rgba(176, 108, 126, 0.1);
+            transform: rotate(-2deg);
+            border-radius: 3px;
+            text-align: center;
+            margin-bottom: 120px;
+        }
+        .polaroid-container img { width: 100%; opacity: 0.95; }
+        .polaroid-text { font-family: 'Mrs Saint Delafield', cursive; font-size: 3.5rem; color: var(--dusty-rose); margin-top: 45px; }
+
+        .memos-hub { margin-top: 120px; text-align: center; }
+        .loopy-memo-pill { font-family: 'Mrs Saint Delafield', cursive; font-size: 3rem; color: var(--dusty-rose); margin-bottom: 15px; }
+
+        footer { text-align: center; margin-top: 200px; font-weight: 800; letter-spacing: 12px; font-size: 0.75rem; color: var(--dusty-rose); text-transform: uppercase; padding-bottom: 120px; opacity: 0.7; }
     </style>
 </head>
 <body>
     <header>
-        <div class="editorial-label">Private Intelligence • 2026年01月28日</div>
-        <h1 class="assistant-signature">Travel Agent from 一丹</h1>
+        <h1 class="header-title">Travel Agent from 一丹</h1>
+        <div class="header-subtitle">SPRING COLLECTION • 2026年01月28日 • PRIVATE BRIEFING</div>
     </header>
 
-    <section class="ticket-system">
+    <section class="collage-wrapper">
         
-        <div class="info-card card-sfo">
-            <div class="meta-context">Scheduled transit • 2026-03-27 to 2026-03-29</div>
+        <div class="collage-card pos-left">
+            <div class="tag-label">Private Flight • 2026-03-27 to 2026-03-29</div>
             <div class="route-accent">SEA-SFO</div>
-            <div class="price-hero">
-                <span class="price-val">$187</span>
-                <span class="price-unit">Curated Best Value</span>
+            <div class="hero-price">
+                <span class="price-big">$187</span>
+                <span class="price-sub">USD / RT</span>
             </div>
             
-            <div class="comparison-sweep">
-                <div class="meta-context" style="font-size:0.6rem; color: var(--rose);">Assistant's Market Sweep</div>
-                <div class="sweep-row best-val"><span>Delta Nonstop</span><span>$187</span></div><div class="sweep-row best-val"><span>Delta Nonstop</span><span>$257</span></div><div class="sweep-row"><span>United Alternative</span><span>$237</span></div><div class="sweep-row"><span>United Alternative</span><span>$278</span></div>
+            <div class="market-comparison">
+                <div class="tag-label" style="font-size:0.6rem; color: #B06C7E;">Concierge Market Brief</div>
+                <div class="comparison-row best-pick"><span>Delta Primary</span><span>$187</span></div><div class="comparison-row best-pick"><span>Delta Primary</span><span>$257</span></div><div class="comparison-row"><span>United Value</span><span>$237</span></div><div class="comparison-row"><span>United Value</span><span>$278</span></div>
             </div>
             
-            <div class="handwritten-note">Assistant's Pick: Highly efficient for your schedule.</div>
+            <div class="assistant-memo">助理追踪提示：Highly recommended for seasonal timing.</div>
         </div>
         
-        <div class="info-card card-psp">
-            <div class="meta-context">Scheduled transit • 2026-04-09 to 2026-04-13</div>
+        <div class="collage-card pos-right">
+            <div class="tag-label">Private Flight • 2026-04-09 to 2026-04-13</div>
             <div class="route-accent">SEA-PSP</div>
-            <div class="price-hero">
-                <span class="price-val">$505</span>
-                <span class="price-unit">Curated Best Value</span>
+            <div class="hero-price">
+                <span class="price-big">$505</span>
+                <span class="price-sub">USD / RT</span>
             </div>
             
-            <div class="comparison-sweep">
-                <div class="meta-context" style="font-size:0.6rem; color: var(--rose);">Assistant's Market Sweep</div>
-                <div class="sweep-row best-val"><span>Alaska Nonstop</span><span>$567</span></div><div class="sweep-row best-val"><span>Alaska Nonstop</span><span>$567</span></div><div class="sweep-row"><span>Southwest Alternative</span><span>$580</span></div><div class="sweep-row"><span>Southwest Alternative</span><span>$580</span></div>
+            <div class="market-comparison">
+                <div class="tag-label" style="font-size:0.6rem; color: #B06C7E;">Concierge Market Brief</div>
+                <div class="comparison-row best-pick"><span>Alaska Primary</span><span>$567</span></div><div class="comparison-row best-pick"><span>Alaska Primary</span><span>$567</span></div><div class="comparison-row"><span>Southwest Value</span><span>$580</span></div><div class="comparison-row"><span>Southwest Value</span><span>$580</span></div>
             </div>
             
-            <div class="handwritten-note">Assistant's Pick: Perfect for maximum relaxation.</div>
+            <div class="assistant-memo">助理追踪提示：A perfect escape for your upcoming weekend.</div>
         </div>
         
     </section>
 
-    <div class="sanctuary-header">
-        <h2 style="font-family: 'Mrs Saint Delafield', cursive; font-size: 5rem; color: var(--rose);">The Sanctuary Collection</h2>
+    <div class="sanctuary-title-box">
+        <h2 style="font-family: 'Mrs Saint Delafield', cursive; font-size: 5rem; color: var(--dusty-rose);">The Sanctuary Brief</h2>
     </div>
     <section class="sanctuary-grid">
         
-        <div class="sanctuary-frame">
-            <div class="vibe-tag">Atmosphere: Sustainable luxury on the waterfront.</div>
+        <div class="sanctuary-collage-card">
+            <div class="memo-tag">Recommended Stay</div>
             <img src="hotel_sfo.png" alt="1 Hotel San Francisco">
-            <div class="sanctuary-details">
+            <div class="sanctuary-info">
                 <div class="sanctuary-name">1 Hotel San Francisco</div>
-                <div class="sanctuary-meta">Curated stay from $325</div>
+                <div class="sanctuary-vibe">Sustainable luxury on the waterfront.</div>
+                <div class="sanctuary-price">Special rate from $325</div>
             </div>
-            <div class="handwritten-note">"Yidan, the panoramic bay views are best enjoyed at sunset."</div>
+            <div class="assistant-handwritten">一丹，the panoramic bay views are best enjoyed at sunset.</div>
         </div>
     
-        <div class="sanctuary-frame">
-            <div class="vibe-tag">Atmosphere: Moroccan desert sanctuary.</div>
+        <div class="sanctuary-collage-card">
+            <div class="memo-tag">Recommended Stay</div>
             <img src="hotel_psp.png" alt="Korakia Pensione">
-            <div class="sanctuary-details">
+            <div class="sanctuary-info">
                 <div class="sanctuary-name">Korakia Pensione</div>
-                <div class="sanctuary-meta">Curated stay from $425</div>
+                <div class="sanctuary-vibe">Moroccan desert sanctuary.</div>
+                <div class="sanctuary-price">Special rate from $425</div>
             </div>
-            <div class="handwritten-note">"Yidan, candlelit courtyards make this the ultimate escape."</div>
+            <div class="assistant-handwritten">一丹，candlelit courtyards make this the ultimate escape.</div>
         </div>
     
     </section>
 
-    <div class="polaroid-trend">
-        <img src="price_trend.png" alt="Intelligence Analytics">
-        <div class="trend-caption">Price Flow Intelligence</div>
+    <div class="polaroid-container">
+        <img src="price_trend.png" alt="Loopy Pulse">
+        <div class="polaroid-text">Market Intelligence Pulse</div>
     </div>
 
-    <section class="assistant-memo-hub">
-        <div class="concierge-tip">Sf Weekend is stable. No immediate rush, monitor for target.</div><div class="concierge-tip">Desert Escape is stable. No immediate rush, monitor for target.</div>
+    <section class="memos-hub">
+        <div class="loopy-memo-pill">Sf Weekend is stable. No immediate rush, monitor for target.</div><div class="loopy-memo-pill">Desert Escape is stable. No immediate rush, monitor for target.</div>
     </section>
 
     <footer>
-        Curated for Yidan Yan • All Rights Reserved
+        Antigravity Personalized Concierge • For Yidan Yan
     </footer>
 </body>
 </html>
