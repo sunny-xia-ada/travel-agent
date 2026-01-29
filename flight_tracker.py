@@ -136,10 +136,13 @@ async def fetch_flight_price(task: Dict) -> Dict:
         await browser.close()
         
         if not results:
+            print(f"   - No prices found for {task['route_name']}")
             return {"price": 0, "carrier": "N/A"}
         
         # Return cheapest from priority list
-        return min(results, key=lambda x: x["price"])
+        best = min(results, key=lambda x: x["price"])
+        print(f"   - Found: ${best['price']} on {best['carrier']}")
+        return best
 
 # Analytics & Intelligence
 def calculate_stats(history: Dict, task_id: str) -> Dict:
@@ -234,12 +237,12 @@ def generate_html_report(reports_data: List[Dict], recommendations: List[str]):
     <style>
         :root {{
             --bg: #fff5f8;
-            --surface: rgba(255, 255, 255, 0.85);
+            --surface: rgba(255, 255, 255, 0.95);
             --primary: #ff69b4;
-            --accent: #ff1493;
-            --target: #ff85a2;
+            --accent: #d81b60;  /* Higher contrast pink */
+            --target: #ff1493;
             --border: #ffc0cb;
-            --text-main: #4a4a4a;
+            --text-main: #333333;
             --text-sub: #ff69b4;
             --kitty-pink: #ff69b4;
         }}
@@ -257,12 +260,12 @@ def generate_html_report(reports_data: List[Dict], recommendations: List[str]):
         .container {{ 
             max-width: 900px; 
             margin: 0 auto; 
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.85); /* Slightly less transparent */
+            backdrop-filter: blur(15px);
             padding: 40px;
             border-radius: 40px;
             border: 5px solid white;
-            box-shadow: 0 10px 30px rgba(255, 105, 180, 0.2);
+            box-shadow: 0 10px 40px rgba(255, 105, 180, 0.4);
         }}
 
         header {{ 
