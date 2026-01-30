@@ -3,7 +3,7 @@
         "latest": {
             "date": "2026-01-29",
             "price": 257,
-            "market_avg": 312.56
+            "market_avg": 300.94
         },
         "history": [
             {
@@ -204,6 +204,12 @@
                 "price": 257,
                 "carrier": "United",
                 "market_avg": 312.56
+            },
+            {
+                "date": "2026-01-29",
+                "price": 257,
+                "carrier": "United",
+                "market_avg": 300.94
             }
         ]
     },
@@ -406,6 +412,12 @@
                 "price": 505,
                 "carrier": "Alaska",
                 "market_avg": 677.0
+            },
+            {
+                "date": "2026-01-29",
+                "price": 490,
+                "carrier": "Alaska",
+                "market_avg": 676.0
             },
             {
                 "date": "2026-01-29",

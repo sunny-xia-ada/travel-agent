@@ -177,12 +177,12 @@ def get_recommendation(task_id: str, current_price: float, stats: Dict, target: 
     return f"{route_name} 目前价格 ${current_price}。建议再等等，关注 ${target} 的突破点。"
 
 def generate_trend_chart(history: Dict):
-    """Generates a monochromatic Cream Pink trend chart for the Loopy edition."""
+    """生成带有海水蓝渐变的海浪风格趋势图。"""
     plt.figure(figsize=(10, 4))
     plt.style.use('seaborn-whitegrid')
     
-    # Cream Pink Gradient Palette
-    colors = ['#FADADD', '#F8C8DC', '#FFF0F5']
+    # Oceanic Cyan Palette
+    colors = ['#0077be', '#0099cc', '#00b2ee']
     for i, (task_id, data) in enumerate(history.items()):
         records = data.get("history", [])
         df = pd.DataFrame(records)
@@ -244,20 +244,20 @@ def generate_price_spectrum(all_flights: List[Dict]) -> str:
     """
 
 def generate_html_report(reports_data: List[Dict], recommendations: List[str], hotels: List[Dict]):
-    """生成带有'一丹的旅行助理'品牌标识的中文 Loopy 版简报。"""
+    """生成带有'Travel Agent from 一丹'海水蓝波动风格的中文简报。"""
     today_str = datetime.date.today().strftime("%Y年%m月%d日")
     
-    recommendation_html = "".join([f'<div class="loopy-memo-pill">{rec}</div>' for rec in recommendations])
+    recommendation_html = "".join([f'<div class="wave-memo-pill">{rec}</div>' for rec in recommendations])
     hotel_html = "".join([f"""
-        <div class="sanctuary-vertical-card">
-            <div class="vibe-check-badge">氛围评估</div>
-            <div class="media-frame">
+        <div class="ocean-vertical-card">
+            <div class="surf-badge">氛围评估</div>
+            <div class="view-frame">
                 <img src="{'hotel_sfo.png' if h['city'] == 'SFO' else 'hotel_psp.png'}" alt="{h['name']}">
             </div>
-            <div class="sanctuary-info">
-                <div class="sanctuary-name">{h['name']}</div>
-                <div class="sanctuary-vibe">{h['vibe']}</div>
-                <div class="sanctuary-meta">专属礼遇价格从 ${h['rate']} 起</div>
+            <div class="ocean-info">
+                <div class="ocean-name">{h['name']}</div>
+                <div class="ocean-vibe">{h['vibe']}</div>
+                <div class="ocean-meta">海洋特赏价由 ${h['rate']} 起</div>
             </div>
             <div class="assistant-handwritten">助理寄语：{h['tip']}</div>
         </div>
@@ -269,166 +269,169 @@ def generate_html_report(reports_data: List[Dict], recommendations: List[str], h
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>一丹的旅行助理 | 专属私享简报</title>
+    <title>Travel Agent from 一丹 | 海洋智控简报</title>
     <link href="https://fonts.googleapis.com/css2?family=Mrs+Saint+Delafield&family=Outfit:wght@300;500;800&display=swap" rel="stylesheet">
     <style>
         :root {{
-            --deep-rose: #D81B60;
-            --cream-pink: #FADADD;
-            --milky-white: rgba(255, 240, 245, 0.45);
-            --glow: 0 0 15px rgba(255, 255, 255, 1);
-            --text-dark: #3a3a3a;
+            --ocean-blue: #0077be;
+            --aqua-foam: #00b2ee;
+            --sand-pink: rgba(255, 240, 245, 0.4);
+            --foam-glow: 0 0 20px rgba(255, 255, 255, 0.9);
+            --text-main: #2a3a4a;
         }}
 
         * {{ margin: 0; padding: 0; box-sizing: border-box; }}
         
         body {{ 
             font-family: 'Outfit', 'PingFang SC', sans-serif; 
-            background: linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3)), 
+            background: linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), 
                         url('loopy_vacation_bg.png') no-repeat center center fixed;
             background-size: cover;
-            color: var(--text-dark);
+            color: var(--text-main);
             overflow-x: hidden;
             padding: 80px 40px;
         }}
 
-        header {{ margin-bottom: 220px; text-align: left; padding-left: 6%; }}
+        header {{ margin-bottom: 240px; text-align: left; padding-left: 6%; }}
         .header-title {{
             font-family: 'Mrs Saint Delafield', cursive;
-            font-size: 8rem;
-            color: var(--deep-rose);
-            text-shadow: var(--glow);
-            margin-bottom: -10px;
+            font-size: 8.5rem;
+            color: var(--ocean-blue);
+            text-shadow: var(--foam-glow), 0 5px 15px rgba(0, 119, 190, 0.2);
+            margin-bottom: -15px;
+            letter-spacing: -3px;
+            transition: transform 0.3s ease;
         }}
-        .header-edition {{ font-weight: 800; letter-spacing: 12px; font-size: 0.85rem; color: var(--deep-rose); opacity: 0.9; margin-bottom: 15px; }}
+        .header-edition {{ font-weight: 800; letter-spacing: 12px; font-size: 0.9rem; color: var(--ocean-blue); opacity: 0.8; margin-bottom: 20px; text-transform: uppercase; }}
 
-        /* Asymmetric Layout */
-        .dashboard-canvas {{
+        /* Floating Wave Canvas */
+        .wave-canvas {{
             position: relative;
-            max-width: 1400px;
+            max-width: 1450px;
             margin: 0 auto;
-            height: 1100px;
+            height: 1150px;
             margin-bottom: 200px;
         }}
 
-        .info-card {{
+        .frosted-card {{
             position: absolute;
-            background: var(--milky-white);
+            background: var(--sand-pink);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            padding: 55px;
-            border-radius: 85px;
-            border: 2px solid rgba(255, 255, 255, 0.9);
-            box-shadow: 0 25px 50px rgba(216, 27, 96, 0.04);
-            width: 600px;
-            transition: all 0.5s ease;
+            padding: 60px;
+            border-radius: 90px;
+            border: 3px solid rgba(255, 255, 255, 0.7);
+            box-shadow: 0 40px 80px rgba(0, 119, 190, 0.05);
+            width: 620px;
+            transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
         }}
         
-        .info-card:hover {{ transform: translateY(-10px); z-index: 100; }}
+        .frosted-card:hover {{ transform: translateY(-20px) rotate(1deg); z-index: 100; box-shadow: 0 60px 100px rgba(0, 119, 190, 0.08); }}
         
-        .pos-alpha {{ top: 0; left: 5%; z-index: 20; }}
-        .pos-beta {{ top: 480px; right: 5%; z-index: 10; }}
+        .pos-wave {{ top: 0; left: 4%; z-index: 20; }}
+        .pos-tide {{ top: 500px; right: 4%; z-index: 10; }}
 
-        .meta-tag {{ font-size: 0.7rem; font-weight: 800; letter-spacing: 6px; color: var(--deep-rose); text-transform: uppercase; margin-bottom: 30px; opacity: 0.8; }}
-        .route-typography {{ font-family: 'Mrs Saint Delafield', cursive; font-size: 5.5rem; color: var(--deep-rose); margin-bottom: 15px; }}
+        .meta-header {{ font-size: 0.75rem; font-weight: 800; letter-spacing: 5px; color: var(--ocean-blue); text-transform: uppercase; margin-bottom: 30px; }}
+        .route-accent {{ font-family: 'Mrs Saint Delafield', cursive; font-size: 6rem; color: var(--ocean-blue); margin-bottom: 20px; }}
         
-        .price-section {{ display: flex; align-items: baseline; gap: 15px; margin-bottom: 35px; }}
-        .price-hero {{ font-size: 9rem; font-weight: 800; letter-spacing: -6px; line-height: 1; color: var(--deep-rose); }}
-        .price-unit {{ font-size: 1.4rem; font-weight: 500; color: #a1a1a1; }}
+        .price-hero {{ display: flex; align-items: baseline; gap: 20px; margin-bottom: 45px; }}
+        .price-large {{ font-size: 9.5rem; font-weight: 800; letter-spacing: -6px; line-height: 1; color: var(--ocean-blue); }}
+        .price-curr {{ font-size: 1.6rem; font-weight: 500; color: #8e9eab; }}
 
-        .memo-handwritten {{
+        .assistant-wave-memo {{
             font-family: 'Mrs Saint Delafield', cursive;
-            font-size: 2.6rem;
-            color: var(--deep-rose);
+            font-size: 2.7rem;
+            color: var(--ocean-blue);
             line-height: 1.1;
-            margin-top: 25px;
+            margin-top: 35px;
             padding: 25px;
             background: rgba(255, 255, 255, 0.5);
-            border-radius: 40px;
-            border-left: 6px solid var(--cream-pink);
+            border-radius: 45px;
+            border-bottom: 6px solid var(--ocean-blue);
         }}
 
-        .market-brief {{ margin-top: 40px; border-top: 1px dashed rgba(216, 27, 96, 0.15); padding-top: 30px; }}
-        .carrier-row {{ display: flex; justify-content: space-between; font-size: 0.95rem; padding: 7px 0; color: #777; font-weight: 600; }}
-        .priority-row {{ color: var(--deep-rose); font-weight: 800; }}
+        .market-sweep {{ margin-top: 45px; border-top: 2px dashed rgba(0, 119, 190, 0.1); padding-top: 30px; }}
+        .sweep-row {{ display: flex; justify-content: space-between; font-size: 1rem; padding: 8px 0; color: #5a6a7a; font-weight: 600; }}
+        .leader-row {{ color: var(--ocean-blue); font-weight: 800; }}
 
-        /* Sanctuary vertical frames */
-        .sanctuary-header {{ text-align: center; margin-bottom: 120px; }}
-        .sanctuary-grid {{ display: flex; justify-content: center; gap: 80px; margin-bottom: 200px; }}
+        /* Ocean Sanctuary */
+        .ocean-header {{ text-align: center; margin-bottom: 120px; }}
+        .ocean-grid {{ display: flex; justify-content: center; gap: 90px; margin-bottom: 220px; padding: 0 40px; }}
         
-        .sanctuary-vertical-card {{ 
-            width: 500px; 
+        .ocean-vertical-card {{ 
+            width: 520px; 
             background: white; 
-            padding: 30px; 
-            border-radius: 100px;
-            box-shadow: 0 50px 100px rgba(216, 27, 96, 0.06); 
+            padding: 35px; 
+            border-radius: 110px;
+            box-shadow: 0 60px 120px rgba(0, 119, 190, 0.08); 
             position: relative;
         }}
-        .media-frame {{ width: 100%; height: 600px; border-radius: 80px; overflow: hidden; margin-bottom: 30px; }}
-        .media-frame img {{ width: 100%; height: 100%; object-fit: cover; filter: contrast(1.05); }}
+        .view-frame {{ width: 100%; height: 650px; border-radius: 90px; overflow: hidden; margin-bottom: 35px; }}
+        .view-frame img {{ width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s ease; }}
+        .ocean-vertical-card:hover .view-frame img {{ transform: scale(1.04); }}
         
-        .sanctuary-info {{ text-align: center; }}
-        .sanctuary-name {{ font-size: 2.3rem; font-weight: 800; color: var(--deep-rose); margin-bottom: 8px; }}
-        .sanctuary-vibe {{ font-size: 0.95rem; color: #a1a1a1; font-style: italic; margin-bottom: 15px; }}
-        .sanctuary-meta {{ font-weight: 800; color: var(--deep-rose); letter-spacing: 3px; text-transform: uppercase; font-size: 0.8rem; }}
+        .ocean-info {{ text-align: center; }}
+        .ocean-name {{ font-size: 2.4rem; font-weight: 800; color: var(--ocean-blue); margin-bottom: 12px; }}
+        .ocean-vibe {{ font-size: 1rem; color: #7a8a9a; font-style: italic; margin-bottom: 18px; }}
+        .ocean-meta {{ font-weight: 800; color: var(--ocean-blue); letter-spacing: 3px; text-transform: uppercase; font-size: 0.85rem; }}
         
-        .vibe-check-badge {{ 
-            position: absolute; top: 60px; left: -15px; 
-            background: var(--deep-rose); color: white; 
-            padding: 8px 30px; border-radius: 40px; 
-            font-weight: 800; font-size: 0.85rem; transform: rotate(-8deg);
-            box-shadow: 0 10px 20px rgba(216, 27, 96, 0.2);
+        .surf-badge {{ 
+            position: absolute; top: 70px; left: -20px; 
+            background: var(--ocean-blue); color: white; 
+            padding: 10px 35px; border-radius: 50px; 
+            font-weight: 800; font-size: 0.9rem; transform: rotate(-5deg);
+            box-shadow: 0 15px 30px rgba(0, 119, 190, 0.2);
         }}
 
-        /* Polaroid Trend */
-        .analytics-polaroid {{
-            max-width: 950px;
+        /* Memory Polaroid */
+        .memory-polaroid {{
+            max-width: 1000px;
             margin: 0 auto;
             background: #fff;
-            padding: 45px 45px 150px 45px;
-            box-shadow: 0 60px 120px rgba(216, 27, 96, 0.1);
+            padding: 50px 50px 160px 50px;
+            box-shadow: 0 70px 140px rgba(0, 119, 190, 0.12);
             transform: rotate(-2deg);
             border-radius: 5px;
             text-align: center;
-            margin-bottom: 150px;
+            margin-bottom: 160px;
         }}
-        .analytics-polaroid img {{ width: 100%; opacity: 0.92; }}
-        .polaroid-title {{ font-family: 'Mrs Saint Delafield', cursive; font-size: 4.5rem; color: var(--deep-rose); margin-top: 55px; }}
+        .memory-polaroid img {{ width: 100%; opacity: 0.95; filter: hue-rotate(-10deg); }}
+        .polaroid-script {{ font-family: 'Mrs Saint Delafield', cursive; font-size: 4.8rem; color: var(--ocean-blue); margin-top: 60px; }}
 
-        .intelligence-hub {{ text-align: center; margin-bottom: 180px; padding: 0 20%; }}
-        .loopy-memo-pill {{ font-family: 'Mrs Saint Delafield', cursive; font-size: 3.4rem; color: var(--deep-rose); margin-bottom: 25px; }}
+        .memo-hub {{ text-align: center; margin-bottom: 200px; padding: 0 15%; }}
+        .wave-memo-pill {{ font-family: 'Mrs Saint Delafield', cursive; font-size: 3.6rem; color: var(--ocean-blue); margin-bottom: 25px; }}
 
-        footer {{ text-align: center; margin-top: 250px; font-weight: 800; letter-spacing: 15px; font-size: 0.85rem; color: var(--deep-rose); text-transform: uppercase; padding-bottom: 150px; opacity: 0.7; }}
+        footer {{ text-align: center; margin-top: 250px; font-weight: 800; letter-spacing: 18px; font-size: 0.9rem; color: var(--ocean-blue); text-transform: uppercase; padding-bottom: 150px; opacity: 0.6; }}
     </style>
 </head>
 <body>
     <header>
-        <div class="header-edition">2026年春季系列 • {today_str}</div>
-        <h1 class="header-title">一丹的旅行助理</h1>
+        <div class="header-edition">Spring Waves • {today_str} • Private Briefing</div>
+        <h1 class="header-title">Travel Agent from 一丹</h1>
     </header>
 
-    <section class="dashboard-canvas">
+    <section class="wave-canvas">
         {generate_status_cards(reports_data)}
     </section>
 
-    <div class="sanctuary-header">
-        <h2 style="font-family: 'Mrs Saint Delafield', cursive; font-size: 6rem; color: var(--deep-rose);">避世酒店推荐</h2>
+    <div class="ocean-header">
+        <h2 style="font-family: 'Mrs Saint Delafield', cursive; font-size: 6.5rem; color: var(--ocean-blue);">Ocean Sanctuary</h2>
     </div>
-    <section class="sanctuary-grid">
+    <section class="ocean-grid">
         {hotel_html}
     </section>
 
-    <div class="analytics-polaroid">
-        <img src="price_trend.png" alt="Intelligence Pulse">
-        <div class="polaroid-title">市场价格波动追踪</div>
+    <div class="memory-polaroid">
+        <img src="price_trend.png" alt="Maritime Pulse">
+        <div class="polaroid-script">Market Tide Intelligence</div>
     </div>
 
-    <section class="intelligence-hub">
+    <section class="memo-hub">
         {recommendation_html}
     </section>
 
     <footer>
-        Antigravity 私享智能简报 • 为 Yidan Yan 定制
+        Antigravity Maritime Intelligence • Exclusive for Yidan Yan
     </footer>
 </body>
 </html>
@@ -439,39 +442,39 @@ def generate_html_report(reports_data: List[Dict], recommendations: List[str], h
 def generate_status_cards(reports_data: List[Dict]) -> str:
     cards = ""
     for data in reports_data:
-        pos_class = "card-alpha" if "SFO" in data['route_name'] else "card-beta"
+        pos_class = "pos-wave" if "SFO" in data['route_name'] else "pos-tide"
         
-        # 航司对比：重点关注 Alaska 和 Delta
+        # Oceanic Carrier Analysis
         priorities = [f for f in data['all_flights'] if f.get('is_priority')]
         alternatives = [f for f in data['all_flights'] if not f.get('is_priority')]
         
         comparison_html = ""
         for p in priorities[:2]: 
-            comparison_html += f'<div class="carrier-row priority-row"><span>{p["carrier"]} 非经停</span><span>${p["price"]}</span></div>'
+            comparison_html += f'<div class="sweep-row leader-row"><span>{p["carrier"]} Primary</span><span>${p["price"]}</span></div>'
         for a in alternatives[:2]: 
-            comparison_html += f'<div class="carrier-row"><span>{a["carrier"]} 市场参考</span><span>${a["price"]}</span></div>'
+            comparison_html += f'<div class="sweep-row"><span>{a["carrier"]} Awareness</span><span>${a["price"]}</span></div>'
 
-        # 助理中文建议
+        # Maritime Memos (Chinese)
         if "SFO" in data['route_name']:
-            memo_text = f"一丹，旧金山的价格目前为 ${data['price']}，建议再等等 $160 的回调。" if data['price'] > 160 else "旧金山已跌破心理价位，建议立即锁定。"
+            memo_text = f"一丹，这班飞往旧金山的航线目前价格为 ${data['price']}，像海浪一样平稳，建议持币观望 ${160} 的回调波峰。" if data['price'] > 160 else "目标达成！旧金山航线已进入黄金窗口位，建议立即锁定。"
         else:
-            memo_text = f"棕榈泉目前正值旺季，价格为 ${data['price']}。若跌至 $400 可果断入手。" if data['price'] > 400 else "棕榈泉价格突破目标位，沙漠之旅可以启程了。"
+            memo_text = f"棕榈泉的旅程目前处于涨潮期 (${data['price']})，建议耐心等待价格退潮至 ${400} 以下。" if data['price'] > 400 else "价格退潮完成！棕榈泉的沙漠绿洲正在向您招手。"
 
         cards += f"""
-        <div class="info-card {pos_class}">
-            <div class="meta-tag">专属飞行航线 • {data['dates']}</div>
-            <div class="route-typography">{data['route_name']}</div>
-            <div class="price-section">
-                <span class="price-hero">${data['price']}</span>
-                <span class="price-unit">美金</span>
+        <div class="frosted-card {pos_class}">
+            <div class="meta-header">Private Flight Wave • {data['dates']}</div>
+            <div class="route-accent">{data['route_name']}</div>
+            <div class="price-hero">
+                <span class="price-large">${data['price']}</span>
+                <span class="price-curr">USD</span>
             </div>
             
-            <div class="market-brief">
-                <div class="meta-tag" style="font-size:0.6rem; color: #D81B60; margin-bottom:15px;">全市场比价智控</div>
+            <div class="market-sweep">
+                <div class="meta-header" style="font-size:0.6rem; color: #0077be; margin-bottom:15px;">Market Tide Briefing</div>
                 {comparison_html}
             </div>
             
-            <div class="memo-handwritten">助理建议：{memo_text}</div>
+            <div class="assistant-wave-memo">助理寄语：{memo_text}</div>
         </div>
         """
     return cards
