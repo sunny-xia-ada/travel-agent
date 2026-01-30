@@ -161,24 +161,21 @@ def calculate_stats(history: Dict, task_id: str) -> Dict:
     
     return {"avg_7d": round(avg_7d, 2), "status": status}
 
-def get_recommendation(task_id: str, current_price: float, stats: Dict, target: float) -> str:
-    """Generates a human-readable escape recommendation."""
+def get_recommendation(task_id: str, current_price: float, stats: Dict, target: float, route_name: str) -> str:
+    """Generates a human-readable escape recommendation with specific price targets."""
     avg = stats['avg_7d']
     status = stats['status']
     
     if current_price == 0:
-        return "Data unavailable. Monitor closely."
+        return "Intelligence unavailable. Stay prepared."
     
-    if current_price < target:
-        return f"🚨 Target hit! {task_id.replace('_', ' ').title()} is at a record low. Buy now."
+    if current_price <= target:
+        return f"🚨 Target hit! {route_name} is at ${current_price}. This is your moment—secure it now."
     
     if current_price < avg * 0.95:
-        return f"{task_id.replace('_', ' ').title()} is below average. Good time to consider."
+        return f"{route_name} is currently ${current_price}, dip detected below the 7-day average. Solid value."
     
-    if status == "Volatile":
-        return f"{task_id.replace('_', ' ').title()} is currently volatile. Prices are fluctuating; wait for a dip."
-    
-    return f"{task_id.replace('_', ' ').title()} is stable. No immediate rush, monitor for target."
+    return f"{route_name} is ${current_price}. I recommend holding for the ${target} target breakthrough."
 
 def generate_trend_chart(history: Dict):
     """Generates a monochromatic Cream Pink trend chart for the Loopy edition."""
@@ -248,20 +245,22 @@ def generate_price_spectrum(all_flights: List[Dict]) -> str:
     """
 
 def generate_html_report(reports_data: List[Dict], recommendations: List[str], hotels: List[Dict]):
-    """Generates a Loopy Soft-Focus Briefing with 'Travel Agent from 一丹' branding."""
+    """Generates a Creamy Loopy Briefing with 'Travel Agent from 一丹' branding."""
     today_str = datetime.date.today().strftime("%Y年%m月%d日")
     
     recommendation_html = "".join([f'<div class="loopy-memo-pill">{rec}</div>' for rec in recommendations])
     hotel_html = "".join([f"""
-        <div class="sanctuary-collage-card">
-            <div class="memo-tag">Recommended Stay</div>
-            <img src="{'hotel_sfo.png' if h['city'] == 'SFO' else 'hotel_psp.png'}" alt="{h['name']}">
+        <div class="sanctuary-vertical-card">
+            <div class="vibe-check-badge">Vibe Check</div>
+            <div class="media-frame">
+                <img src="{'hotel_sfo.png' if h['city'] == 'SFO' else 'hotel_psp.png'}" alt="{h['name']}">
+            </div>
             <div class="sanctuary-info">
                 <div class="sanctuary-name">{h['name']}</div>
                 <div class="sanctuary-vibe">{h['vibe']}</div>
-                <div class="sanctuary-price">Special rate from ${h['rate']}</div>
+                <div class="sanctuary-meta">Special rate from ${h['rate']}</div>
             </div>
-            <div class="assistant-handwritten">一丹，{h['tip']}</div>
+            <div class="assistant-handwritten">助理提示：{h['tip']}</div>
         </div>
     """ for h in hotels])
 
@@ -271,156 +270,168 @@ def generate_html_report(reports_data: List[Dict], recommendations: List[str], h
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Travel Agent from 一丹 | PRIVATE BRIEFING</title>
+    <title>Travel Agent from 一丹 | Bespoke Briefing</title>
     <link href="https://fonts.googleapis.com/css2?family=Mrs+Saint+Delafield&family=Outfit:wght@300;500;800&display=swap" rel="stylesheet">
     <style>
         :root {{
             --cream-pink: #FADADD;
             --dusty-rose: #B06C7E;
-            --loopy-glow: rgba(255, 248, 245, 0.4);
-            --text-dark: #4a4a4a;
+            --milky-white: rgba(255, 255, 250, 0.45);
+            --glow: 0 0 20px rgba(255, 255, 255, 0.9);
+            --text-main: #4a4a4a;
         }}
 
         * {{ margin: 0; padding: 0; box-sizing: border-box; }}
         
         body {{ 
             font-family: 'Outfit', sans-serif; 
-            background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 250, 250, 0.5)), 
+            background: linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4)), 
                         url('loopy_vacation_bg.png') no-repeat center center fixed;
             background-size: cover;
-            color: var(--text-dark);
+            color: var(--text-main);
             overflow-x: hidden;
-            padding: 100px 60px;
+            padding: 80px 40px;
         }}
 
-        header {{ margin-bottom: 220px; text-align: left; padding-left: 4%; }}
+        header {{ margin-bottom: 240px; text-align: left; padding-left: 6%; }}
         .header-title {{
             font-family: 'Mrs Saint Delafield', cursive;
-            font-size: 7rem;
-            color: var(--dusty-rose);
-            text-shadow: 0 0 10px rgba(255,255,255,0.9);
-            margin-bottom: 10px;
+            font-size: 8rem;
+            color: var(--cream-pink);
+            text-shadow: var(--glow), 0 0 40px rgba(255, 255, 255, 0.4);
+            margin-bottom: -15px;
+            letter-spacing: -2px;
         }}
-        .header-subtitle {{ font-weight: 800; letter-spacing: 10px; font-size: 0.9rem; color: var(--dusty-rose); opacity: 0.8; }}
+        .header-edition {{ font-weight: 800; letter-spacing: 12px; font-size: 0.8rem; color: var(--dusty-rose); opacity: 0.8; margin-bottom: 20px; }}
 
-        /* Collage Grid */
-        .collage-wrapper {{
+        /* Asymmetric Collage */
+        .dashboard-grid {{
             position: relative;
-            max-width: 1300px;
+            max-width: 1400px;
             margin: 0 auto;
-            height: 1000px;
-            margin-bottom: 150px;
+            height: 1100px;
+            margin-bottom: 200px;
         }}
 
-        .collage-card {{
+        .editorial-card {{
             position: absolute;
-            background: var(--loopy-glow);
+            background: var(--milky-white);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            padding: 50px;
-            border-radius: 60px;
-            border: 2px solid rgba(255, 255, 255, 0.7);
-            box-shadow: 20px 20px 40px rgba(176, 108, 126, 0.05);
-            width: 520px;
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            padding: 60px;
+            border-radius: 80px;
+            border: 3px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 30px 60px rgba(176, 108, 126, 0.05);
+            width: 580px;
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
         }}
         
-        .collage-card:hover {{ transform: scale(1.02) rotate(1deg); z-index: 50; }}
+        .editorial-card:hover {{ transform: translateY(-15px) scale(1.01); z-index: 100; }}
         
-        .pos-left {{ top: 0; left: 0; z-index: 10; }}
-        .pos-right {{ top: 380px; right: 0; z-index: 5; }}
+        .card-alpha {{ top: 0; left: 5%; z-index: 20; }}
+        .card-beta {{ top: 450px; right: 5%; z-index: 10; }}
 
-        .tag-label {{ font-size: 0.75rem; font-weight: 800; letter-spacing: 4px; color: var(--dusty-rose); text-transform: uppercase; margin-bottom: 25px; }}
-        .route-accent {{ font-family: 'Mrs Saint Delafield', cursive; font-size: 4rem; color: var(--dusty-rose); margin-bottom: 15px; }}
+        .meta-header {{ font-size: 0.75rem; font-weight: 800; letter-spacing: 5px; color: var(--dusty-rose); text-transform: uppercase; margin-bottom: 30px; }}
+        .route-title {{ font-family: 'Mrs Saint Delafield', cursive; font-size: 5rem; color: var(--dusty-rose); margin-bottom: 20px; }}
         
-        .hero-price {{ display: flex; align-items: baseline; gap: 15px; margin-bottom: 35px; }}
-        .price-big {{ font-size: 7.5rem; font-weight: 800; letter-spacing: -5px; line-height: 1; color: var(--dusty-rose); }}
-        .price-sub {{ font-size: 1.4rem; font-weight: 500; color: #a1a1a1; }}
+        .price-display {{ display: flex; align-items: baseline; gap: 20px; margin-bottom: 40px; }}
+        .price-val {{ font-size: 8.5rem; font-weight: 800; letter-spacing: -8px; line-height: 1; color: var(--dusty-rose); }}
+        .price-curr {{ font-size: 1.5rem; font-weight: 500; color: #b1b1b1; }}
 
-        .assistant-memo {{
+        .assistant-memo-box {{
             font-family: 'Mrs Saint Delafield', cursive;
-            font-size: 2.2rem;
+            font-size: 2.5rem;
             color: var(--dusty-rose);
             line-height: 1.1;
-            margin-top: 25px;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 30px;
+            margin-top: 30px;
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 40px;
+            border-left: 5px solid var(--cream-pink);
         }}
 
-        .market-comparison {{ margin-top: 35px; border-top: 1px dashed rgba(176, 108, 126, 0.2); padding-top: 25px; }}
-        .comparison-row {{ display: flex; justify-content: space-between; font-size: 0.9rem; padding: 4px 0; color: #888; }}
-        .best-pick {{ color: var(--dusty-rose); font-weight: 800; }}
+        .carrier-brief {{ margin-top: 40px; border-top: 2px dashed rgba(176, 108, 126, 0.1); padding-top: 30px; }}
+        .carrier-row {{ display: flex; justify-content: space-between; font-size: 0.95rem; padding: 6px 0; color: #8a8a8a; font-weight: 600; }}
+        .primary-carrier {{ color: var(--dusty-rose); font-weight: 800; }}
 
-        /* Sanctuary */
-        .sanctuary-title-box {{ text-align: center; margin-bottom: 100px; }}
-        .sanctuary-grid {{ display: flex; justify-content: center; gap: 70px; margin-bottom: 200px; }}
+        /* Sanctuary vertical frames */
+        .sanctuary-header {{ text-align: center; margin-bottom: 120px; }}
+        .sanctuary-grid {{ display: flex; justify-content: center; gap: 80px; margin-bottom: 200px; padding: 0 40px; }}
         
-        .sanctuary-collage-card {{ 
-            width: 460px; 
+        .sanctuary-vertical-card {{ 
+            width: 480px; 
             background: white; 
-            padding: 25px; 
-            border-radius: 70px;
-            box-shadow: 0 40px 80px rgba(176, 108, 126, 0.08); 
-            position: relative; 
-            overflow: hidden;
+            padding: 30px; 
+            border-radius: 90px;
+            box-shadow: 0 50px 100px rgba(176, 108, 126, 0.08); 
+            position: relative;
         }}
-        .sanctuary-collage-card img {{ width: 100%; height: 520px; object-fit: cover; border-radius: 50px; }}
-        .sanctuary-info {{ margin-top: 25px; text-align: center; }}
-        .sanctuary-name {{ font-size: 2rem; font-weight: 800; margin-bottom: 8px; color: var(--dusty-rose); }}
-        .sanctuary-vibe {{ font-size: 0.85rem; color: #a1a1a1; font-style: italic; margin-bottom: 12px; }}
-        .sanctuary-price {{ font-weight: 800; color: var(--dusty-rose); letter-spacing: 2px; text-transform: uppercase; font-size: 0.75rem; }}
-        .memo-tag {{ position: absolute; top: 15px; left: 30px; background: var(--cream-pink); color: var(--dusty-rose); padding: 5px 15px; border-radius: 20px; font-weight: 800; font-size: 0.7rem; }}
+        .media-frame {{ width: 100%; height: 600px; border-radius: 70px; overflow: hidden; margin-bottom: 30px; }}
+        .media-frame img {{ width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s ease; }}
+        .sanctuary-vertical-card:hover .media-frame img {{ transform: scale(1.05); }}
+        
+        .sanctuary-info {{ text-align: center; }}
+        .sanctuary-name {{ font-size: 2.2rem; font-weight: 800; color: var(--dusty-rose); margin-bottom: 10px; }}
+        .sanctuary-vibe {{ font-size: 0.9rem; color: #a1a1a1; font-style: italic; margin-bottom: 15px; }}
+        .sanctuary-meta {{ font-weight: 800; color: var(--dusty-rose); letter-spacing: 3px; text-transform: uppercase; font-size: 0.8rem; }}
+        
+        .vibe-check-badge {{ 
+            position: absolute; top: 50px; left: -20px; 
+            background: var(--cream-pink); color: white; 
+            padding: 10px 25px; border-radius: 40px; 
+            font-weight: 800; font-size: 0.8rem; transform: rotate(-5deg);
+            box-shadow: 0 10px 20px rgba(250, 218, 221, 0.4);
+        }}
 
-        /* Polaroid Polaroid */
-        .polaroid-container {{
-            max-width: 900px;
+        /* Polaroid Trend */
+        .editorial-polaroid {{
+            max-width: 950px;
             margin: 0 auto;
-            background: #fffcfb;
-            padding: 35px 35px 110px 35px;
-            box-shadow: 0 50px 100px rgba(176, 108, 126, 0.1);
+            background: #fff;
+            padding: 40px 40px 140px 40px;
+            box-shadow: 0 60px 120px rgba(176, 108, 126, 0.12);
             transform: rotate(-2deg);
-            border-radius: 3px;
+            border-radius: 4px;
             text-align: center;
-            margin-bottom: 120px;
+            margin-bottom: 150px;
         }}
-        .polaroid-container img {{ width: 100%; opacity: 0.95; }}
-        .polaroid-text {{ font-family: 'Mrs Saint Delafield', cursive; font-size: 3.5rem; color: var(--dusty-rose); margin-top: 45px; }}
+        .editorial-polaroid img {{ width: 100%; opacity: 0.9; }}
+        .polaroid-caption {{ font-family: 'Mrs Saint Delafield', cursive; font-size: 4rem; color: var(--dusty-rose); margin-top: 50px; }}
 
-        .memos-hub {{ margin-top: 120px; text-align: center; }}
-        .loopy-memo-pill {{ font-family: 'Mrs Saint Delafield', cursive; font-size: 3rem; color: var(--dusty-rose); margin-bottom: 15px; }}
+        .intelligence-summary {{ text-align: center; margin-bottom: 180px; }}
+        .loopy-memo-pill {{ font-family: 'Mrs Saint Delafield', cursive; font-size: 3.2rem; color: var(--dusty-rose); margin-bottom: 20px; }}
 
-        footer {{ text-align: center; margin-top: 200px; font-weight: 800; letter-spacing: 12px; font-size: 0.75rem; color: var(--dusty-rose); text-transform: uppercase; padding-bottom: 120px; opacity: 0.7; }}
+        footer {{ text-align: center; margin-top: 250px; font-weight: 800; letter-spacing: 15px; font-size: 0.8rem; color: var(--dusty-rose); text-transform: uppercase; padding-bottom: 150px; opacity: 0.6; }}
     </style>
 </head>
 <body>
     <header>
+        <div class="header-edition">Spring 2026 Collection • {today_str}</div>
         <h1 class="header-title">Travel Agent from 一丹</h1>
-        <div class="header-subtitle">SPRING COLLECTION • {today_str} • PRIVATE BRIEFING</div>
     </header>
 
-    <section class="collage-wrapper">
+    <section class="dashboard-grid">
         {generate_status_cards(reports_data)}
     </section>
 
-    <div class="sanctuary-title-box">
-        <h2 style="font-family: 'Mrs Saint Delafield', cursive; font-size: 5rem; color: var(--dusty-rose);">The Sanctuary Brief</h2>
+    <div class="sanctuary-header">
+        <h2 style="font-family: 'Mrs Saint Delafield', cursive; font-size: 6rem; color: var(--dusty-rose);">Sanctuary Highlights</h2>
     </div>
     <section class="sanctuary-grid">
         {hotel_html}
     </section>
 
-    <div class="polaroid-container">
-        <img src="price_trend.png" alt="Loopy Pulse">
-        <div class="polaroid-text">Market Intelligence Pulse</div>
+    <div class="editorial-polaroid">
+        <img src="price_trend.png" alt="Intelligence Pulse">
+        <div class="polaroid-caption">Market Fluctuations & Insight</div>
     </div>
 
-    <section class="memos-hub">
+    <section class="intelligence-summary">
         {recommendation_html}
     </section>
 
     <footer>
-        Antigravity Personalized Concierge • For Yidan Yan
+        Antigravity Personalized Intelligence • For Yidan Yan
     </footer>
 </body>
 </html>
@@ -431,34 +442,39 @@ def generate_html_report(reports_data: List[Dict], recommendations: List[str], h
 def generate_status_cards(reports_data: List[Dict]) -> str:
     cards = ""
     for data in reports_data:
-        pos_class = "pos-left" if "SFO" in data['route_name'] else "pos-right"
+        pos_class = "card-alpha" if "SFO" in data['route_name'] else "card-beta"
         
-        # Build comparison sweep
-        picks = [f for f in data['all_flights'] if f.get('is_priority')]
-        others = [f for f in data['all_flights'] if not f.get('is_priority')]
+        # Comparison logic: Alaska/Delta alerts, but show all for awareness
+        priorities = [f for f in data['all_flights'] if f.get('is_priority')]
+        alternatives = [f for f in data['all_flights'] if not f.get('is_priority')]
         
         comparison_html = ""
-        for p in picks[:2]: comparison_html += f'<div class="comparison-row best-pick"><span>{p["carrier"]} Primary</span><span>${p["price"]}</span></div>'
-        for o in others[:2]: comparison_html += f'<div class="comparison-row"><span>{o["carrier"]} Value</span><span>${o["price"]}</span></div>'
+        for p in priorities[:2]: 
+            comparison_html += f'<div class="carrier-row primary-carrier"><span>{p["carrier"]} Focus</span><span>${p["price"]}</span></div>'
+        for a in alternatives[:2]: 
+            comparison_html += f'<div class="carrier-row"><span>{a["carrier"]} Awareness</span><span>${a["price"]}</span></div>'
 
-        # Personal memo text
-        memo_text = "Highly recommended for seasonal timing." if "SFO" in data['route_name'] else "A perfect escape for your upcoming weekend."
+        # Assistant memo with positional awareness
+        if "SFO" in data['route_name']:
+            memo_text = f"SFO is currently ${data['price']}; hold for the $160 dip." if data['price'] > 160 else "The SFO target is cleared. Remarkable timing."
+        else:
+            memo_text = f"PSP is currently ${data['price']}; it's high season—watch for the $400 breakthrough." if data['price'] > 400 else "PSP breakthrough achieved. Secure your desert sanctuary."
 
         cards += f"""
-        <div class="collage-card {pos_class}">
-            <div class="tag-label">Private Flight • {data['dates']}</div>
-            <div class="route-accent">{data['route_name']}</div>
-            <div class="hero-price">
-                <span class="price-big">${data['price']}</span>
-                <span class="price-sub">USD / RT</span>
+        <div class="editorial-card {pos_class}">
+            <div class="meta-header">Private Flight Path • {data['dates']}</div>
+            <div class="route-title">{data['route_name']}</div>
+            <div class="price-display">
+                <span class="price-val">${data['price']}</span>
+                <span class="price-curr">USD</span>
             </div>
             
-            <div class="market-comparison">
-                <div class="tag-label" style="font-size:0.6rem; color: #B06C7E;">Concierge Market Brief</div>
+            <div class="carrier-brief">
+                <div class="meta-header" style="font-size:0.6rem; color: #B06C7E; margin-bottom:15px;">Market Situation Awareness</div>
                 {comparison_html}
             </div>
             
-            <div class="assistant-memo">助理追踪提示：{memo_text}</div>
+            <div class="assistant-memo-box">Insight: {memo_text}</div>
         </div>
         """
     return cards
@@ -516,7 +532,7 @@ async def run_tracker():
             "all_flights": all_flights,
         })
         
-        recommendations.append(get_recommendation(task_id, value_leader["price"], stats, task["price_trigger"]))
+        recommendations.append(get_recommendation(task_id, value_leader["price"], stats, task["price_trigger"], task['route_name']))
 
     save_history(history)
     generate_trend_chart(history)
