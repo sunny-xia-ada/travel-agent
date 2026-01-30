@@ -2,8 +2,8 @@
     "sf_weekend": {
         "latest": {
             "date": "2026-01-29",
-            "price": 207,
-            "market_avg": 297.0
+            "price": 257,
+            "market_avg": 312.56
         },
         "history": [
             {
@@ -198,14 +198,20 @@
                 "price": 207,
                 "carrier": "Delta",
                 "market_avg": 297.0
+            },
+            {
+                "date": "2026-01-29",
+                "price": 257,
+                "carrier": "United",
+                "market_avg": 312.56
             }
         ]
     },
     "desert_escape": {
         "latest": {
             "date": "2026-01-29",
-            "price": 505,
-            "market_avg": 677.0
+            "price": 490,
+            "market_avg": 676.0
         },
         "history": [
             {
@@ -400,6 +406,12 @@
                 "price": 505,
                 "carrier": "Alaska",
                 "market_avg": 677.0
+            },
+            {
+                "date": "2026-01-29",
+                "price": 490,
+                "carrier": "Alaska",
+                "market_avg": 676.0
             }
         ]
     }
