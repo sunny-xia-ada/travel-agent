@@ -216,6 +216,12 @@
                 "price": 257,
                 "carrier": "United",
                 "market_avg": 342.22
+            },
+            {
+                "date": "2026-01-30",
+                "price": 257,
+                "carrier": "United",
+                "market_avg": 342.22
             }
         ]
     },
@@ -430,6 +436,12 @@
                 "price": 490,
                 "carrier": "Alaska",
                 "market_avg": 676.0
+            },
+            {
+                "date": "2026-01-30",
+                "price": 505,
+                "carrier": "Alaska",
+                "market_avg": 657.58
             },
             {
                 "date": "2026-01-30",
