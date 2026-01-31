@@ -436,7 +436,7 @@ def generate_html_report(reports_data: List[Dict], recommendations: List[str], h
 </body>
 </html>
     """
-    with open("flight_report.html", "w") as f:
+    with open("index.html", "w") as f:
         f.write(html_template)
 
 def generate_status_cards(reports_data: List[Dict]) -> str:
@@ -537,7 +537,7 @@ async def run_tracker():
     save_history(history)
     generate_trend_chart(history)
     generate_html_report(reports_data, recommendations, HOTELS)
-    print("中文版 Loopy 更新完成: flight_report.html")
+    print("中文版 Loopy 更新完成: index.html")
 
 if __name__ == "__main__":
     asyncio.run(run_tracker())
