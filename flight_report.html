@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XYLab | Interactive Intelligence v10</title>
+    <title>XYLab | Hyper-Connected Intelligence v11</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700;900&display=swap" rel="stylesheet">
     <style>
         /* ─── RESET & ROOT ─────────────────────────────────── */
@@ -65,6 +65,46 @@
             min-height: 100vh;
             padding: 60px 20px;
             overflow-x: hidden;
+        }
+
+        /* ─── HYPERLINK STYLING ────────────────────────────── */
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        a:hover {
+            opacity: 0.75;
+        }
+
+        .poi-link {
+            color: var(--text-dark);
+            display: inline;
+            position: relative;
+        }
+
+        .poi-link b {
+            border-bottom: 1.5px solid rgba(255, 105, 180, 0.3);
+        }
+
+        .poi-link:hover b {
+            border-bottom-color: var(--pink);
+            color: var(--pink);
+        }
+
+        .map-icon {
+            font-size: 0.7rem;
+            vertical-align: middle;
+            margin-left: 2px;
+            filter: grayscale(1);
+            opacity: 0.5;
+        }
+
+        .poi-link:hover .map-icon {
+            filter: grayscale(0);
+            opacity: 1;
         }
 
         /* ─── HEADER ───────────────────────────────────────── */
@@ -299,7 +339,6 @@
             letter-spacing: 1px;
         }
 
-        /* Hidden inputs for functionality */
         .tab-input {
             display: none;
         }
@@ -316,7 +355,7 @@
             animation: fadeIn 0.4s ease;
         }
 
-        /* Tab switch logic */
+        /* Tab Visibility */
         #tab1-sfo:checked~.tab-triggers label[for="tab1-sfo"],
         #tab2-sfo:checked~.tab-triggers label[for="tab2-sfo"],
         #tab1-psp:checked~.tab-triggers label[for="tab1-psp"],
@@ -419,12 +458,24 @@
             font-size: 1.1rem;
             font-weight: 900;
             margin-bottom: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .mini-tag {
             font-size: 0.7rem;
             color: var(--pink);
             font-weight: 800;
+        }
+
+        .book-btn {
+            font-size: 0.6rem;
+            padding: 4px 8px;
+            background: rgba(255, 105, 180, 0.1);
+            border-radius: 6px;
+            color: var(--pink);
+            font-weight: 900;
         }
 
         /* ITINERARY STYLING */
@@ -474,11 +525,6 @@
             line-height: 1.5;
         }
 
-        .it-slot b {
-            color: var(--text-dark);
-            border-bottom: 1px solid rgba(255, 105, 180, 0.2);
-        }
-
         /* DUBAI RISKY ALERT */
         .dubai-glass {
             filter: grayscale(1) opacity(0.85);
@@ -513,6 +559,18 @@
             letter-spacing: 3px;
             font-size: 1.2rem;
             margin-bottom: 10px;
+        }
+
+        .news-link {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 25px;
+            border: 1.5px solid var(--risk-red);
+            border-radius: 50px;
+            color: var(--risk-red);
+            font-weight: 900;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
         }
 
         footer {
@@ -561,7 +619,7 @@
 <body>
 
     <header>
-        <span class="header-subtitle">Interactive Travel Intelligence</span>
+        <span class="header-subtitle">Hyper-Interactive Daily Intelligence</span>
         <h1 class="header-title">XYLab Travel Agent</h1>
     </header>
 
@@ -580,14 +638,14 @@
             <div class="b-val">$6,100</div>
         </div>
         <div class="budget-cell total">
-            <div class="b-label">🏆 年度旅行资产预估 (v10)</div>
+            <div class="b-label">🏆 年度旅行资产预估 (Hyper-Link v11)</div>
             <div class="b-val">$18,296</div>
         </div>
     </div>
 
     <div class="islands-container">
 
-        <!-- 🇸🇬 SINGAPORE - INTERACTIVE PANE -->
+        <!-- 🇸🇬 SINGAPORE -->
         <section class="island">
             <div class="island-banner accent-sin"></div>
             <div class="island-head">
@@ -606,68 +664,96 @@
                     <div class="st-status">🟢 SQ 直飞 (NON-STOP)</div>
                     <div class="st-price"><span>$</span>718</div>
                     <div style="font-size:0.8rem; line-height:1.6; color:var(--text-mid); margin-top:10px;">🤖 XYLab
-                        短评：新加坡航空服务极佳，作为九月跨国资产配置首选，稳定性处于最高等级。</div>
+                        短评：新加坡航空服务极佳。点击行程中的加粗地名可直接在地图中查看。</div>
                 </div>
                 <div class="interactive-pane">
                     <div class="tab-box">
                         <input type="radio" name="sin-tabs" id="tab1-sin" class="tab-input" checked>
                         <input type="radio" name="sin-tabs" id="tab2-sin" class="tab-input">
-
                         <div class="tab-triggers">
                             <label for="tab1-sin" class="tab-trigger">SUMMARY 亮点概要</label>
                             <label for="tab2-sin" class="tab-trigger">FULL GUIDE 完整指南</label>
                         </div>
-
                         <div class="tab-content-wrapper">
-                            <!-- SUMMARY -->
                             <div class="tab-panel pane-summary">
                                 <div class="itinerary-grid">
                                     <div class="it-day">
                                         <div class="it-day-num">1</div>
-                                        <div class="it-title">星耀入境 & 巅峰飨宴</div>
+                                        <div class="it-title">星耀入境 & 巅峰法餐</div>
                                         <div class="it-meal-row">
-                                            <div class="it-slot">上午：<b>Jewel Changi</b> 室内瀑布巡礼，体验极致人工自然。</div>
-                                            <div class="it-slot">晚餐：<b>Odette</b> (米其林三星) 极致法餐体验。</div>
+                                            <div class="it-slot">上午：<a
+                                                    href="https://www.google.com/maps/search/Jewel+Changi+Singapore"
+                                                    target="_blank" class="poi-link"><b>Jewel Changi</b><span
+                                                        class="map-icon">📍</span></a> 室内瀑布。</div>
+                                            <div class="it-slot">晚餐：<a
+                                                    href="https://www.google.com/maps/search/Odette+Singapore"
+                                                    target="_blank" class="poi-link"><b>Odette</b> 3★<span
+                                                        class="map-icon">📍</span></a> 极致法餐。</div>
                                         </div>
                                     </div>
                                     <div
                                         style="background:rgba(255,105,180,0.05); padding:15px; border-radius:15px; font-size:0.8rem; color:var(--pink); font-weight:800;">
-                                        ✨ 精选必吃：National Kitchen, Burnt Ends, Candlenut, Atlas Bar.
+                                        ✨ 精选：<a
+                                            href="https://www.google.com/maps/search/National+Kitchen+by+Violet+Oon+Singapore"
+                                            target="_blank">National Kitchen</a>, <a
+                                            href="https://www.google.com/maps/search/Burnt+Ends+Singapore"
+                                            target="_blank">Burnt Ends</a>, <a
+                                            href="https://www.google.com/maps/search/Atlas+Bar+Singapore"
+                                            target="_blank">Atlas Bar</a>.
                                     </div>
                                 </div>
                             </div>
-                            <!-- FULL GUIDE (7 Days Preserved) -->
                             <div class="tab-panel pane-full">
                                 <div class="itinerary-grid">
                                     <div class="it-day">
                                         <div class="it-day-num">1</div>
                                         <div class="it-title">星耀巡礼</div>
                                         <div class="it-meal-row">
-                                            <div class="it-slot"><b>Jewel Changi</b> / <b>National Kitchen</b></div>
-                                            <div class="it-slot">滨海湾花园 / <b>Odette</b> (3★)</div>
+                                            <div class="it-slot"><a
+                                                    href="https://www.google.com/maps/search/Jewel+Changi+Singapore"
+                                                    target="_blank" class="poi-link"><b>Jewel Changi</b></a> / <a
+                                                    href="https://www.google.com/maps/search/National+Kitchen+by+Violet+Oon+Singapore"
+                                                    target="_blank" class="poi-link"><b>National Kitchen</b></a></div>
+                                            <div class="it-slot">滨海湾花园 / <a
+                                                    href="https://www.google.com/maps/search/Odette+Singapore"
+                                                    target="_blank" class="poi-link"><b>Odette</b> 3★</a></div>
                                         </div>
                                     </div>
                                     <div class="it-day">
                                         <div class="it-day-num">2</div>
-                                        <div class="it-title">艺术烟火</div>
+                                        <div class="it-title">艺术与火</div>
                                         <div class="it-meal-row">
-                                            <div class="it-slot"><b>ArtScience Museum</b> / <b>Burnt Ends</b></div>
-                                            <div class="it-slot"><b>Tiong Bahru</b> / <b>Atlas Bar</b></div>
+                                            <div class="it-slot"><a
+                                                    href="https://www.google.com/maps/search/ArtScience+Museum+Singapore"
+                                                    target="_blank" class="poi-link"><b>ArtScience Museum</b></a> / <a
+                                                    href="https://www.google.com/maps/search/Burnt+Ends+Singapore"
+                                                    target="_blank" class="poi-link"><b>Burnt Ends</b></a></div>
+                                            <div class="it-slot"><a
+                                                    href="https://www.google.com/maps/search/Tiong+Bahru+Singapore"
+                                                    target="_blank" class="poi-link"><b>Tiong Bahru</b></a> / <a
+                                                    href="https://www.google.com/maps/search/Atlas+Bar+Singapore"
+                                                    target="_blank" class="poi-link"><b>Atlas Bar</b></a></div>
                                         </div>
                                     </div>
                                     <div class="it-day">
                                         <div class="it-day-num">3</div>
                                         <div class="it-title">狮城核心</div>
                                         <div class="it-meal-row">
-                                            <div class="it-slot">鱼尾狮码头 / <b>Jumbo Seafood</b></div>
-                                            <div class="it-slot">乌节路购物 / <b>Candlenut</b> (1★)</div>
+                                            <div class="it-slot">鱼尾狮 / <a
+                                                    href="https://www.google.com/maps/search/Jumbo+Seafood+Riverside+Singapore"
+                                                    target="_blank" class="poi-link"><b>Jumbo Seafood</b></a></div>
+                                            <div class="it-slot">乌节路 / <a
+                                                    href="https://www.google.com/maps/search/Candlenut+Singapore"
+                                                    target="_blank" class="poi-link"><b>Candlenut</b> 1★</a></div>
                                         </div>
                                     </div>
                                     <div class="it-day">
                                         <div class="it-day-num">4</div>
                                         <div class="it-title">圣淘沙逃离</div>
                                         <div class="it-meal-row">
-                                            <div class="it-slot">海滩探索 / <b>Spago Dining</b></div>
+                                            <div class="it-slot">海滩 / <a
+                                                    href="https://www.google.com/maps/search/Spago+Singapore"
+                                                    target="_blank" class="poi-link"><b>Spago Dining</b></a></div>
                                             <div class="it-slot">麦士威食阁 / 夜间动物园</div>
                                         </div>
                                     </div>
@@ -675,24 +761,36 @@
                                         <div class="it-day-num">5</div>
                                         <div class="it-title">多元文化</div>
                                         <div class="it-meal-row">
-                                            <div class="it-slot">甘榜格南 / <b>Zam Zam</b></div>
-                                            <div class="it-slot">哈芝巷买手店 / <b>Cloud Street</b></div>
+                                            <div class="it-slot">甘榜格南 / <a
+                                                    href="https://www.google.com/maps/search/Zam+Zam+Singapore"
+                                                    target="_blank" class="poi-link"><b>Zam Zam</b></a></div>
+                                            <div class="it-slot">哈芝巷 / <a
+                                                    href="https://www.google.com/maps/search/Cloud+Street+Singapore"
+                                                    target="_blank" class="poi-link"><b>Cloud Street</b></a></div>
                                         </div>
                                     </div>
                                     <div class="it-day">
                                         <div class="it-day-num">6</div>
                                         <div class="it-title">殖民余韵</div>
                                         <div class="it-meal-row">
-                                            <div class="it-slot">小印度 / <b>Banana Leaf Apolo</b></div>
-                                            <div class="it-slot">登普西山 / <b>The White Rabbit</b></div>
+                                            <div class="it-slot">小印度 / <a
+                                                    href="https://www.google.com/maps/search/Banana+Leaf+Apolo+Singapore"
+                                                    target="_blank" class="poi-link"><b>Banana Leaf</b></a></div>
+                                            <div class="it-slot">登普西山 / <a
+                                                    href="https://www.google.com/maps/search/The+White+Rabbit+Singapore"
+                                                    target="_blank" class="poi-link"><b>White Rabbit</b></a></div>
                                         </div>
                                     </div>
                                     <div class="it-day">
                                         <div class="it-day-num">7</div>
                                         <div class="it-title">自然呼吸</div>
                                         <div class="it-meal-row">
-                                            <div class="it-slot">麦里芝蓄水池 / <b>Open Farm</b></div>
-                                            <div class="it-slot">Raffles / <b>Long Bar</b> 金酒</div>
+                                            <div class="it-slot">麦里芝蓄水池 / <a
+                                                    href="https://www.google.com/maps/search/Open+Farm+Community+Singapore"
+                                                    target="_blank" class="poi-link"><b>Open Farm</b></a></div>
+                                            <div class="it-slot">Raffles / <a
+                                                    href="https://www.google.com/maps/search/Long+Bar+Raffles+Singapore"
+                                                    target="_blank" class="poi-link"><b>Long Bar</b></a></div>
                                         </div>
                                     </div>
                                 </div>
@@ -704,32 +802,35 @@
             <div class="hotel-scroll-section">
                 <div class="scroll-header">XYLab Hotel Curation 🏨</div>
                 <div class="hotel-stripe">
-                    <div class="hotel-mini-card">
+                    <a href="https://www.google.com/maps/search/YOTEL+Singapore+Orchard" target="_blank"
+                        class="hotel-mini-card">
                         <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800" class="mini-img">
                         <div class="mini-info">
-                            <div class="mini-name">YOTEL Orchard</div>
-                            <div class="mini-tag">极简科技避风港 | Est. $255</div>
+                            <div class="mini-name">YOTEL Orchard <span class="book-btn">🏨 BOOK</span></div>
+                            <div class="mini-tag">科技避风港 | Est. $255</div>
                         </div>
-                    </div>
-                    <div class="hotel-mini-card">
+                    </a>
+                    <a href="https://www.google.com/maps/search/lyf+Bugis+Singapore" target="_blank"
+                        class="hotel-mini-card">
                         <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800" class="mini-img">
                         <div class="mini-info">
-                            <div class="mini-name">lyf Bugis</div>
-                            <div class="mini-tag">数字游民社交空间 | Est. $198</div>
+                            <div class="mini-name">lyf Bugis <span class="book-btn">🏨 BOOK</span></div>
+                            <div class="mini-tag">社交空间 | Est. $198</div>
                         </div>
-                    </div>
-                    <div class="hotel-mini-card">
+                    </a>
+                    <a href="https://www.google.com/maps/search/Marina+Bay+Sands+Singapore" target="_blank"
+                        class="hotel-mini-card">
                         <img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800" class="mini-img">
                         <div class="mini-info">
-                            <div class="mini-name">Marina Bay Sands</div>
-                            <div class="mini-tag">地标巅峰视角 | Est. $680</div>
+                            <div class="mini-name">MBS Singapore <span class="book-btn">🏨 BOOK</span></div>
+                            <div class="mini-tag">巅峰视角 | Est. $680</div>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </div>
         </section>
 
-        <!-- 🌉 SFO - INTERACTIVE PANE -->
+        <!-- 🌉 SFO -->
         <section class="island">
             <div class="island-banner accent-sfo"></div>
             <div class="island-head">
@@ -748,7 +849,7 @@
                     <div class="st-status">🟢 联合/阿拉斯加直飞 (NON-STOP)</div>
                     <div class="st-price"><span>$</span>452</div>
                     <div style="font-size:0.8rem; line-height:1.6; color:var(--text-mid); margin-top:10px;">🤖
-                        核心建议：五日行程适合高强度艺术巡礼，Hayes Valley 是精品购物的绝对核心。</div>
+                        资深建议：SFMOMA 是必看。Hayes Valley 则是本地精英最推崇的购物街区。</div>
                 </div>
                 <div class="interactive-pane">
                     <div class="tab-box">
@@ -763,15 +864,27 @@
                                 <div class="itinerary-grid">
                                     <div class="it-day">
                                         <div class="it-day-num">1</div>
-                                        <div class="it-title">艺术巡礼 & 经典风味</div>
+                                        <div class="it-title">现代艺术 & 明星主厨</div>
                                         <div class="it-meal-row">
-                                            <div class="it-slot">上午：<b>SFMOMA</b> 现代艺术巡礼。</div>
-                                            <div class="it-slot">晚餐：<b>State Bird Provisions</b> (米其林一星)。</div>
+                                            <div class="it-slot">上午：<a
+                                                    href="https://www.google.com/maps/search/SFMOMA+San+Francisco"
+                                                    target="_blank" class="poi-link"><b>SFMOMA</b><span
+                                                        class="map-icon">📍</span></a> 膜拜杰作。</div>
+                                            <div class="it-slot">晚餐：<a
+                                                    href="https://www.google.com/maps/search/State+Bird+Provisions+San+Francisco"
+                                                    target="_blank" class="poi-link"><b>State Bird Provisions</b><span
+                                                        class="map-icon">📍</span></a> 创意美餐。</div>
                                         </div>
                                     </div>
                                     <div
                                         style="background:rgba(252,92,125,0.05); padding:15px; border-radius:15px; font-size:0.8rem; color:#fc5c7d; font-weight:800;">
-                                        ✨ 精选必吃：Sons & Daughters, Benu, Tartine Bakery, Zuni Cafe.
+                                        ✨ 坐标：<a
+                                            href="https://www.google.com/maps/search/Sons+and+Daughters+San+Francisco"
+                                            target="_blank">Sons & Daughters</a>, <a
+                                            href="https://www.google.com/maps/search/Ferry+Building+San+Francisco"
+                                            target="_blank">Ferry Building</a>, <a
+                                            href="https://www.google.com/maps/search/Benu+San+Francisco"
+                                            target="_blank">Benu</a>.
                                     </div>
                                 </div>
                             </div>
@@ -781,40 +894,56 @@
                                         <div class="it-day-num">1</div>
                                         <div class="it-title">艺术原点</div>
                                         <div class="it-meal-row">
-                                            <div class="it-slot"><b>SFMOMA</b> / <b>In-Situ</b></div>
-                                            <div class="it-slot"><b>Ferry Building</b> / <b>State Bird</b></div>
+                                            <div class="it-slot"><a
+                                                    href="https://www.google.com/maps/search/SFMOMA+San+Francisco"
+                                                    target="_blank" class="poi-link"><b>SFMOMA</b></a> / <b>In-Situ</b>
+                                            </div>
+                                            <div class="it-slot"><a
+                                                    href="https://www.google.com/maps/search/Ferry+Building+San+Francisco"
+                                                    target="_blank" class="poi-link"><b>Ferry Building</b></a> / <a
+                                                    href="https://www.google.com/maps/search/State+Bird+Provisions+San+Francisco"
+                                                    target="_blank" class="poi-link"><b>State Bird</b></a></div>
                                         </div>
                                     </div>
                                     <div class="it-day">
                                         <div class="it-day-num">2</div>
                                         <div class="it-title">雾城俯瞰</div>
                                         <div class="it-meal-row">
-                                            <div class="it-slot"><b>Twin Peaks</b> / <b>Zuni Cafe</b></div>
-                                            <div class="it-slot"><b>Hayes Valley</b> / <b>Sons & Daughters</b></div>
+                                            <div class="it-slot">Twin Peaks / Zuni Cafe</div>
+                                            <div class="it-slot"><a
+                                                    href="https://www.google.com/maps/search/Hayes+Valley+San+Francisco"
+                                                    target="_blank" class="poi-link"><b>Hayes Valley</b></a> / <a
+                                                    href="https://www.google.com/maps/search/Sons+and+Daughters+San+Francisco"
+                                                    target="_blank" class="poi-link"><b>Sons & Daughters</b></a></div>
                                         </div>
                                     </div>
                                     <div class="it-day">
                                         <div class="it-day-num">3</div>
-                                        <div class="it-title">波希米亚灵魂</div>
+                                        <div class="it-title">遗世灵魂</div>
                                         <div class="it-meal-row">
-                                            <div class="it-slot">Mission / <b>Tartine</b></div>
-                                            <div class="it-slot">Dolores / <b>Benu</b> (3★)</div>
+                                            <div class="it-slot"><a
+                                                    href="https://www.google.com/maps/search/Mission+District+San+Francisco"
+                                                    target="_blank" class="poi-link"><b>Mission District</b></a> /
+                                                Tartine</div>
+                                            <div class="it-slot">Dolores / <a
+                                                    href="https://www.google.com/maps/search/Benu+San+Francisco"
+                                                    target="_blank" class="poi-link"><b>Benu</b> 3★</a></div>
                                         </div>
                                     </div>
                                     <div class="it-day">
                                         <div class="it-day-num">4</div>
-                                        <div class="it-title">海岸线资产</div>
+                                        <div class="it-title">海岸资产</div>
                                         <div class="it-meal-row">
-                                            <div class="it-slot">金门骑行 / <b>Swan Oyster</b></div>
-                                            <div class="it-slot">Lands End / <b>Aziza</b></div>
+                                            <div class="it-slot">金门骑行 / Swan Oyster</div>
+                                            <div class="it-slot">Lands End / Aziza</div>
                                         </div>
                                     </div>
                                     <div class="it-day">
                                         <div class="it-day-num">5</div>
                                         <div class="it-title">和风余韵</div>
                                         <div class="it-meal-row">
-                                            <div class="it-slot">日本城禅意 / <b>Marufuku</b></div>
-                                            <div class="it-slot">精品购物 / 返程</div>
+                                            <div class="it-slot">日本城 / Marufuku</div>
+                                            <div class="it-slot">免税购物 / 返程</div>
                                         </div>
                                     </div>
                                 </div>
@@ -826,32 +955,27 @@
             <div class="hotel-scroll-section">
                 <div class="scroll-header">XYLab Hotel Curation 🏨</div>
                 <div class="hotel-stripe">
-                    <div class="hotel-mini-card">
+                    <a href="https://www.google.com/maps/search/Hotel+Kabuki+San+Francisco" target="_blank"
+                        class="hotel-mini-card">
                         <img src="https://images.unsplash.com/photo-1503174971373-b1f69850bded?w=800" class="mini-img">
                         <div class="mini-info">
-                            <div class="mini-name">Hotel Kabuki</div>
-                            <div class="mini-tag">日式禅意美学 | Est. $315</div>
+                            <div class="mini-name">Hotel Kabuki <span class="book-btn">🏨 BOOK</span></div>
+                            <div class="mini-tag">日式禅意 | Est. $315</div>
                         </div>
-                    </div>
-                    <div class="hotel-mini-card">
+                    </a>
+                    <a href="https://www.google.com/maps/search/SF+Proper+Hotel+San+Francisco" target="_blank"
+                        class="hotel-mini-card">
                         <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800" class="mini-img">
                         <div class="mini-info">
-                            <div class="mini-name">SF Proper</div>
-                            <div class="mini-tag">视觉艺术盛宴 | Est. $380</div>
+                            <div class="mini-name">SF Proper <span class="book-btn">🏨 BOOK</span></div>
+                            <div class="mini-tag">艺术视觉 | Est. $380</div>
                         </div>
-                    </div>
-                    <div class="hotel-mini-card">
-                        <img src="https://images.unsplash.com/photo-1551882547-ff43c33ff78e?w=800" class="mini-img">
-                        <div class="mini-info">
-                            <div class="mini-name">1 Hotel SFO</div>
-                            <div class="mini-tag">可持续奢华 | Est. $490</div>
-                        </div>
-                    </div>
+                    </a>
                 </div>
             </div>
         </section>
 
-        <!-- 🌵 PSP - INTERACTIVE PANE -->
+        <!-- 🌵 PSP -->
         <section class="island">
             <div class="island-banner accent-psp"></div>
             <div class="island-head">
@@ -883,15 +1007,26 @@
                                 <div class="itinerary-grid">
                                     <div class="it-day">
                                         <div class="it-day-num">1</div>
-                                        <div class="it-title">沙漠入境 & 雪山奇遇</div>
+                                        <div class="it-title">雪山奇遇 & 工业极佳</div>
                                         <div class="it-meal-row">
-                                            <div class="it-slot">下午：<b>Aerial Tramway</b> 高空缆车。</div>
-                                            <div class="it-slot">晚餐：<b>Workshop Kitchen</b> 工业风极致。</div>
+                                            <div class="it-slot">下午：<a
+                                                    href="https://www.google.com/maps/search/Palm+Springs+Aerial+Tramway"
+                                                    target="_blank" class="poi-link"><b>Aerial Tramway</b><span
+                                                        class="map-icon">📍</span></a> 缆车。</div>
+                                            <div class="it-slot">晚餐：<a
+                                                    href="https://www.google.com/maps/search/Workshop+Kitchen+Palm+Springs"
+                                                    target="_blank" class="poi-link"><b>Workshop Kitchen</b><span
+                                                        class="map-icon">📍</span></a> 极致工业。</div>
                                         </div>
                                     </div>
                                     <div
                                         style="background:rgba(247,151,30,0.05); padding:15px; border-radius:15px; font-size:0.8rem; color:var(--orange); font-weight:800;">
-                                        ✨ 精选必吃：The Pink Cabana, Sandfish Sushi, Birba, Cheeky's.
+                                        ✨ 精选：<a href="https://www.google.com/maps/search/Parker+Palm+Springs"
+                                            target="_blank">Parker</a>, <a
+                                            href="https://www.google.com/maps/search/The+Pink+Cabana+Palm+Springs"
+                                            target="_blank">Pink Cabana</a>, <a
+                                            href="https://www.google.com/maps/search/Joshua+Tree+National+Park"
+                                            target="_blank">Joshua Tree</a>.
                                     </div>
                                 </div>
                             </div>
@@ -901,46 +1036,60 @@
                                         <div class="it-day-num">1</div>
                                         <div class="it-title">沙漠入境</div>
                                         <div class="it-meal-row">
-                                            <div class="it-slot"><b>Tramway</b> / <b>Sandfish</b></div>
-                                            <div class="it-slot">植物园 / <b>Workshop</b></div>
+                                            <div class="it-slot"><a
+                                                    href="https://www.google.com/maps/search/Palm+Springs+Aerial+Tramway"
+                                                    target="_blank" class="poi-link"><b>Tramway</b></a> /
+                                                <b>Sandfish</b></div>
+                                            <div class="it-slot"><a
+                                                    href="https://www.google.com/maps/search/Moorten+Botanical+Garden+Palm+Springs"
+                                                    target="_blank" class="poi-link"><b>Moorten植物园</b></a> / <a
+                                                    href="https://www.google.com/maps/search/Workshop+Kitchen+Palm+Springs"
+                                                    target="_blank" class="poi-link"><b>Workshop</b></a></div>
                                         </div>
                                     </div>
                                     <div class="it-day">
                                         <div class="it-day-num">2</div>
-                                        <div class="it-title">粉红复古</div>
+                                        <div class="it-title">复古庄园</div>
                                         <div class="it-meal-row">
-                                            <div class="it-slot"><b>Parker</b> / <b>Pink Cabana</b></div>
-                                            <div class="it-slot">El Paseo / <b>Bootlegger</b></div>
+                                            <div class="it-slot"><a
+                                                    href="https://www.google.com/maps/search/Parker+Palm+Springs"
+                                                    target="_blank" class="poi-link"><b>Parker PSP</b></a> / <a
+                                                    href="https://www.google.com/maps/search/The+Pink+Cabana+Palm+Springs"
+                                                    target="_blank" class="poi-link"><b>Pink Cabana</b></a></div>
+                                            <div class="it-slot">El Paseo / Bootlegger</div>
                                         </div>
                                     </div>
                                     <div class="it-day">
                                         <div class="it-day-num">3</div>
-                                        <div class="it-title">约书亚树</div>
+                                        <div class="it-title">荒漠奇观</div>
                                         <div class="it-meal-row">
-                                            <div class="it-slot">国家公园 / <b>Crossroads</b></div>
-                                            <div class="it-slot">日落 / <b>Pappy & Harriet's</b></div>
+                                            <div class="it-slot"><a
+                                                    href="https://www.google.com/maps/search/Joshua+Tree+National+Park"
+                                                    target="_blank" class="poi-link"><b>Joshua Tree</b></a> / Crossroads
+                                            </div>
+                                            <div class="it-slot">日落 / Pappy & Harriet's</div>
                                         </div>
                                     </div>
                                     <div class="it-day">
                                         <div class="it-day-num">4</div>
                                         <div class="it-title">中世纪美学</div>
                                         <div class="it-meal-row">
-                                            <div class="it-slot">Art Museum / <b>Farm</b></div>
-                                            <div class="it-slot">建筑之旅 / <b>Birba</b></div>
+                                            <div class="it-slot">Art Museum / Farm</div>
+                                            <div class="it-slot">建筑之路 / Birba</div>
                                         </div>
                                     </div>
                                     <div class="it-day">
                                         <div class="it-day-num">5</div>
                                         <div class="it-title">设计街区</div>
                                         <div class="it-meal-row">
-                                            <div class="it-slot">Uptown / <b>Cheeky's</b></div>
-                                            <div class="it-slot">泳池 / <b>Amigo Room</b></div>
+                                            <div class="it-slot">Uptown / Cheeky's</div>
+                                            <div class="it-slot">Ace Pool / Amigo Room</div>
                                         </div>
                                     </div>
                                     <div class="it-day">
                                         <div class="it-day-num">6</div>
                                         <div class="it-title">沙漠告别</div>
-                                        <div class="it-slot">禅意早餐 / 返程</div>
+                                        <div class="it-slot">晨间早餐 / 返程</div>
                                     </div>
                                 </div>
                             </div>
@@ -951,25 +1100,27 @@
             <div class="hotel-scroll-section">
                 <div class="scroll-header">XYLab Hotel Curation 🏨</div>
                 <div class="hotel-stripe">
-                    <div class="hotel-mini-card"><img
+                    <a href="https://www.google.com/maps/search/Ace+Hotel+Palm+Springs" target="_blank"
+                        class="hotel-mini-card"><img
                             src="https://images.unsplash.com/photo-1496417263034-38ec4f0b665a?w=800" class="mini-img">
                         <div class="mini-info">
-                            <div class="mini-name">Ace Hotel PSP</div>
-                            <div class="mini-tag">波希米亚逃离 | Est. $360</div>
+                            <div class="mini-name">Ace Hotel PSP <span class="book-btn">🏨 BOOK</span></div>
+                            <div class="mini-tag">波希米亚 | Est. $360</div>
                         </div>
-                    </div>
-                    <div class="hotel-mini-card"><img
+                    </a>
+                    <a href="https://www.google.com/maps/search/Parker+Palm+Springs" target="_blank"
+                        class="hotel-mini-card"><img
                             src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=800" class="mini-img">
                         <div class="mini-info">
-                            <div class="mini-name">Parker PSP</div>
+                            <div class="mini-name">Parker PSP <span class="book-btn">🏨 BOOK</span></div>
                             <div class="mini-tag">复古庄园 | Est. $750</div>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </div>
         </section>
 
-        <!-- 🌴 DPS - INTERACTIVE PANE -->
+        <!-- 🌴 DPS -->
         <section class="island">
             <div class="island-banner accent-dps"></div>
             <div class="island-head">
@@ -1001,15 +1152,26 @@
                                 <div class="itinerary-grid">
                                     <div class="it-day">
                                         <div class="it-day-num">1</div>
-                                        <div class="it-title">创意入境 & 实验料理</div>
+                                        <div class="it-title">创意美学 & 实验派</div>
                                         <div class="it-meal-row">
-                                            <div class="it-slot">下午：<b>Potato Head Studios</b> 探索。</div>
-                                            <div class="it-slot">晚餐：<b>Locavore</b> (亚洲50强)。</div>
+                                            <div class="it-slot">下午：<a
+                                                    href="https://www.google.com/maps/search/Potato+Head+Studios+Bali"
+                                                    target="_blank" class="poi-link"><b>Potato Head</b><span
+                                                        class="map-icon">📍</span></a> 创意空间。</div>
+                                            <div class="it-slot">晚餐：<a
+                                                    href="https://www.google.com/maps/search/Locavore+Bali"
+                                                    target="_blank" class="poi-link"><b>Locavore</b><span
+                                                        class="map-icon">📍</span></a> 亚洲50强。</div>
                                         </div>
                                     </div>
                                     <div
                                         style="background:rgba(19,78,94,0.05); padding:15px; border-radius:15px; font-size:0.8rem; color:#134e5e; font-weight:800;">
-                                        ✨ 精选必吃：Mama San, Mozaic, Merah Putih, Aperitif, Sundara.
+                                        ✨ 坐标：<a href="https://www.google.com/maps/search/Ubud+Jungle+Bali"
+                                            target="_blank">Ubud Jungle</a>, <a
+                                            href="https://www.google.com/maps/search/Uluwatu+Temple+Bali"
+                                            target="_blank">Uluwatu Temple</a>, <a
+                                            href="https://www.google.com/maps/search/Mama+San+Bali" target="_blank">Mama
+                                            San</a>.
                                     </div>
                                 </div>
                             </div>
@@ -1019,62 +1181,59 @@
                                         <div class="it-day-num">1</div>
                                         <div class="it-title">创意入境</div>
                                         <div class="it-meal-row">
-                                            <div class="it-slot">Potato Head / 仓谷</div>
-                                            <div class="it-slot">Mama San / <b>Locavore</b></div>
+                                            <div class="it-slot"><a
+                                                    href="https://www.google.com/maps/search/Potato+Head+Studios+Bali"
+                                                    target="_blank" class="poi-link"><b>Potato Head</b></a> / 仓谷</div>
+                                            <div class="it-slot"><a
+                                                    href="https://www.google.com/maps/search/Mama+San+Bali"
+                                                    target="_blank" class="poi-link"><b>Mama San</b></a> / <a
+                                                    href="https://www.google.com/maps/search/Locavore+Bali"
+                                                    target="_blank" class="poi-link"><b>Locavore</b></a></div>
                                         </div>
                                     </div>
                                     <div class="it-day">
                                         <div class="it-day-num">2</div>
                                         <div class="it-title">乌布丛林</div>
                                         <div class="it-meal-row">
-                                            <div class="it-slot">Jungle Trek / Hujan</div>
-                                            <div class="it-slot">圣猴森林 / <b>Mozaic</b></div>
+                                            <div class="it-slot"><a
+                                                    href="https://www.google.com/maps/search/Ubud+Jungle+Bali"
+                                                    target="_blank" class="poi-link"><b>Ubud Jungle</b></a> / Hujan
+                                            </div>
+                                            <div class="it-slot">圣猴森林 / <a
+                                                    href="https://www.google.com/maps/search/Mozaic+Bali"
+                                                    target="_blank" class="poi-link"><b>Mozaic</b></a></div>
                                         </div>
                                     </div>
                                     <div class="it-day">
                                         <div class="it-day-num">3</div>
                                         <div class="it-title">断崖落日</div>
                                         <div class="it-meal-row">
-                                            <div class="it-slot">断崖探索 / Single Fin</div>
-                                            <div class="it-slot">Sunset / <b>El Kabron</b></div>
+                                            <div class="it-slot"><a
+                                                    href="https://www.google.com/maps/search/Uluwatu+Temple+Bali"
+                                                    target="_blank" class="poi-link"><b>Uluwatu</b></a> / Single Fin
+                                            </div>
+                                            <div class="it-slot">Sunset / <a
+                                                    href="https://www.google.com/maps/search/El+Kabron+Bali"
+                                                    target="_blank" class="poi-link"><b>El Kabron</b></a></div>
                                         </div>
                                     </div>
                                     <div class="it-day">
                                         <div class="it-day-num">4</div>
-                                        <div class="it-title">梯田资产</div>
+                                        <div class="it-title">水疗余韵</div>
                                         <div class="it-meal-row">
-                                            <div class="it-slot">德格拉朗 / Akasha</div>
-                                            <div class="it-slot">徒步 / <b>Blanco</b></div>
+                                            <div class="it-slot">Seminyak / Sisterfields</div>
+                                            <div class="it-slot"><a
+                                                    href="https://www.google.com/maps/search/Bodyworks+Bali"
+                                                    target="_blank" class="poi-link"><b>Bodyworks Spa</b></a> / Mason
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="it-day">
                                         <div class="it-day-num">5</div>
-                                        <div class="it-title">水疗修护</div>
-                                        <div class="it-meal-row">
-                                            <div class="it-slot">Seminyak / Sisterfields</div>
-                                            <div class="it-slot">Bodyworks / <b>Mason</b></div>
-                                        </div>
-                                    </div>
-                                    <div class="it-day">
-                                        <div class="it-day-num">6</div>
                                         <div class="it-title">离岛探险</div>
-                                        <div class="it-slot">Nusa Penida 私人游艇 / Mana 返回</div>
-                                    </div>
-                                    <div class="it-day">
-                                        <div class="it-day-num">7</div>
-                                        <div class="it-title">神庙巡礼</div>
-                                        <div class="it-meal-row">
-                                            <div class="it-slot">海神庙 / Nook</div>
-                                            <div class="it-slot">山谷 / <b>Aperitif</b></div>
-                                        </div>
-                                    </div>
-                                    <div class="it-day">
-                                        <div class="it-day-num">8</div>
-                                        <div class="it-title">海鲜告别</div>
-                                        <div class="it-meal-row">
-                                            <div class="it-slot">金巴兰海鲜 / Sundara</div>
-                                            <div class="it-slot">Mexicola / 返程</div>
-                                        </div>
+                                        <div class="it-slot"><a
+                                                href="https://www.google.com/maps/search/Nusa+Penida+Bali"
+                                                target="_blank" class="poi-link"><b>Nusa Penida</b></a> 私游 / 返程</div>
                                     </div>
                                 </div>
                             </div>
@@ -1085,41 +1244,44 @@
             <div class="hotel-scroll-section">
                 <div class="scroll-header">XYLab Hotel Curation 🏨</div>
                 <div class="hotel-stripe">
-                    <div class="hotel-mini-card"><img
+                    <a href="https://www.google.com/maps/search/Potato+Head+Studios+Bali" target="_blank"
+                        class="hotel-mini-card"><img
                             src="https://images.unsplash.com/photo-1573790387438-4da905039392?w=800" class="mini-img">
                         <div class="mini-info">
-                            <div class="mini-name">Potato Head</div>
-                            <div class="mini-tag">可持续工业美学 | Est. $295</div>
+                            <div class="mini-name">Potato Head <span class="book-btn">🏨 BOOK</span></div>
+                            <div class="mini-tag">可持续美学 | Est. $295</div>
                         </div>
-                    </div>
-                    <div class="hotel-mini-card"><img
+                    </a>
+                    <a href="https://www.google.com/maps/search/W+Bali+Seminyak" target="_blank"
+                        class="hotel-mini-card"><img
                             src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=800" class="mini-img">
                         <div class="mini-info">
-                            <div class="mini-name">W Bali</div>
-                            <div class="mini-tag">前卫海滩度假 | Est. $550</div>
+                            <div class="mini-name">W Bali <span class="book-btn">🏨 BOOK</span></div>
+                            <div class="mini-tag">海滩前卫 | Est. $550</div>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </div>
         </section>
 
-        <!-- 🏙️ DUBAI - STRATEGIC MODAL STYLE -->
+        <!-- 🏙️ DUBAI -->
         <section class="island dubai-glass">
             <div class="island-banner accent-dxb"></div>
             <div class="risk-brief">
                 <span class="risk-icon">🔒</span>
-                <h3 class="risk-title">Strategic Disruption Alert</h3>
-                <p class="risk-text">由于中东区域安全局势的高度不确定性，XYLab 战略组已将该目的地资产无限期「冻结」。<br><b>建议方案：</b>资源已无损重定向至新加坡，相关 7
-                    日行程详情已加密存储。</p>
-                <div style="margin-top:20px; font-size:0.75rem; font-weight:900; color:var(--risk-red);">STATUS: FROZEN
-                    / RED LIST</div>
+                <h3 class="risk-title">Strategic Disruption Briefing</h3>
+                <p class="risk-text">局势监控中。原有行程资产已战略性锁定。实时了解不确定性对航程的影响：</p>
+                <a href="https://www.google.com/search?q=Dubai+Airport+Travel+Status+News" target="_blank"
+                    class="news-link">📡 LIVE STATUS / NEWS FEED</a>
+                <div style="margin-top:20px; font-size:0.7rem; font-weight:900; color:var(--risk-red);">ASSET STATUS:
+                    RED-LIST FROZEN</div>
             </div>
         </section>
 
     </div>
 
     <footer>
-        <div class="f-pill">✦ POWERED BY XYLab INTERACTIVE INTELLIGENCE v10 ✦</div>
+        <div class="f-pill">✦ POWERED BY XYLab HYPER-CONNECTED INTELLIGENCE v11 ✦</div>
     </footer>
 
 </body>
