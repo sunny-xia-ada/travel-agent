@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XYLab Travel Agent | Editorial Intelligence v7.1</title>
+    <title>XYLab Travel Agent | High-Granularity Curation v8</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700;900&display=swap" rel="stylesheet">
     <style>
         /* ─── RESET & ROOT ─────────────────────────────────── */
@@ -82,6 +82,8 @@
             background-size: 300% 300%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-clip: text;
+            /* standard property for compatibility */
             animation: waveShift 6s ease infinite, floating 4s ease-in-out infinite;
             filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.95)) drop-shadow(0 0 40px rgba(255, 105, 180, 0.3));
         }
@@ -175,14 +177,13 @@
 
         /* Asymmetric Staggering */
         .island:nth-child(odd) {
-            transform: rotate(-1deg);
-            width: 98%;
+            transform: rotate(-0.5deg);
+            width: 100%;
         }
 
         .island:nth-child(even) {
-            transform: rotate(1deg);
-            width: 98%;
-            margin-left: auto;
+            transform: rotate(0.5deg);
+            width: 100%;
         }
 
         .island-accent {
@@ -253,7 +254,7 @@
         /* Internal 3-Column Flow */
         .island-body {
             display: grid;
-            grid-template-columns: 320px 1fr 1.3fr;
+            grid-template-columns: 320px 1.5fr 1.2fr;
             gap: 0;
         }
 
@@ -277,6 +278,7 @@
             text-transform: uppercase;
             padding-bottom: 5px;
             border-bottom: 1.5px solid rgba(0, 0, 0, 0.05);
+            margin-bottom: 15px;
         }
 
         .status-badge {
@@ -331,88 +333,73 @@
             border-left: 5px solid var(--pink);
         }
 
-        /* Column B: Travel Guide (Itinerary + POIs) */
+        /* Column B: High-Granularity Guide */
         .guide-col {
             padding: 40px;
+            background: rgba(255, 255, 255, 0.2);
         }
 
-        .itinerary-list {
-            margin-top: 15px;
+        .day-scroller {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 30px;
         }
 
-        .itin-item {
+        .day-block {
+            border-bottom: 1px dashed rgba(0, 0, 0, 0.1);
+            padding-bottom: 25px;
+        }
+
+        .day-block:last-child {
+            border-bottom: none;
+        }
+
+        .day-header {
             display: flex;
-            gap: 15px;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
         }
 
-        .itin-badge {
-            flex-shrink: 0;
-            width: 65px;
-            height: 26px;
+        .day-tag {
             background: var(--text-dark);
-            border-radius: 13px;
             color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.65rem;
-            font-weight: 900;
-        }
-
-        .itin-text {
-            font-size: 0.9rem;
-            color: var(--text-mid);
-            line-height: 1.5;
-            padding-top: 3px;
-        }
-
-        .poi-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 12px;
-            margin-top: 25px;
-        }
-
-        .poi-card {
-            background: white;
-            border-radius: 18px;
-            padding: 15px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
-        }
-
-        .poi-icon {
-            font-size: 1.8rem;
-        }
-
-        .poi-name {
-            font-size: 0.95rem;
-            font-weight: 900;
-        }
-
-        .poi-tag {
-            display: inline-block;
-            font-size: 0.6rem;
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-size: 0.7rem;
             font-weight: 900;
             text-transform: uppercase;
-            padding: 2px 8px;
-            border-radius: 8px;
-            margin-top: 5px;
         }
 
-        .tag-spot {
-            background: rgba(106, 130, 251, 0.1);
-            color: #6a82fb;
+        .meal-grid {
+            display: grid;
+            gap: 12px;
         }
 
-        .tag-food {
-            background: rgba(255, 105, 180, 0.1);
+        .meal-item {
+            display: flex;
+            gap: 12px;
+            align-items: start;
+        }
+
+        .meal-label {
+            flex-shrink: 0;
+            font-size: 0.65rem;
+            font-weight: 900;
             color: var(--pink);
+            text-transform: uppercase;
+            padding-top: 3px;
+            min-width: 45px;
+        }
+
+        .meal-content {
+            font-size: 0.88rem;
+            line-height: 1.5;
+            color: var(--text-mid);
+        }
+
+        .meal-content b {
+            color: var(--text-dark);
         }
 
         /* Column C: Hotel Curation */
@@ -486,14 +473,8 @@
             text-transform: uppercase;
         }
 
-        /* Dubai Black Fix Style */
         .grayscale-strat {
             filter: grayscale(0.6) contrast(0.9);
-            transition: filter 0.3s;
-        }
-
-        .grayscale-strat:hover {
-            filter: grayscale(0.3) contrast(1);
         }
 
         footer {
@@ -514,7 +495,7 @@
             border: 2px solid rgba(0, 0, 0, 0.02);
         }
 
-        @media (max-width: 1200px) {
+        @media (max-width: 1300px) {
             .island-body {
                 grid-template-columns: 1fr;
             }
@@ -538,7 +519,7 @@
     <div class="budget-card">
         <div class="budget-item">
             <div class="budget-label">✈️ 航费资产投资</div>
-            <div class="budget-val"><span>$</span>3,790</div>
+            <div class="budget-val"><span>$</span>3,858</div>
         </div>
         <div class="budget-item">
             <div class="budget-label">🏨 顶级住宿配比</div>
@@ -554,13 +535,322 @@
         </div>
         <div class="budget-item">
             <div class="budget-label">🏆 年度旅行总配资 (Est.)</div>
-            <div class="budget-total-val"><span>$</span>17,296</div>
+            <div class="budget-total-val"><span>$</span>17,896</div>
         </div>
     </div>
 
     <div class="islands-wrapper">
 
-        <!-- 🏙️ DUBAI - CRISIS STRATEGY (fixed visuals) -->
+        <!-- 🇸🇬 SINGAPORE - HIGH-TECH EXPANSION -->
+        <section class="island">
+            <div class="island-accent accent-sin"></div>
+            <div class="island-header">
+                <div class="island-title-row">
+                    <span class="island-flag">🇸🇬</span>
+                    <div>
+                        <div class="island-name-cn">新加坡</div>
+                        <div class="island-name-en">Singapore Garden City</div>
+                    </div>
+                </div>
+                <div class="island-dates">SEP 3 – 9, 2026</div>
+            </div>
+            <div class="island-body">
+                <div class="pulse-col col-divider">
+                    <div class="section-label">情报脉冲</div>
+                    <span class="status-badge status-live">🟢 STABLE / SQ NON-STOP 直飞</span>
+                    <div class="price-val"><span>$</span>718</div>
+                    <div class="memo-box">🤖 策略建议：新加坡航空直飞稳定性极高。九月花园城市绿意盎然，是配置东南亚资产的最佳时机。</div>
+                </div>
+                <div class="guide-col col-divider">
+                    <div class="section-label">深度导览精粹 (High-Granularity)</div>
+                    <div class="day-scroller">
+                        <div class="day-block">
+                            <div class="day-header"><span class="day-tag">Day 1</span> <b>星耀入境 & 滨海巅峰</b></div>
+                            <div class="meal-grid">
+                                <div class="meal-item"><span class="meal-label">上午</span>
+                                    <div class="meal-content"><b>Jewel Changi</b> 室内瀑布巡礼，体验极致人工自然美学。</div>
+                                </div>
+                                <div class="meal-item"><span class="meal-label">下午</span>
+                                    <div class="meal-content"><b>National Gallery</b> 东南亚艺术展 + 午餐 <b>National Kitchen by
+                                            Violet Oon</b> (娘惹菜殿堂)。</div>
+                                </div>
+                                <div class="meal-item"><span class="meal-label">晚上</span>
+                                    <div class="meal-content">晚餐 <b>Odette</b> (米其林三星，极致法餐) + <b>Marina Bay Sands</b>
+                                        顶楼酒廊俯瞰。</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="day-block">
+                            <div class="day-header"><span class="day-tag">Day 2</span> <b>智能自然 & 烟火气息</b></div>
+                            <div class="meal-grid">
+                                <div class="meal-item"><span class="meal-label">上午</span>
+                                    <div class="meal-content"><b>Gardens by the Bay</b> 云雾林探索，感受未来派园林设计。</div>
+                                </div>
+                                <div class="meal-item"><span class="meal-label">下午</span>
+                                    <div class="meal-content"><b>ArtScience Museum</b> 沉浸式观展 + <b>Burnt Ends</b>
+                                        现代烧烤(高难度预订)。</div>
+                                </div>
+                                <div class="meal-item"><span class="meal-label">晚上</span>
+                                    <div class="meal-content">晚餐 <b>Candlenut</b> (米其林一星娘惹) + <b>Atlas Bar</b>
+                                        (全球最美金酒酒吧)。</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="dwell-col">
+                    <div class="section-label">XYLab 调性精选</div>
+                    <div class="hotel-magazine-grid">
+                        <div class="hotel-magazine-card">
+                            <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800"
+                                class="hotel-img">
+                            <div class="hotel-overlay">
+                                <div class="hotel-name">YOTEL Orchard</div>
+                                <div class="hotel-vibe">极简科技避风港。赛博美感，非常符合 XYLab 调性。</div>
+                                <div class="hotel-rate">Est. $255/晚</div>
+                            </div>
+                        </div>
+                        <div class="hotel-magazine-card">
+                            <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800"
+                                class="hotel-img">
+                            <div class="hotel-overlay">
+                                <div class="hotel-name">lyf Bugis</div>
+                                <div class="hotel-vibe">为 Digital Nomad 量身打造的社交空间。设计活泼前卫。</div>
+                                <div class="hotel-rate">Est. $198/晚</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 🌉 SFO - ART & GASTRONOMY -->
+        <section class="island">
+            <div class="island-accent accent-sfo"></div>
+            <div class="island-header">
+                <div class="island-title-row">
+                    <span class="island-flag">🌉</span>
+                    <div>
+                        <div class="island-name-cn">旧金山</div>
+                        <div class="island-name-en">San Francisco Pulse</div>
+                    </div>
+                </div>
+                <div class="island-dates">MAR 27 – 29, 2026</div>
+            </div>
+            <div class="island-body">
+                <div class="pulse-col col-divider">
+                    <div class="section-label">情报脉冲</div>
+                    <span class="status-badge status-live">🟢 LIVE DATA / NON-STOP 直飞</span>
+                    <div class="price-val"><span>$</span>452</div>
+                    <div class="memo-box">🤖 核心情报：航费资产配置进入平稳期。建议深度挖掘日本城与 Hayes Valley 的精品商业。</div>
+                </div>
+                <div class="guide-col col-divider">
+                    <div class="section-label">深度导览精粹 (High-Granularity)</div>
+                    <div class="day-scroller">
+                        <div class="day-block">
+                            <div class="day-header"><span class="day-tag">Day 1</span> <b>艺术巡礼 & 经典风味</b></div>
+                            <div class="meal-grid">
+                                <div class="meal-item"><span class="meal-label">上午</span>
+                                    <div class="meal-content"><b>SFMOMA</b> 现代艺术巡礼，膜拜极简主义杰作。</div>
+                                </div>
+                                <div class="meal-item"><span class="meal-label">下午</span>
+                                    <div class="meal-content"><b>Ferry Building</b> 美食市集巡回 + 午餐 <b>Blue Bottle Cafe</b>
+                                        始祖店。</div>
+                                </div>
+                                <div class="meal-item"><span class="meal-label">晚上</span>
+                                    <div class="meal-content">晚餐 <b>State Bird Provisions</b> (米其林一星，创意美式) +
+                                        <b>Smuggler's Cove</b>。</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="day-block">
+                            <div class="day-header"><span class="day-tag">Day 2</span> <b>城市制高点 & 米其林巅峰</b></div>
+                            <div class="meal-grid">
+                                <div class="meal-item"><span class="meal-label">上午</span>
+                                    <div class="meal-content"><b>Twin Peaks</b> 360度俯瞰雾城，捕捉清晨光影。</div>
+                                </div>
+                                <div class="meal-item"><span class="meal-label">下午</span>
+                                    <div class="meal-content"><b>Hayes Valley</b> 精品店购物 + <b>Ritual Coffee</b> 品鉴手工手冲。
+                                    </div>
+                                </div>
+                                <div class="meal-item"><span class="meal-label">晚上</span>
+                                    <div class="meal-content">晚餐 <b>Sons & Daughters</b> (米其林星级) + <b>The View
+                                            Lounge</b> 绝美夜色。</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="dwell-col">
+                    <div class="section-label">精选下榻</div>
+                    <div class="hotel-magazine-grid">
+                        <div class="hotel-magazine-card">
+                            <img src="https://images.unsplash.com/photo-1503174971373-b1f69850bded?w=800"
+                                class="hotel-img">
+                            <div class="hotel-overlay">
+                                <div class="hotel-name">Hotel Kabuki</div>
+                                <div class="hotel-vibe">日本城和风禅意美学。XYLab 重点推荐的避世之所。</div>
+                                <div class="hotel-rate">Est. $315/晚</div>
+                            </div>
+                        </div>
+                        <div class="hotel-magazine-card">
+                            <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800"
+                                class="hotel-img">
+                            <div class="hotel-overlay">
+                                <div class="hotel-name">SF Proper Hotel</div>
+                                <div class="hotel-vibe">Kelly Wearstler 操刀的视觉爆炸。</div>
+                                <div class="hotel-rate">Est. $380/晚</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 🌵 PSP - DESERT RETREAT -->
+        <section class="island">
+            <div class="island-accent accent-psp"></div>
+            <div class="island-header">
+                <div class="island-title-row">
+                    <span class="island-flag">🌵</span>
+                    <div>
+                        <div class="island-name-cn">棕榈泉</div>
+                        <div class="island-name-en">Palm Springs Escape</div>
+                    </div>
+                </div>
+                <div class="island-dates">APR 9 – 13, 2026</div>
+            </div>
+            <div class="island-body">
+                <div class="pulse-col col-divider">
+                    <div class="section-label">情报脉冲</div>
+                    <span class="status-badge status-est">🟡 ESTIMATED / NON-STOP 直飞</span>
+                    <div class="price-val"><span>$</span>413</div>
+                </div>
+                <div class="guide-col col-divider">
+                    <div class="section-label">深度导览精粹 (High-Granularity)</div>
+                    <div class="day-scroller">
+                        <div class="day-block">
+                            <div class="day-header"><span class="day-tag">Day 1</span> <b>雪山奇遇 & 现代工业</b></div>
+                            <div class="meal-grid">
+                                <div class="meal-item"><span class="meal-label">上午</span>
+                                    <div class="meal-content"><b>Aerial Tramway</b> 高空缆车雪山巡礼，体验极致温差。</div>
+                                </div>
+                                <div class="meal-item"><span class="meal-label">下午</span>
+                                    <div class="meal-content"><b>Moorten Botanical Garden</b> 植物奇境 + 午餐 <b>Sandfish
+                                            Sushi</b>。</div>
+                                </div>
+                                <div class="meal-item"><span class="meal-label">晚上</span>
+                                    <div class="meal-content">晚餐 <b>Workshop Kitchen</b> (工业风极致) + <b>Bootlegger
+                                            Tiki</b>。</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="day-block">
+                            <div class="day-header"><span class="day-tag">Day 2</span> <b>粉红复古 & 泳池闲暇</b></div>
+                            <div class="meal-grid">
+                                <div class="meal-item"><span class="meal-label">上午</span>
+                                    <div class="meal-content"><b>Desert X</b> 艺术装置卫星追踪，打卡荒漠艺术。</div>
+                                </div>
+                                <div class="meal-item"><span class="meal-label">下午</span>
+                                    <div class="meal-content">午餐 <b>The Pink Cabana</b> (复古地中海) + <b>El Paseo</b> 名品购物。
+                                    </div>
+                                </div>
+                                <div class="meal-item"><span class="meal-label">晚上</span>
+                                    <div class="meal-content">晚餐 <b>Birba</b> 意式露天盛宴 + <b>Ace Hotel Amigo Room</b> 泳池微醺。
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="dwell-col">
+                    <div class="section-label">精选下榻</div>
+                    <div class="hotel-magazine-grid">
+                        <div class="hotel-magazine-card">
+                            <img src="https://images.unsplash.com/photo-1496417263034-38ec4f0b665a?w=800"
+                                class="hotel-img">
+                            <div class="hotel-overlay">
+                                <div class="hotel-name">Ace Hotel & Swim Club</div>
+                                <div class="hotel-vibe">复古波希米亚，沙漠逃离的首选。</div>
+                                <div class="hotel-rate">Est. $360/晚</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 🌴 DPS - TROPICAL LUXE -->
+        <section class="island">
+            <div class="island-accent accent-dps"></div>
+            <div class="island-header">
+                <div class="island-title-row">
+                    <span class="island-flag">🌴</span>
+                    <div>
+                        <div class="island-name-cn">巴厘岛</div>
+                        <div class="island-name-en">Bali Tropical Asset</div>
+                    </div>
+                </div>
+                <div class="island-dates">JUL 1 – 8, 2026</div>
+            </div>
+            <div class="island-body">
+                <div class="pulse-col col-divider">
+                    <div class="section-label">情报脉冲</div>
+                    <span class="status-badge status-est">🟡 ESTIMATED / AS-NON-STOP</span>
+                    <div class="price-val"><span>$</span>1,250</div>
+                </div>
+                <div class="guide-col col-divider">
+                    <div class="section-label">深度导览精粹 (High-Granularity)</div>
+                    <div class="day-scroller">
+                        <div class="day-block">
+                            <div class="day-header"><span class="day-tag">Day 1</span> <b>创意海滩 & 现代亚洲</b></div>
+                            <div class="meal-grid">
+                                <div class="meal-item"><span class="meal-label">上午</span>
+                                    <div class="meal-content"><b>Potato Head Studios</b> 创意空间巡回，探索可持续美学。</div>
+                                </div>
+                                <div class="meal-item"><span class="meal-label">下午</span>
+                                    <div class="meal-content"><b>Canggu</b> 买手店巡礼 + 午餐 <b>Mama San</b> 东南亚融合风。</div>
+                                </div>
+                                <div class="meal-item"><span class="meal-label">晚上</span>
+                                    <div class="meal-content">晚餐 <b>Locavore</b> (亚洲50强，实验派) + <b>Mason</b> 品酒阁。</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="day-block">
+                            <div class="day-header"><span class="day-tag">Day 2</span> <b>丛林隐修 & 绝美晚宴</b></div>
+                            <div class="meal-grid">
+                                <div class="meal-item"><span class="meal-label">上午</span>
+                                    <div class="meal-content"><b>Ubud Jungle Trek</b> 丛林徒步，吸氧清肺。</div>
+                                </div>
+                                <div class="meal-item"><span class="meal-label">下午</span>
+                                    <div class="meal-content"><b>Tegalalang</b> 梯田下午茶 + **Cretya Ubud** 俯瞰池畔。</div>
+                                </div>
+                                <div class="meal-item"><span class="meal-label">晚上</span>
+                                    <div class="meal-content">晚餐 <b>Merah Putih</b> 绝美印尼餐建筑 + <b>Desa Potato Head</b>
+                                        露天。</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="dwell-col">
+                    <div class="section-label">野奢下榻</div>
+                    <div class="hotel-magazine-grid">
+                        <div class="hotel-magazine-card">
+                            <img src="https://images.unsplash.com/photo-1573790387438-4da905039392?w=800"
+                                class="hotel-img">
+                            <div class="hotel-overlay">
+                                <div class="hotel-name">Potato Head Studios</div>
+                                <div class="hotel-vibe">工业美学与再生创意的极致。</div>
+                                <div class="hotel-rate">Est. $295/晚</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 🏙️ DUBAI - STRATEGIC LOCKUP -->
         <section class="island">
             <div class="island-accent accent-dxb"></div>
             <div class="island-header">
@@ -577,369 +867,28 @@
                 <div class="pulse-col col-divider">
                     <div class="section-label">情报脉冲</div>
                     <span class="status-badge status-risk">🔴 STRATEGIC DISRUPTION</span>
-                    <div class="price-val" style="opacity:0.3;"><span>$</span>---</div>
                     <div class="strategy-box">
                         <h4>Strategic Pivot Required</h4>
-                        <p style="font-size:0.85rem; line-height:1.6; color:var(--text-mid);">由于中东局势升级，DXB
-                            机场运作目前面临高度不确定性。XYLab 战略建议：<b>无限期封存</b>该目的地计划，建议将原定资源优化至新加坡扩张计划。</p>
+                        <p style="font-size:0.85rem; line-height:1.6; color:var(--text-mid);">由于不确定的区域溢出风险，XYLab
+                            战略组已将该资产列入<b>灰名单</b>。建议无限期封存。资源已优化指向新加坡。</p>
                     </div>
                 </div>
                 <div class="guide-col col-divider">
-                    <div class="section-label">原定计划 (已封存)</div>
-                    <div class="itinerary-list">
-                        <div class="itin-item">
-                            <div class="itin-badge">Day 1-2</div>
-                            <div class="itin-text">未来博物馆观礼与阿玛哈沙漠保护区。</div>
-                        </div>
-                        <div class="itin-item">
-                            <div class="itin-badge">Day 3-5</div>
-                            <div class="itin-text">Atlantis The Royal 无边泳池静谧时光。</div>
-                        </div>
+                    <div class="section-label">计划锁定 (Locked Portfolio)</div>
+                    <div style="opacity:0.3; padding:20px; text-align:center;">
+                        <span style="font-size:3rem;">🔒</span>
+                        <div style="font-size:0.8rem; font-weight:900; margin-top:10px;">ITINERARY ENCRYPTED</div>
                     </div>
                 </div>
                 <div class="dwell-col">
                     <div class="section-label">资产风险锁定</div>
                     <div class="hotel-magazine-grid">
                         <div class="hotel-magazine-card grayscale-strat">
-                            <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800"
+                            <img src="https://images.unsplash.com/photo-1628131338274-98bcc865b26b?w=800"
                                 class="hotel-img">
                             <div class="hotel-overlay">
                                 <div class="hotel-name">Atlantis The Royal</div>
-                                <div class="hotel-vibe">顶奢美学巅峰，目前由于局势原因暂缓预订建议。</div>
                                 <div class="hotel-rate">LOCKUP / ---</div>
-                            </div>
-                        </div>
-                        <div class="hotel-magazine-card grayscale-strat">
-                            <img src="https://images.unsplash.com/photo-1518684079-3c830dcef090?auto=format&fit=crop&q=80&w=600"
-                                class="hotel-img">
-                            <div class="hotel-overlay">
-                                <div class="hotel-name">Burj Al Arab</div>
-                                <div class="hotel-vibe">帆船酒店地标。XYLab 资产组将其列为“观察中”不可入驻状态。</div>
-                                <div class="hotel-rate">LOCKUP / ---</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 🇸🇬 SINGAPORE - HIGH-TECH EXPANSION (FULL) -->
-        <section class="island">
-            <div class="island-accent accent-sin"></div>
-            <div class="island-header">
-                <div class="island-title-row">
-                    <span class="island-flag">🇸🇬</span>
-                    <div>
-                        <div class="island-name-cn">新加坡</div>
-                        <div class="island-name-en">Singapore Garden City</div>
-                    </div>
-                </div>
-                <div class="island-dates">SEP 3 – 9, 2026</div>
-            </div>
-            <div class="island-body">
-                <div class="pulse-col col-divider">
-                    <div class="section-label">情报脉冲</div>
-                    <span class="status-badge status-live">🟢 STABLE / SQ NON-STOP</span>
-                    <div class="price-val"><span>$</span>718</div>
-                    <div class="memo-box">🤖 XYLab 调研：九月为新加坡航线淡季，新加坡航空直飞价格极具资产优化价值。</div>
-                </div>
-                <div class="guide-col col-divider">
-                    <div class="section-label">3日导览精粹</div>
-                    <div class="itinerary-list">
-                        <div class="itin-item">
-                            <div class="itin-badge">Day 1</div>
-                            <div class="itin-text">星耀樟宜 (Jewel) 入境巡礼 & 滨海湾金沙。</div>
-                        </div>
-                        <div class="itin-item">
-                            <div class="itin-badge">Day 2</div>
-                            <div class="itin-text">Gardens by the Bay 核心区 & 艺术科学博物馆。</div>
-                        </div>
-                        <div class="itin-item">
-                            <div class="itin-badge">Day 3</div>
-                            <div class="itin-text">牛车水历史径 & 麦士威食阁美食探索。</div>
-                        </div>
-                    </div>
-                    <div class="poi-grid">
-                        <div class="poi-card"><span class="poi-icon">⛲</span>
-                            <div class="poi-info">
-                                <div class="poi-name">Jewel Changi</div><span class="poi-tag tag-spot">Must Visit</span>
-                            </div>
-                        </div>
-                        <div class="poi-card"><span class="poi-icon">🍜</span>
-                            <div class="poi-info">
-                                <div class="poi-name">Maxwell Center</div><span
-                                    class="poi-tag tag-food">Signature</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="dwell-col">
-                    <div class="section-label">XYLab 调性精选</div>
-                    <div class="hotel-magazine-grid">
-                        <div class="hotel-magazine-card">
-                            <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&q=80&w=600"
-                                class="hotel-img">
-                            <div class="hotel-overlay">
-                                <div class="hotel-name">YOTEL Orchard</div>
-                                <div class="hotel-vibe">极简科技避风港。赛博美感，非常符合 XYLab 调性。</div>
-                                <div class="hotel-rate">Est. $255/晚</div>
-                            </div>
-                        </div>
-                        <div class="hotel-magazine-card">
-                            <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&q=80&w=600"
-                                class="hotel-img">
-                            <div class="hotel-overlay">
-                                <div class="hotel-name">lyf Bugis</div>
-                                <div class="hotel-vibe">为 Digital Nomad 量身打造的社交空间。设计活泼前卫。</div>
-                                <div class="hotel-rate">Est. $198/晚</div>
-                            </div>
-                        </div>
-                        <div class="hotel-magazine-card">
-                            <img src="https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&q=80&w=600"
-                                class="hotel-img">
-                            <div class="hotel-overlay">
-                                <div class="hotel-name">Mercure ICON</div>
-                                <div class="hotel-vibe">精致设计感与城市便利的完美平衡。</div>
-                                <div class="hotel-rate">Est. $210/晚</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 🌉 SFO (FULL) -->
-        <section class="island">
-            <div class="island-accent accent-sfo"></div>
-            <div class="island-header">
-                <div class="island-title-row">
-                    <span class="island-flag">🌉</span>
-                    <div>
-                        <div class="island-name-cn">旧金山</div>
-                        <div class="island-name-en">San Francisco Pulse</div>
-                    </div>
-                </div>
-                <div class="island-dates">MAR 27 – 29, 2026</div>
-            </div>
-            <div class="island-body">
-                <div class="pulse-col col-divider">
-                    <div class="section-label">情报脉冲</div>
-                    <span class="status-badge status-live">🟢 LIVE DATA</span>
-                    <div class="price-val"><span>$</span>452</div>
-                    <div class="memo-box">🤖 核心情报：直飞价格稳定。建议入住日本城，避开 Union Square 的喧嚣。</div>
-                </div>
-                <div class="guide-col col-divider">
-                    <div class="section-label">核心计划</div>
-                    <div class="itinerary-list">
-                        <div class="itin-item">
-                            <div class="itin-badge">Day 1</div>
-                            <div class="itin-text">SFMOMA 现代艺术巡礼 & 日本城拉面。</div>
-                        </div>
-                        <div class="itin-item">
-                            <div class="itin-badge">Day 2</div>
-                            <div class="itin-text">Twin Peaks 俯瞰城市 & Proper Hotel 顶楼酒廊。</div>
-                        </div>
-                    </div>
-                    <div class="poi-grid">
-                        <div class="poi-card"><span class="poi-icon">🎨</span>
-                            <div class="poi-info">
-                                <div class="poi-name">SFMOMA</div><span class="poi-tag tag-spot">Culture</span>
-                            </div>
-                        </div>
-                        <div class="poi-card"><span class="poi-icon">⛰️</span>
-                            <div class="poi-info">
-                                <div class="poi-name">Twin Peaks</div><span class="poi-tag tag-spot">Scenic</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="dwell-col">
-                    <div class="section-label">精选下榻</div>
-                    <div class="hotel-magazine-grid">
-                        <div class="hotel-magazine-card">
-                            <img src="https://images.unsplash.com/photo-1503174971373-b1f69850bded?w=800"
-                                class="hotel-img">
-                            <div class="hotel-overlay">
-                                <div class="hotel-name">Hotel Kabuki</div>
-                                <div class="hotel-vibe">日本城和风禅意美学，静谧安稳。</div>
-                                <div class="hotel-rate">Est. $315/晚</div>
-                            </div>
-                        </div>
-                        <div class="hotel-magazine-card">
-                            <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&q=80&w=600"
-                                class="hotel-img">
-                            <div class="hotel-overlay">
-                                <div class="hotel-name">SF Proper Hotel</div>
-                                <div class="hotel-vibe">Kelly Wearstler 设计的视觉盛宴。</div>
-                                <div class="hotel-rate">Est. $380/晚</div>
-                            </div>
-                        </div>
-                        <div class="hotel-magazine-card">
-                            <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&q=80&w=600"
-                                class="hotel-img">
-                            <div class="hotel-overlay">
-                                <div class="hotel-name">The LINE SF</div>
-                                <div class="hotel-vibe">摩登都市工业感，极佳的策展调性。</div>
-                                <div class="hotel-rate">Est. $290/晚</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 🌵 PSP (FULL) -->
-        <section class="island">
-            <div class="island-accent accent-psp"></div>
-            <div class="island-header">
-                <div class="island-title-row">
-                    <span class="island-flag">🌵</span>
-                    <div>
-                        <div class="island-name-cn">棕榈泉</div>
-                        <div class="island-name-en">Palm Springs Escape</div>
-                    </div>
-                </div>
-                <div class="island-dates">APR 9 – 13, 2026</div>
-            </div>
-            <div class="island-body">
-                <div class="pulse-col col-divider">
-                    <div class="section-label">情报脉冲</div>
-                    <span class="status-badge status-est">🟡 ESTIMATED</span>
-                    <div class="price-val"><span>$</span>413</div>
-                </div>
-                <div class="guide-col col-divider">
-                    <div class="section-label">核心计划</div>
-                    <div class="itinerary-list">
-                        <div class="itin-item">
-                            <div class="itin-badge">Day 1</div>
-                            <div class="itin-text">Ace Hotel 泳池派对，享受沙漠自由气息。</div>
-                        </div>
-                        <div class="itin-item">
-                            <div class="itin-badge">Day 2</div>
-                            <div class="itin-text">Aerial Tramway 雪山奇遇。</div>
-                        </div>
-                    </div>
-                    <div class="poi-grid">
-                        <div class="poi-card"><span class="poi-icon">🚠</span>
-                            <div class="poi-info">
-                                <div class="poi-name">Aerial Tramway</div><span class="poi-tag tag-spot">Visuals</span>
-                            </div>
-                        </div>
-                        <div class="poi-card"><span class="poi-icon">🍴</span>
-                            <div class="poi-info">
-                                <div class="poi-name">Workshop Kitchen</div><span
-                                    class="poi-tag tag-food">Gastronomy</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="dwell-col">
-                    <div class="section-label">精选下榻</div>
-                    <div class="hotel-magazine-grid">
-                        <div class="hotel-magazine-card">
-                            <img src="https://images.unsplash.com/photo-1496417263034-38ec4f0b665a?auto=format&fit=crop&q=80&w=600"
-                                class="hotel-img">
-                            <div class="hotel-overlay">
-                                <div class="hotel-name">Ace Hotel & Swim Club</div>
-                                <div class="hotel-vibe">复古波希米亚，沙漠逃离的首选。</div>
-                                <div class="hotel-rate">Est. $360/晚</div>
-                            </div>
-                        </div>
-                        <div class="hotel-magazine-card">
-                            <img src="https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&q=80&w=600"
-                                class="hotel-img">
-                            <div class="hotel-overlay">
-                                <div class="hotel-name">Sands Hotel & Spa</div>
-                                <div class="hotel-vibe">摩洛哥风情的沙漠秘密花园。</div>
-                                <div class="hotel-rate">Est. $320/晚</div>
-                            </div>
-                        </div>
-                        <div class="hotel-magazine-card">
-                            <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&q=80&w=600"
-                                class="hotel-img">
-                            <div class="hotel-overlay">
-                                <div class="hotel-name">Korakia Pensione</div>
-                                <div class="hotel-vibe">极具地中海风情的浪漫静谧地。</div>
-                                <div class="hotel-rate">Est. $410/晚</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 🌴 DPS (FULL) -->
-        <section class="island">
-            <div class="island-accent accent-dps"></div>
-            <div class="island-header">
-                <div class="island-title-row">
-                    <span class="island-flag">🌴</span>
-                    <div>
-                        <div class="island-name-cn">巴厘岛</div>
-                        <div class="island-name-en">Bali Tropical Asset</div>
-                    </div>
-                </div>
-                <div class="island-dates">JUL 1 – 8, 2026</div>
-            </div>
-            <div class="island-body">
-                <div class="pulse-col col-divider">
-                    <div class="section-label">情报脉冲</div>
-                    <span class="status-badge status-est">🟡 ESTIMATED</span>
-                    <div class="price-val"><span>$</span>1,250</div>
-                </div>
-                <div class="guide-col col-divider">
-                    <div class="section-label">核心计划</div>
-                    <div class="itinerary-list">
-                        <div class="itin-item">
-                            <div class="itin-badge">Day 1-2</div>
-                            <div class="itin-text">Potato Head Beach Club 创意派对。</div>
-                        </div>
-                        <div class="itin-item">
-                            <div class="itin-badge">Day 3-5</div>
-                            <div class="itin-text">Ubud 丛林隐修与 Alila 绝壁泳池。</div>
-                        </div>
-                    </div>
-                    <div class="poi-grid">
-                        <div class="poi-card"><span class="poi-icon">🍹</span>
-                            <div class="poi-info">
-                                <div class="poi-name">Potato Head</div><span class="poi-tag tag-spot">Creative</span>
-                            </div>
-                        </div>
-                        <div class="poi-card"><span class="poi-icon">🛖</span>
-                            <div class="poi-info">
-                                <div class="poi-name">Monkey Forest</div><span class="poi-tag tag-spot">Nature</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="dwell-col">
-                    <div class="section-label">野奢下榻</div>
-                    <div class="hotel-magazine-grid">
-                        <div class="hotel-magazine-card">
-                            <img src="https://images.unsplash.com/photo-1573790387438-4da905039392?auto=format&fit=crop&q=80&w=600"
-                                class="hotel-img">
-                            <div class="hotel-overlay">
-                                <div class="hotel-name">Potato Head Studios</div>
-                                <div class="hotel-vibe">工业美学与再生创意的极致。</div>
-                                <div class="hotel-rate">Est. $295/晚</div>
-                            </div>
-                        </div>
-                        <div class="hotel-magazine-card">
-                            <img src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&q=80&w=600"
-                                class="hotel-img">
-                            <div class="hotel-overlay">
-                                <div class="hotel-name">Alila Villas Uluwatu</div>
-                                <div class="hotel-vibe">绝壁之上的几何美学巅峰。</div>
-                                <div class="hotel-rate">Est. $850/晚</div>
-                            </div>
-                        </div>
-                        <div class="hotel-magazine-card">
-                            <img src="https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&q=80&w=600"
-                                class="hotel-img">
-                            <div class="hotel-overlay">
-                                <div class="hotel-name">Hanging Gardens</div>
-                                <div class="hotel-vibe">深入丛林的层级泳池奇境。</div>
-                                <div class="hotel-rate">Est. $550/晚</div>
                             </div>
                         </div>
                     </div>
