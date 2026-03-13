@@ -1,0 +1,1260 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>一丹的 Travel Agent | 旅行数据中心 v3</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        /* ─── RESET & ROOT ─────────────────────────────────── */
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --pink: #FF69B4;
+            --orange: #FFA500;
+            --glass-bg: rgba(255, 255, 255, 0.55);
+            --glass-border: rgba(255, 255, 255, 0.75);
+            --text-dark: #1a1a2e;
+            --text-mid: #4a4a6a;
+            --text-soft: #888;
+            --live-green: #00c97a;
+            --est-amber: #f59e0b;
+            --card-bg: rgba(255, 255, 255, 0.85);
+        }
+
+        body {
+            font-family: 'Outfit', 'PingFang SC', 'Noto Sans SC', sans-serif;
+            background: url('loopy_vacation_bg.png') no-repeat center center fixed;
+            background-size: cover;
+            color: var(--text-dark);
+            min-height: 100vh;
+            padding: 60px 32px 80px;
+        }
+
+        /* ─── HEADER ───────────────────────────────────────── */
+        header {
+            text-align: center;
+            margin-bottom: 52px;
+        }
+
+        @keyframes waveShift {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .header-title {
+            font-weight: 900;
+            font-size: clamp(3.5rem, 9vw, 7.5rem);
+            letter-spacing: -3px;
+            line-height: 1;
+            margin-bottom: 18px;
+            background: linear-gradient(270deg, #FF69B4, #FFA500, #FF4E9A, #FFB347);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: waveShift 6s ease infinite;
+            filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.95)) drop-shadow(0 0 30px rgba(255, 255, 255, 0.85)) drop-shadow(0 0 50px rgba(255, 105, 180, 0.35));
+        }
+
+        .header-meta {
+            display: inline-flex;
+            align-items: center;
+            gap: 18px;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(10px);
+            padding: 10px 28px;
+            border-radius: 50px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            color: var(--pink);
+            text-transform: uppercase;
+            box-shadow: 0 4px 20px rgba(255, 105, 180, 0.15);
+        }
+
+        .header-meta .sep {
+            opacity: 0.3;
+        }
+
+        /* ─── BUDGET CARD (Financial Intelligence) ─────────── */
+        .budget-card {
+            max-width: 1280px;
+            margin: 0 auto 52px;
+            background: linear-gradient(135deg, rgba(255, 105, 180, 0.12), rgba(255, 165, 0, 0.08));
+            backdrop-filter: blur(22px);
+            -webkit-backdrop-filter: blur(22px);
+            border-radius: 32px;
+            border: 2px solid rgba(255, 255, 255, 0.75);
+            box-shadow: 0 20px 60px rgba(255, 105, 180, 0.1), 0 2px 0 rgba(255, 255, 255, 0.9) inset;
+            overflow: hidden;
+        }
+
+        .budget-accent {
+            height: 5px;
+            background: linear-gradient(to right, #FF69B4, #FFA500, #FF69B4);
+            background-size: 200%;
+            animation: waveShift 4s linear infinite;
+        }
+
+        .budget-inner {
+            padding: 36px 44px;
+        }
+
+        .budget-title-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 28px;
+        }
+
+        .budget-icon {
+            font-size: 2rem;
+        }
+
+        .budget-heading {
+            font-size: 1.4rem;
+            font-weight: 900;
+            color: var(--text-dark);
+        }
+
+        .budget-sub {
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--text-soft);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .budget-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr) 1.4fr;
+            gap: 16px;
+            align-items: stretch;
+        }
+
+        .budget-item {
+            background: rgba(255, 255, 255, 0.75);
+            border-radius: 20px;
+            padding: 20px 22px;
+            border: 1.5px solid rgba(255, 255, 255, 0.9);
+        }
+
+        .budget-item-label {
+            font-size: 0.7rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-soft);
+            margin-bottom: 6px;
+        }
+
+        .budget-item-detail {
+            font-size: 0.78rem;
+            color: var(--text-mid);
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+
+        .budget-item-amount {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--text-dark);
+        }
+
+        .budget-item-amount .cur {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--pink);
+            vertical-align: super;
+        }
+
+        .budget-total {
+            background: linear-gradient(135deg, #FF69B4, #FFA500);
+            border-radius: 20px;
+            padding: 20px 22px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .budget-total-label {
+            font-size: 0.7rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 6px;
+        }
+
+        .budget-total-detail {
+            font-size: 0.78rem;
+            color: rgba(255, 255, 255, 0.85);
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+
+        .budget-total-amount {
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: white;
+            filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.15));
+        }
+
+        .budget-total-amount .cur {
+            font-size: 1.2rem;
+            vertical-align: super;
+        }
+
+        .budget-note {
+            margin-top: 16px;
+            font-size: 0.78rem;
+            color: var(--text-soft);
+            line-height: 1.6;
+        }
+
+        /* ─── ISLAND WRAPPER ───────────────────────────────── */
+        .islands-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 56px;
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        /* ─── SINGLE ISLAND ────────────────────────────────── */
+        .island {
+            background: var(--glass-bg);
+            backdrop-filter: blur(22px);
+            -webkit-backdrop-filter: blur(22px);
+            border-radius: 40px;
+            border: 2px solid var(--glass-border);
+            box-shadow: 0 24px 80px rgba(0, 0, 0, 0.07), 0 2px 0 rgba(255, 255, 255, 0.9) inset;
+            overflow: hidden;
+            transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .island:hover {
+            transform: translateY(-4px);
+        }
+
+        .island-accent {
+            height: 5px;
+            width: 100%;
+        }
+
+        .accent-sfo {
+            background: linear-gradient(to right, #6a82fb, #fc5c7d);
+        }
+
+        .accent-psp {
+            background: linear-gradient(to right, #f7971e, #ffd200);
+        }
+
+        .accent-dxb {
+            background: linear-gradient(to right, #c471ed, #f64f59);
+        }
+
+        .accent-dps {
+            background: linear-gradient(to right, #134e5e, #71b280);
+        }
+
+        .island-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 32px 44px 20px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+        }
+
+        .island-flag {
+            font-size: 2.8rem;
+            margin-right: 16px;
+        }
+
+        .island-title-group {
+            display: flex;
+            align-items: center;
+        }
+
+        .island-name-cn {
+            font-size: 1.9rem;
+            font-weight: 900;
+            color: var(--text-dark);
+            line-height: 1.1;
+        }
+
+        .island-name-en {
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: var(--text-soft);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-top: 3px;
+        }
+
+        .island-dates {
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--text-soft);
+            text-transform: uppercase;
+            background: rgba(0, 0, 0, 0.04);
+            padding: 8px 18px;
+            border-radius: 30px;
+        }
+
+        /* ─── THREE-COLUMN BODY ────────────────────────────── */
+        /* Col A: Price Pulse | Col B: Itinerary + POIs | Col C: Hotels */
+        .island-body {
+            display: grid;
+            grid-template-columns: 300px 1fr 1fr;
+            gap: 0;
+        }
+
+        .col-divider {
+            border-right: 1px solid rgba(0, 0, 0, 0.07);
+        }
+
+        /* ─── COLUMN A: Price Pulse ────────────────────────── */
+        .price-pulse {
+            padding: 32px 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .section-label {
+            font-size: 0.68rem;
+            font-weight: 800;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--text-soft);
+            margin-bottom: 2px;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            padding: 5px 12px;
+            border-radius: 20px;
+        }
+
+        .status-live {
+            background: rgba(0, 201, 122, 0.1);
+            color: #009a5a;
+            border: 1.5px solid rgba(0, 201, 122, 0.3);
+        }
+
+        .status-est {
+            background: rgba(245, 158, 11, 0.1);
+            color: #c27f00;
+            border: 1.5px solid rgba(245, 158, 11, 0.3);
+        }
+
+        .status-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .dot-live {
+            background: var(--live-green);
+            box-shadow: 0 0 6px var(--live-green);
+        }
+
+        .dot-est {
+            background: var(--est-amber);
+            box-shadow: 0 0 6px var(--est-amber);
+        }
+
+        .route-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: var(--text-dark);
+        }
+
+        .route-nonstop {
+            font-size: 0.6rem;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            color: white;
+            background: var(--text-dark);
+            padding: 3px 9px;
+            border-radius: 20px;
+        }
+
+        .big-price {
+            font-size: 3.8rem;
+            font-weight: 900;
+            color: var(--text-dark);
+            line-height: 1;
+        }
+
+        .big-price .currency {
+            font-size: 1.8rem;
+            font-weight: 700;
+            vertical-align: super;
+            color: var(--pink);
+        }
+
+        .carrier-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 105, 180, 0.08);
+            border: 1.5px solid rgba(255, 105, 180, 0.2);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: #d63384;
+        }
+
+        .memo-box {
+            background: rgba(255, 240, 250, 0.8);
+            border-left: 3px solid var(--pink);
+            border-radius: 0 12px 12px 0;
+            padding: 12px 14px;
+            font-size: 0.83rem;
+            color: var(--text-mid);
+            line-height: 1.6;
+        }
+
+        /* ─── COLUMN B: Itinerary + POIs ───────────────────── */
+        .itinerary-col {
+            padding: 32px 32px;
+            border-right: 1px solid rgba(0, 0, 0, 0.07);
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        /* Itinerary timeline */
+        .itinerary-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 8px;
+        }
+
+        .itin-day {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        .itin-badge {
+            flex-shrink: 0;
+            width: 56px;
+            height: 24px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.62rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            color: white;
+            background: linear-gradient(135deg, var(--pink), var(--orange));
+        }
+
+        .itin-text {
+            font-size: 0.83rem;
+            color: var(--text-mid);
+            line-height: 1.5;
+            padding-top: 3px;
+        }
+
+        .itin-text strong {
+            color: var(--text-dark);
+        }
+
+        /* POIs */
+        .poi-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 8px;
+        }
+
+        .poi-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 14px;
+            padding: 10px 14px;
+        }
+
+        .poi-icon {
+            font-size: 1.4rem;
+            flex-shrink: 0;
+        }
+
+        .poi-info {}
+
+        .poi-name {
+            font-size: 0.85rem;
+            font-weight: 800;
+            color: var(--text-dark);
+        }
+
+        .poi-desc {
+            font-size: 0.75rem;
+            color: var(--text-mid);
+            line-height: 1.4;
+            margin-top: 2px;
+        }
+
+        .poi-tag {
+            display: inline-block;
+            font-size: 0.6rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 2px 8px;
+            border-radius: 10px;
+            margin-bottom: 4px;
+        }
+
+        .tag-spot {
+            background: rgba(106, 130, 251, 0.12);
+            color: #5060d0;
+        }
+
+        .tag-food {
+            background: rgba(255, 105, 180, 0.12);
+            color: #c0307a;
+        }
+
+        /* ─── COLUMN C: Hotel Grid ─────────────────────────── */
+        .curated-stays {
+            padding: 32px 32px;
+        }
+
+        .hotel-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 14px;
+            margin-top: 8px;
+        }
+
+        .hotel-card {
+            background: var(--card-bg);
+            border-radius: 18px;
+            overflow: hidden;
+            display: flex;
+            gap: 0;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .hotel-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .hotel-img-wrap {
+            width: 90px;
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+
+        .hotel-img-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+
+        .hotel-card:hover .hotel-img-wrap img {
+            transform: scale(1.08);
+        }
+
+        .hotel-info {
+            padding: 12px 14px;
+            flex: 1;
+        }
+
+        .hotel-name {
+            font-size: 0.88rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 4px;
+        }
+
+        .hotel-vibe {
+            font-size: 0.74rem;
+            color: var(--text-mid);
+            line-height: 1.45;
+            margin-bottom: 6px;
+        }
+
+        .hotel-rate {
+            font-size: 0.68rem;
+            font-weight: 700;
+            color: var(--text-soft);
+            letter-spacing: 1px;
+        }
+
+        /* ─── FOOTER ───────────────────────────────────────── */
+        footer {
+            text-align: center;
+            margin-top: 64px;
+        }
+
+        .footer-pill {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(10px);
+            padding: 12px 36px;
+            border-radius: 50px;
+            font-size: 0.78rem;
+            font-weight: 800;
+            letter-spacing: 3px;
+            color: var(--pink);
+            text-transform: uppercase;
+            box-shadow: 0 4px 20px rgba(255, 105, 180, 0.12);
+        }
+
+        /* ─── RESPONSIVE ───────────────────────────────────── */
+        @media (max-width: 1100px) {
+            .island-body {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .price-pulse {
+                border-right: none;
+                border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+                grid-column: 1 / -1;
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 16px;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .island-body {
+                grid-template-columns: 1fr;
+            }
+
+            .itinerary-col {
+                border-right: none;
+                border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+            }
+
+            .budget-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .budget-total {
+                grid-column: 1 / -1;
+            }
+
+            .island-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+                padding: 24px;
+            }
+
+            .price-pulse,
+            .itinerary-col,
+            .curated-stays {
+                padding: 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ═══ HEADER ═══════════════════════════════════════════════ -->
+    <header>
+        <h1 class="header-title">一丹的 Travel Agent</h1>
+        <div class="header-meta">
+            <span>4-目的地全景版</span>
+            <span class="sep">|</span>
+            <span>2026年03月12日</span>
+            <span class="sep">|</span>
+            <span>行程 · 兴趣点 · 预算综合</span>
+        </div>
+    </header>
+
+    <!-- ═══ FINANCIAL INTELLIGENCE ════════════════════════════════ -->
+    <div class="budget-card" style="max-width:1280px;margin:0 auto 52px;">
+        <div class="budget-accent"></div>
+        <div class="budget-inner">
+            <div class="budget-title-row">
+                <span class="budget-icon">💰</span>
+                <div>
+                    <div class="budget-heading">财务智能 · 年度旅行预算综合</div>
+                    <div class="budget-sub">Financial Intelligence &nbsp;·&nbsp; 全年四次出行总投资</div>
+                </div>
+            </div>
+            <div class="budget-grid">
+                <!-- Airfare -->
+                <div class="budget-item">
+                    <div class="budget-item-label">✈️ 机票总计</div>
+                    <div class="budget-item-detail">$452 旧金山 + $413 棕榈泉<br>$975 迪拜 + $1,250 巴厘岛</div>
+                    <div class="budget-item-amount"><span class="cur">$</span>3,090</div>
+                </div>
+                <!-- Hotels -->
+                <div class="budget-item">
+                    <div class="budget-item-label">🏨 住宿总计</div>
+                    <div class="budget-item-detail">均价 $300/晚 · 2晚 + 4晚 + 6晚 + 7晚 = 19晚</div>
+                    <div class="budget-item-amount"><span class="cur">$</span>5,700</div>
+                </div>
+                <!-- Daily spend -->
+                <div class="budget-item">
+                    <div class="budget-item-label">🍽️ 日常消费</div>
+                    <div class="budget-item-detail">$150/天 · 2 + 4 + 6 + 7天 = 19天</div>
+                    <div class="budget-item-amount"><span class="cur">$</span>2,850</div>
+                </div>
+                <!-- Buffer -->
+                <div class="budget-item">
+                    <div class="budget-item-label">🎯 弹性备用</div>
+                    <div class="budget-item-detail">购物、活动、应急预备金（约15%）</div>
+                    <div class="budget-item-amount"><span class="cur">$</span>1,749</div>
+                </div>
+                <!-- GRAND TOTAL -->
+                <div class="budget-total">
+                    <div class="budget-total-label">🏆 年度旅行总投资</div>
+                    <div class="budget-total-detail">四次出行 · 四大目的地<br>2026 全年计划</div>
+                    <div class="budget-total-amount"><span class="cur">$</span>13,389</div>
+                </div>
+            </div>
+            <div class="budget-note">
+                * 机票价格以 2026-03-12 实时/估算数据为准。住宿以精选四星均价 $300/晚计算。日常消费含餐饮与景点。弹性备用金为总额15%。建议分批预定以锁定最优价格。
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══ DESTINATION ISLANDS ═══════════════════════════════════ -->
+    <div class="islands-wrapper">
+
+        <!-- ──────────────────────────────────────── 🌉 SFO ─── -->
+        <section class="island">
+            <div class="island-accent accent-sfo"></div>
+            <div class="island-header">
+                <div class="island-title-group">
+                    <span class="island-flag">🌉</span>
+                    <div>
+                        <div class="island-name-cn">旧金山 San Francisco</div>
+                        <div class="island-name-en">SEA → SFO &nbsp;·&nbsp; 周末文艺短途</div>
+                    </div>
+                </div>
+                <div class="island-dates">MAR 27 – 29, 2026</div>
+            </div>
+            <div class="island-body">
+                <!-- A: Price -->
+                <div class="price-pulse col-divider">
+                    <div>
+                        <div class="section-label">实时价格脉冲</div>
+                        <span class="status-badge status-live"><span class="status-dot dot-live"></span>🟢 实时数据</span>
+                    </div>
+                    <div>
+                        <div class="route-tag">SEA → SFO <span class="route-nonstop">直飞</span></div>
+                        <div class="big-price"><span class="currency">$</span>452</div>
+                    </div>
+                    <div class="carrier-pill">✈️ Alaska Airlines</div>
+                    <div class="memo-box">🤖 当前直飞 $452，若回落至 $160 以下，建议立即锁单。周末行程精简高效。</div>
+                </div>
+                <!-- B: Itinerary + POIs -->
+                <div class="itinerary-col">
+                    <div>
+                        <div class="section-label">精华行程</div>
+                        <div class="itinerary-list">
+                            <div class="itin-day">
+                                <div class="itin-badge">Day 1</div>
+                                <div class="itin-text"><strong>抵达 & 感受城市气息</strong> — 扎根日本城，入住 Hotel Kabuki，Union Square
+                                    周边漫步，晚探 Chinatown。</div>
+                            </div>
+                            <div class="itin-day">
+                                <div class="itin-badge">Day 2</div>
+                                <div class="itin-text"><strong>艺术 & 全景</strong> — 上午 SFMOMA 沉浸现代艺术，下午 Twin Peaks
+                                    俯瞰全城，State Bird Provisions 收尾晚餐。</div>
+                            </div>
+                            <div class="itin-day">
+                                <div class="itin-badge">Day 3</div>
+                                <div class="itin-text"><strong>海湾 & 返程</strong> — Fisherman's Wharf 早餐，1 Hotel
+                                    大堂打卡，轻松返场，结束完美周末。</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="section-label">精选兴趣点</div>
+                        <div class="poi-list">
+                            <div class="poi-item">
+                                <span class="poi-icon">🖼️</span>
+                                <div class="poi-info">
+                                    <div class="poi-tag tag-spot">艺术</div>
+                                    <div class="poi-name">SFMOMA</div>
+                                    <div class="poi-desc">世界级现代艺术博物馆，Warhol、Matisse 与 Calder 巨作云集。</div>
+                                </div>
+                            </div>
+                            <div class="poi-item">
+                                <span class="poi-icon">⛰️</span>
+                                <div class="poi-info">
+                                    <div class="poi-tag tag-spot">全景</div>
+                                    <div class="poi-name">Twin Peaks</div>
+                                    <div class="poi-desc">旧金山城市全貌尽收眼底，日落时分最为震撼，值得专程前往。</div>
+                                </div>
+                            </div>
+                            <div class="poi-item">
+                                <span class="poi-icon">🍽️</span>
+                                <div class="poi-info">
+                                    <div class="poi-tag tag-food">餐厅</div>
+                                    <div class="poi-name">State Bird Provisions</div>
+                                    <div class="poi-desc">米其林星级点心式正餐，推车传菜文化，创意加州料理的极致演绎。</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- C: Hotels -->
+                <div class="curated-stays">
+                    <div class="section-label">精选住宿</div>
+                    <div class="hotel-grid">
+                        <div class="hotel-card">
+                            <div class="hotel-img-wrap">
+                                <img src="https://images.unsplash.com/photo-1550586678-f7b249a4f47d?auto=format&fit=crop&w=200&q=80"
+                                    alt="Hotel Kabuki"
+                                    onerror="this.src='https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=200&q=80'">
+                            </div>
+                            <div class="hotel-info">
+                                <div class="hotel-name">Hotel Kabuki</div>
+                                <div class="hotel-vibe">日式禅意舒适，日本城中心的静谧之选。推荐 Garden Wing 房间。</div>
+                                <div class="hotel-rate">Est. $220+ / 晚</div>
+                            </div>
+                        </div>
+                        <div class="hotel-card">
+                            <div class="hotel-img-wrap">
+                                <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&w=200&q=80"
+                                    alt="The Line SF"
+                                    onerror="this.src='https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=200&q=80'">
+                            </div>
+                            <div class="hotel-info">
+                                <div class="hotel-name">The Line SF</div>
+                                <div class="hotel-vibe">现代工业风，Market Street 潮流心脏地带，城市活力满满。</div>
+                                <div class="hotel-rate">Est. $200+ / 晚</div>
+                            </div>
+                        </div>
+                        <div class="hotel-card">
+                            <div class="hotel-img-wrap">
+                                <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=200&q=80"
+                                    alt="1 Hotel SF"
+                                    onerror="this.src='https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=200&q=80'">
+                            </div>
+                            <div class="hotel-info">
+                                <div class="hotel-name">1 Hotel San Francisco</div>
+                                <div class="hotel-vibe">自然环保奢华，海湾大桥旁的绿色绿洲，大堂绿植墙极度出片。</div>
+                                <div class="hotel-rate">Est. $350+ / 晚</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ──────────────────────────────────────── 🌵 PSP ─── -->
+        <section class="island">
+            <div class="island-accent accent-psp"></div>
+            <div class="island-header">
+                <div class="island-title-group">
+                    <span class="island-flag">🌵</span>
+                    <div>
+                        <div class="island-name-cn">棕榈泉 Palm Springs</div>
+                        <div class="island-name-en">SEA → PSP &nbsp;·&nbsp; 沙漠音乐节逃脱</div>
+                    </div>
+                </div>
+                <div class="island-dates">APR 9 – 13, 2026</div>
+            </div>
+            <div class="island-body">
+                <div class="price-pulse col-divider">
+                    <div>
+                        <div class="section-label">实时价格脉冲</div>
+                        <span class="status-badge status-est"><span class="status-dot dot-est"></span>🟡 估算数据</span>
+                    </div>
+                    <div>
+                        <div class="route-tag">SEA → PSP <span class="route-nonstop">直飞</span></div>
+                        <div class="big-price"><span class="currency">$</span>413</div>
+                    </div>
+                    <div class="carrier-pill">✈️ Alaska Airlines</div>
+                    <div class="memo-box">🤖 低于 $400 即是完美入场券，建议持续关注。沙漠黄金时刻不等人。</div>
+                </div>
+                <div class="itinerary-col">
+                    <div>
+                        <div class="section-label">精华行程</div>
+                        <div class="itinerary-list">
+                            <div class="itin-day">
+                                <div class="itin-badge">Day 1</div>
+                                <div class="itin-text"><strong>抵达 & 沙漠初见</strong> — 入住 Ace Hotel，泳池边调制特调，感受棕榈泉复古嬉皮氛围。
+                                </div>
+                            </div>
+                            <div class="itin-day">
+                                <div class="itin-badge">Day 2</div>
+                                <div class="itin-text"><strong>自然奇观</strong> — 乘缆车升上 San Jacinto 雪山，傍晚探访 Moorten
+                                    仙人掌植物园，感受沙漠生命力。</div>
+                            </div>
+                            <div class="itin-day">
+                                <div class="itin-badge">Day 3-4</div>
+                                <div class="itin-text"><strong>深度漫游</strong> — Coachella Valley 周边探索，Workshop Kitchen
+                                    美食收官，沙漠日落金色记忆。</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="section-label">精选兴趣点</div>
+                        <div class="poi-list">
+                            <div class="poi-item">
+                                <span class="poi-icon">🚡</span>
+                                <div class="poi-info">
+                                    <div class="poi-tag tag-spot">自然</div>
+                                    <div class="poi-name">Palm Springs Aerial Tramway</div>
+                                    <div class="poi-desc">从沙漠直升雪山，10分钟内温差30°C，全球最壮观的缆车之旅之一。</div>
+                                </div>
+                            </div>
+                            <div class="poi-item">
+                                <span class="poi-icon">🌵</span>
+                                <div class="poi-info">
+                                    <div class="poi-tag tag-spot">植物园</div>
+                                    <div class="poi-name">Moorten Botanical Garden</div>
+                                    <div class="poi-desc">3000+ 种沙漠植物的私家花园，1938年创立，仙人掌爱好者必朝圣之地。</div>
+                                </div>
+                            </div>
+                            <div class="poi-item">
+                                <span class="poi-icon">🍽️</span>
+                                <div class="poi-info">
+                                    <div class="poi-tag tag-food">餐厅</div>
+                                    <div class="poi-name">Workshop Kitchen + Bar</div>
+                                    <div class="poi-desc">获奖工业风餐厅，本地有机食材创意料理，棕榈泉最受推崇的晚餐去处。</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="curated-stays">
+                    <div class="section-label">精选住宿</div>
+                    <div class="hotel-grid">
+                        <div class="hotel-card">
+                            <div class="hotel-img-wrap">
+                                <img src="https://images.unsplash.com/photo-1582719508461-905c67377189?auto=format&fit=crop&w=200&q=80"
+                                    alt="Ace Hotel"
+                                    onerror="this.src='https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=200&q=80'">
+                            </div>
+                            <div class="hotel-info">
+                                <div class="hotel-name">Ace Hotel & Swim Club</div>
+                                <div class="hotel-vibe">复古嬉皮泳池风，棕榈泉最热闹的派对圣地。Amigo Room 特调必点。</div>
+                                <div class="hotel-rate">Est. $280+ / 晚</div>
+                            </div>
+                        </div>
+                        <div class="hotel-card">
+                            <div class="hotel-img-wrap">
+                                <img src="https://images.unsplash.com/photo-1561501900312-72dc1481042f?auto=format&fit=crop&w=200&q=80"
+                                    alt="The Parker"
+                                    onerror="this.src='https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=200&q=80'">
+                            </div>
+                            <div class="hotel-info">
+                                <div class="hotel-name">The Parker Palm Springs</div>
+                                <div class="hotel-vibe">迷宫花园式奢华，Jonathan Adler 设计，私密感极强的成人天堂。</div>
+                                <div class="hotel-rate">Est. $450+ / 晚</div>
+                            </div>
+                        </div>
+                        <div class="hotel-card">
+                            <div class="hotel-img-wrap">
+                                <img src="https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?auto=format&fit=crop&w=200&q=80"
+                                    alt="Korakia Pensione"
+                                    onerror="this.src='https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=200&q=80'">
+                            </div>
+                            <div class="hotel-info">
+                                <div class="hotel-name">Korakia Pensione</div>
+                                <div class="hotel-vibe">地中海浪漫隐居地，周三户外电影之夜，极度宁静的修复旅程。</div>
+                                <div class="hotel-rate">Est. $320+ / 晚</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ──────────────────────────────────────── 🏙️ DXB ─── -->
+        <section class="island">
+            <div class="island-accent accent-dxb"></div>
+            <div class="island-header">
+                <div class="island-title-group">
+                    <span class="island-flag">🏙️</span>
+                    <div>
+                        <div class="island-name-cn">迪拜 Dubai</div>
+                        <div class="island-name-en">SEA → DXB &nbsp;·&nbsp; 未来奢华圣地</div>
+                    </div>
+                </div>
+                <div class="island-dates">MAY 22 – 28, 2026</div>
+            </div>
+            <div class="island-body">
+                <div class="price-pulse col-divider">
+                    <div>
+                        <div class="section-label">实时价格脉冲</div>
+                        <span class="status-badge status-live"><span class="status-dot dot-live"></span>🟢 实时数据</span>
+                    </div>
+                    <div>
+                        <div class="route-tag">SEA → DXB <span class="route-nonstop">直飞</span></div>
+                        <div class="big-price"><span class="currency">$</span>975</div>
+                    </div>
+                    <div class="carrier-pill">✈️ Emirates</div>
+                    <div class="memo-box">🤖 $975 属合理区间，五月假期窗口稀缺，建议尽快锁单，把握黄金出行时机。</div>
+                </div>
+                <div class="itinerary-col">
+                    <div>
+                        <div class="section-label">精华行程</div>
+                        <div class="itinerary-list">
+                            <div class="itin-day">
+                                <div class="itin-badge">Day 1-2</div>
+                                <div class="itin-text"><strong>抵达 & 未来震撼</strong> — 入住 Atlantis The Royal，参观未来博物馆，Burj
+                                    Khalifa 夜览迪拜天际线。</div>
+                            </div>
+                            <div class="itin-day">
+                                <div class="itin-badge">Day 3-4</div>
+                                <div class="itin-text"><strong>文化深潜</strong> — Al Fahidi 旧区感受阿拉伯传统，Dubai Frame
+                                    时空穿越体验，金沙市场淘宝。</div>
+                            </div>
+                            <div class="itin-day">
+                                <div class="itin-badge">Day 5-6</div>
+                                <div class="itin-text"><strong>奢华收官</strong> — Cloud 22 无边泳池日，Orfali Bros
+                                    晚餐体验，沙漠星空烧烤告别之夜。</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="section-label">精选兴趣点</div>
+                        <div class="poi-list">
+                            <div class="poi-item">
+                                <span class="poi-icon">🤖</span>
+                                <div class="poi-info">
+                                    <div class="poi-tag tag-spot">科技</div>
+                                    <div class="poi-name">Museum of the Future</div>
+                                    <div class="poi-desc">全球最美建筑之一，沉浸式体验2071年人类文明，AI与未来生活前沿展示。</div>
+                                </div>
+                            </div>
+                            <div class="poi-item">
+                                <span class="poi-icon">🗼</span>
+                                <div class="poi-info">
+                                    <div class="poi-tag tag-spot">地标</div>
+                                    <div class="poi-name">Burj Khalifa 观景台</div>
+                                    <div class="poi-desc">全球最高楼，At The Top 观景台俯瞰迪拜全貌，日落时分最为梦幻。</div>
+                                </div>
+                            </div>
+                            <div class="poi-item">
+                                <span class="poi-icon">🍽️</span>
+                                <div class="poi-info">
+                                    <div class="poi-tag tag-food">餐厅</div>
+                                    <div class="poi-name">Orfali Bros Bistro</div>
+                                    <div class="poi-desc">中东烹饪新星，三兄弟主理，亚洲与地中海风味完美融合，世界50佳餐厅上榜。</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="curated-stays">
+                    <div class="section-label">精选住宿</div>
+                    <div class="hotel-grid">
+                        <div class="hotel-card">
+                            <div class="hotel-img-wrap">
+                                <img src="https://images.unsplash.com/photo-1512453979798-850f04a6c4d9?auto=format&fit=crop&w=200&q=80"
+                                    alt="Atlantis The Royal"
+                                    onerror="this.src='https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=200&q=80'">
+                            </div>
+                            <div class="hotel-info">
+                                <div class="hotel-name">Atlantis The Royal</div>
+                                <div class="hotel-vibe">极致奢华地标，Cloud 22 无边泳池俯瞰迪拜，超现代建筑奇迹。</div>
+                                <div class="hotel-rate">Est. $600+ / 晚</div>
+                            </div>
+                        </div>
+                        <div class="hotel-card">
+                            <div class="hotel-img-wrap">
+                                <img src="https://images.unsplash.com/photo-1577085773173-9097d744ec1c?auto=format&fit=crop&w=200&q=80"
+                                    alt="Al Maha Desert Resort"
+                                    onerror="this.src='https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=200&q=80'">
+                            </div>
+                            <div class="hotel-info">
+                                <div class="hotel-name">Al Maha Desert Resort</div>
+                                <div class="hotel-vibe">贝都因奢华，沙漠保护区内私密体验，含骆驼骑行与沙漠狩猎游。</div>
+                                <div class="hotel-rate">Est. $900+ / 晚</div>
+                            </div>
+                        </div>
+                        <div class="hotel-card">
+                            <div class="hotel-img-wrap">
+                                <img src="https://images.unsplash.com/photo-1546412414-e1885259563a?auto=format&fit=crop&w=200&q=80"
+                                    alt="Bulgari Resort"
+                                    onerror="this.src='https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=200&q=80'">
+                            </div>
+                            <div class="hotel-info">
+                                <div class="hotel-name">Bulgari Resort Dubai</div>
+                                <div class="hotel-vibe">海上意大利珠宝，游艇俱乐部配套，私密性极高的顶奢海滨体验。</div>
+                                <div class="hotel-rate">Est. $850+ / 晚</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ──────────────────────────────────────── 🌴 DPS ─── -->
+        <section class="island">
+            <div class="island-accent accent-dps"></div>
+            <div class="island-header">
+                <div class="island-title-group">
+                    <span class="island-flag">🌴</span>
+                    <div>
+                        <div class="island-name-cn">巴厘岛 Bali</div>
+                        <div class="island-name-en">SEA → DPS &nbsp;·&nbsp; 热带精神撤退</div>
+                    </div>
+                </div>
+                <div class="island-dates">JUL 1 – 8, 2026</div>
+            </div>
+            <div class="island-body">
+                <div class="price-pulse col-divider">
+                    <div>
+                        <div class="section-label">实时价格脉冲</div>
+                        <span class="status-badge status-est"><span class="status-dot dot-est"></span>🟡 估算数据</span>
+                    </div>
+                    <div>
+                        <div class="route-tag">SEA → DPS <span class="route-nonstop">转机优先</span></div>
+                        <div class="big-price"><span class="currency">$</span>1,250</div>
+                    </div>
+                    <div class="carrier-pill">✈️ Singapore Airlines</div>
+                    <div class="memo-box">🤖 暑期舱位紧俏，建议经 SIN 转机并尽早锁单，体验新航最优服务。</div>
+                </div>
+                <div class="itinerary-col">
+                    <div>
+                        <div class="section-label">精华行程</div>
+                        <div class="itinerary-list">
+                            <div class="itin-day">
+                                <div class="itin-badge">Day 1-2</div>
+                                <div class="itin-text"><strong>抵达 Seminyak & 海滩初醒</strong> — Potato Head Beach Club
+                                    日落派对，Seminyak 设计师精品店探索。</div>
+                            </div>
+                            <div class="itin-day">
+                                <div class="itin-badge">Day 3-4</div>
+                                <div class="itin-text"><strong>Ubud 丛林深潜</strong> — Sacred Monkey Forest
+                                    灵魂漫步，稻田徒步，传统乌木雕刻工坊体验。</div>
+                            </div>
+                            <div class="itin-day">
+                                <div class="itin-badge">Day 5-7</div>
+                                <div class="itin-text"><strong>Canggu 慢生活</strong> — The Layar 私池别墅放空，Mama San
+                                    美食告别晚宴，冲浪课挑战自我。</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="section-label">精选兴趣点</div>
+                        <div class="poi-list">
+                            <div class="poi-item">
+                                <span class="poi-icon">🏖️</span>
+                                <div class="poi-info">
+                                    <div class="poi-tag tag-spot">海滩俱乐部</div>
+                                    <div class="poi-name">Potato Head Beach Club</div>
+                                    <div class="poi-desc">Seminyak 标志性海滩俱乐部，日落时分鸡尾酒配无敌海景，Bali 最佳打卡圣地。</div>
+                                </div>
+                            </div>
+                            <div class="poi-item">
+                                <span class="poi-icon">🐒</span>
+                                <div class="poi-info">
+                                    <div class="poi-tag tag-spot">自然</div>
+                                    <div class="poi-name">Sacred Monkey Forest (Ubud)</div>
+                                    <div class="poi-desc">巴厘岛心跳地带，700只圣猴守护的古寺丛林，灵性与自然的完美交汇。</div>
+                                </div>
+                            </div>
+                            <div class="poi-item">
+                                <span class="poi-icon">🍽️</span>
+                                <div class="poi-info">
+                                    <div class="poi-tag tag-food">餐厅</div>
+                                    <div class="poi-name">Mama San</div>
+                                    <div class="poi-desc">亚洲殖民地风情尽显，融合印尼、泰国、缅甸多元风味，Seminyak 必吃神店。</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="curated-stays">
+                    <div class="section-label">精选住宿</div>
+                    <div class="hotel-grid">
+                        <div class="hotel-card">
+                            <div class="hotel-img-wrap">
+                                <img src="https://images.unsplash.com/photo-1573790387438-4da905039392?auto=format&fit=crop&w=200&q=80"
+                                    alt="Potato Head Studios"
+                                    onerror="this.src='https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=200&q=80'">
+                            </div>
+                            <div class="hotel-info">
+                                <div class="hotel-name">Potato Head Studios</div>
+                                <div class="hotel-vibe">现代野兽派海滩俱乐部一体化，Seminyak 最具创意的旅宿体验。</div>
+                                <div class="hotel-rate">Est. $250+ / 晚</div>
+                            </div>
+                        </div>
+                        <div class="hotel-card">
+                            <div class="hotel-img-wrap">
+                                <img src="https://images.unsplash.com/photo-1544644181-1484b3fdfc62?auto=format&fit=crop&w=200&q=80"
+                                    alt="Mason Elephant Lodge"
+                                    onerror="this.src='https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=200&q=80'">
+                            </div>
+                            <div class="hotel-info">
+                                <div class="hotel-name">Mason Elephant Lodge</div>
+                                <div class="hotel-vibe">Ubud 丛林深处生态奢华，独家大象互动晨间体验，绿野仙踪在此成真。</div>
+                                <div class="hotel-rate">Est. $380+ / 晚</div>
+                            </div>
+                        </div>
+                        <div class="hotel-card">
+                            <div class="hotel-img-wrap">
+                                <img src="https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?auto=format&fit=crop&w=200&q=80"
+                                    alt="The Layar Bali"
+                                    onerror="this.src='https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=200&q=80'">
+                            </div>
+                            <div class="hotel-info">
+                                <div class="hotel-name">The Layar Bali</div>
+                                <div class="hotel-vibe">Canggu 极简泳池别墅，设计感精致，非常适合拍照与深度放松。</div>
+                                <div class="hotel-rate">Est. $220+ / 晚</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div><!-- /islands-wrapper -->
+
+    <!-- ═══ FOOTER ════════════════════════════════════════════════ -->
+    <footer>
+        <div class="footer-pill">✦ DESIGNED FOR YIDAN &nbsp;·&nbsp; ANTIGRAVITY AGENT &nbsp;·&nbsp; 2026 ✦</div>
+    </footer>
+
+</body>
+
+</html>
