@@ -1,0 +1,376 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>一丹的 Travel Agent | 4-Destination Edition</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;700;900&family=PingFang+SC:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --deep-ocean: #0077BE;
+            --glass-bg: rgba(255, 255, 255, 0.65); 
+            --text-dark: #2c3e50;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+            font-family: 'Outfit', 'PingFang SC', sans-serif; 
+            background: url('loopy_vacation_bg.png') no-repeat center center fixed;
+            background-size: cover;
+            color: var(--text-dark);
+            min-height: 100vh;
+            padding: 60px 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header { margin-bottom: 80px; text-align: center; }
+        
+        /* Pink-to-Orange Gradient Title */
+        .header-title {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 900;
+            font-size: 7rem;
+            text-transform: uppercase;
+            letter-spacing: -3px;
+            line-height: 1.0;
+            margin-bottom: 20px;
+            
+            background-image: linear-gradient(to right, #FF69B4, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            
+            /* Heavy White Glow */
+            filter: drop-shadow(0 0 10px white) drop-shadow(0 0 20px white) drop-shadow(0 0 30px rgba(255,255,255,0.8));
+        }
+        
+        .header-subtitle {
+            font-size: 1.2rem;
+            font-weight: 700;
+            letter-spacing: 5px;
+            color: #FF69B4;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 8px 30px;
+            border-radius: 30px;
+            text-transform: uppercase;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        /* DESTINATION CLUSTERING */
+        .destination-island {
+            width: 100%;
+            max-width: 1200px;
+            background: rgba(255, 255, 255, 0.5); /* See-through glass */
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 50px;
+            padding: 50px;
+            margin-bottom: 80px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.05);
+            border: 2px solid rgba(255,255,255,0.6);
+            transition: transform 0.4s ease;
+        }
+        .destination-island:hover { transform: scale(1.01); background: rgba(255, 255, 255, 0.6); }
+
+        .destination-title {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--deep-ocean);
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid rgba(0,0,0,0.1);
+        }
+
+        /* Flight Bar */
+        .flight-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            padding: 25px 40px;
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            margin-bottom: 20px;
+        }
+        .flight-route { font-size: 2rem; font-weight: 800; color: #333; }
+        .flight-details { text-align: right; margin-right: 30px; }
+        .flight-airline { font-weight: 700; color: #FF69B4; font-size: 1.2rem; }
+        .flight-dates { font-size: 0.9rem; color: #888; letter-spacing: 1px; }
+        .flight-price { font-size: 3rem; font-weight: 900; color: #333; }
+        
+        .memo-pill {
+            background: #fff0f5;
+            color: #555;
+            padding: 15px 25px;
+            border-radius: 20px;
+            font-size: 1rem;
+            margin-bottom: 40px;
+            display: inline-block;
+            font-weight: 500;
+        }
+
+        /* Hotel Grid */
+        .hotel-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+        .hotel-card {
+            background: rgba(255,255,255,0.8);
+            border-radius: 25px;
+            padding: 15px;
+            transition: transform 0.3s ease;
+        }
+        .hotel-card:hover { transform: translateY(-5px); }
+        
+        .hotel-img-frame {
+            height: 220px;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+        .hotel-img-frame img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .hotel-name { font-weight: 800; font-size: 1.2rem; margin-bottom: 5px; color: #333; }
+        .hotel-vibe { font-size: 0.9rem; color: #666; margin-bottom: 10px; line-height: 1.4; min-height: 40px; }
+        .hotel-price { font-size: 0.8rem; font-weight: 700; color: #aaa; text-transform: uppercase; letter-spacing: 1px; }
+
+        footer { 
+            color: #FF69B4; font-weight: 700; letter-spacing: 2px; margin-top: 50px;
+            background: rgba(255,255,255,0.9); padding: 10px 30px; border-radius: 30px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 class="header-title">一丹的 Travel Agent</h1>
+        <div class="header-subtitle">4-Destination Edition • 2026年02月20日</div>
+    </header>
+
+    
+        <section class="destination-island">
+            <h2 class="destination-title">旧金山 San Francisco</h2>
+            
+            <div class="flight-bar">
+                <div class="flight-route">SEA-SFO <span style="font-size:1rem; opacity:0.6; margin-left:10px;">NON-STOP</span></div>
+                <div class="flight-details">
+                    <div class="flight-airline">Delta</div>
+                    <div class="flight-dates">2026-03-27 - 2026-03-29</div>
+                </div>
+                <div class="flight-price">
+                    <span class="price-unit">$</span>298
+                </div>
+            </div>
+            
+            <div class="memo-pill">🤖 助理 memo: 当前直飞价格 $298。若回落至 $160，建议立即出发。</div>
+            
+            <div class="hotel-grid">
+                
+            <div class="hotel-card">
+                <div class="hotel-img-frame">
+                    <img src="https://images.unsplash.com/photo-1550586678-f7b249a4f47d?auto=format&fit=crop&w=600&q=80" alt="Hotel Kabuki" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=600&q=80';">
+                </div>
+                <div class="hotel-info">
+                    <div class="hotel-name">Hotel Kabuki</div>
+                    <div class="hotel-vibe">日式禅意舒适，日本城中心的静谧之选。</div>
+                    <div class="hotel-price">Est. $220+ / night</div>
+                </div>
+            </div>
+        
+            <div class="hotel-card">
+                <div class="hotel-img-frame">
+                    <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&w=600&q=80" alt="The Line SF" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=600&q=80';">
+                </div>
+                <div class="hotel-info">
+                    <div class="hotel-name">The Line SF</div>
+                    <div class="hotel-vibe">现代工业风设计，Market Street 潮流中心。</div>
+                    <div class="hotel-price">Est. $200+ / night</div>
+                </div>
+            </div>
+        
+            <div class="hotel-card">
+                <div class="hotel-img-frame">
+                    <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=600&q=80" alt="1 Hotel San Francisco" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=600&q=80';">
+                </div>
+                <div class="hotel-info">
+                    <div class="hotel-name">1 Hotel San Francisco</div>
+                    <div class="hotel-vibe">自然环保奢华，海湾大桥旁的绿色绿洲。</div>
+                    <div class="hotel-price">Est. $350+ / night</div>
+                </div>
+            </div>
+        
+            </div>
+        </section>
+        
+        <section class="destination-island">
+            <h2 class="destination-title">棕榈泉 Palm Springs</h2>
+            
+            <div class="flight-bar">
+                <div class="flight-route">SEA-PSP <span style="font-size:1rem; opacity:0.6; margin-left:10px;">NON-STOP</span></div>
+                <div class="flight-details">
+                    <div class="flight-airline">Alaska</div>
+                    <div class="flight-dates">2026-04-09 - 2026-04-13</div>
+                </div>
+                <div class="flight-price">
+                    <span class="price-unit">$</span>413
+                </div>
+            </div>
+            
+            <div class="memo-pill">🤖 助理 memo: 棕榈泉沙漠音乐节预热。低于 $400 即是完美入场券。</div>
+            
+            <div class="hotel-grid">
+                
+            <div class="hotel-card">
+                <div class="hotel-img-frame">
+                    <img src="https://images.unsplash.com/photo-1582719508461-905c67377189?auto=format&fit=crop&w=600&q=80" alt="Ace Hotel" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=600&q=80';">
+                </div>
+                <div class="hotel-info">
+                    <div class="hotel-name">Ace Hotel</div>
+                    <div class="hotel-vibe">复古嬉皮泳池风，棕榈泉最热闹的派对。</div>
+                    <div class="hotel-price">Est. $280+ / night</div>
+                </div>
+            </div>
+        
+            <div class="hotel-card">
+                <div class="hotel-img-frame">
+                    <img src="https://images.unsplash.com/photo-1561501900312-72dc1481042f?auto=format&fit=crop&w=600&q=80" alt="The Parker" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=600&q=80';">
+                </div>
+                <div class="hotel-info">
+                    <div class="hotel-name">The Parker</div>
+                    <div class="hotel-vibe">私密奢华花园，迷宫般的设计适合漫步。</div>
+                    <div class="hotel-price">Est. $450+ / night</div>
+                </div>
+            </div>
+        
+            <div class="hotel-card">
+                <div class="hotel-img-frame">
+                    <img src="https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?auto=format&fit=crop&w=600&q=80" alt="Korakia Pensione" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=600&q=80';">
+                </div>
+                <div class="hotel-info">
+                    <div class="hotel-name">Korakia Pensione</div>
+                    <div class="hotel-vibe">地中海浪漫风情，极度安静的隐居地。</div>
+                    <div class="hotel-price">Est. $320+ / night</div>
+                </div>
+            </div>
+        
+            </div>
+        </section>
+        
+        <section class="destination-island">
+            <h2 class="destination-title">迪拜 Dubai</h2>
+            
+            <div class="flight-bar">
+                <div class="flight-route">SEA-DXB <span style="font-size:1rem; opacity:0.6; margin-left:10px;">NON-STOP</span></div>
+                <div class="flight-details">
+                    <div class="flight-airline">Emirates</div>
+                    <div class="flight-dates">2026-05-22 - 2026-05-28</div>
+                </div>
+                <div class="flight-price">
+                    <span class="price-unit">$</span>975
+                </div>
+            </div>
+            
+            <div class="memo-pill">🤖 助理 memo: 酋长国的奢华之旅。推荐 Emirates 直飞。锁定五月假期。</div>
+            
+            <div class="hotel-grid">
+                
+            <div class="hotel-card">
+                <div class="hotel-img-frame">
+                    <img src="https://images.unsplash.com/photo-1512453979798-850f04a6c4d9?auto=format&fit=crop&w=600&q=80" alt="Atlantis The Royal" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=600&q=80';">
+                </div>
+                <div class="hotel-info">
+                    <div class="hotel-name">Atlantis The Royal</div>
+                    <div class="hotel-vibe">极致奢华地标，超现代的建筑奇迹。</div>
+                    <div class="hotel-price">Est. $600+ / night</div>
+                </div>
+            </div>
+        
+            <div class="hotel-card">
+                <div class="hotel-img-frame">
+                    <img src="https://images.unsplash.com/photo-1577085773173-9097d744ec1c?auto=format&fit=crop&w=600&q=80" alt="Al Maha Resort" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=600&q=80';">
+                </div>
+                <div class="hotel-info">
+                    <div class="hotel-name">Al Maha Resort</div>
+                    <div class="hotel-vibe">贝都因豪华，沙漠保护区内的私密体验。</div>
+                    <div class="hotel-price">Est. $900+ / night</div>
+                </div>
+            </div>
+        
+            <div class="hotel-card">
+                <div class="hotel-img-frame">
+                    <img src="https://images.unsplash.com/photo-1546412414-e1885259563a?auto=format&fit=crop&w=600&q=80" alt="Bulgari Resort" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=600&q=80';">
+                </div>
+                <div class="hotel-info">
+                    <div class="hotel-name">Bulgari Resort</div>
+                    <div class="hotel-vibe">海上意大利珠宝，私密性极高的海滨奢华。</div>
+                    <div class="hotel-price">Est. $850+ / night</div>
+                </div>
+            </div>
+        
+            </div>
+        </section>
+        
+        <section class="destination-island">
+            <h2 class="destination-title">巴厘岛 Bali</h2>
+            
+            <div class="flight-bar">
+                <div class="flight-route">SEA-DPS <span style="font-size:1rem; opacity:0.6; margin-left:10px;">NON-STOP</span></div>
+                <div class="flight-details">
+                    <div class="flight-airline">Singapore Airlines</div>
+                    <div class="flight-dates">2026-07-01 - 2026-07-08</div>
+                </div>
+                <div class="flight-price">
+                    <span class="price-unit">$</span>1250
+                </div>
+            </div>
+            
+            <div class="memo-pill">🤖 助理 memo: 巴厘岛 (Bali): $1250。热带天堂的呼唤，建议经由 Singapore 转机体验最佳服务。</div>
+            
+            <div class="hotel-grid">
+                
+            <div class="hotel-card">
+                <div class="hotel-img-frame">
+                    <img src="https://images.unsplash.com/photo-1573790387438-4da905039392?auto=format&fit=crop&w=600&q=80" alt="Potato Head Studios" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=600&q=80';">
+                </div>
+                <div class="hotel-info">
+                    <div class="hotel-name">Potato Head Studios</div>
+                    <div class="hotel-vibe">现代野兽派海滩俱乐部，Seminyak 的创意中心。</div>
+                    <div class="hotel-price">Est. $250+ / night</div>
+                </div>
+            </div>
+        
+            <div class="hotel-card">
+                <div class="hotel-img-frame">
+                    <img src="https://images.unsplash.com/photo-1544644181-1484b3fdfc62?auto=format&fit=crop&w=600&q=80" alt="Mason Elephant Lodge" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=600&q=80';">
+                </div>
+                <div class="hotel-info">
+                    <div class="hotel-name">Mason Elephant Lodge</div>
+                    <div class="hotel-vibe">与大象共眠的丛林奇遇，Ubud 深处的生态奢华。</div>
+                    <div class="hotel-price">Est. $380+ / night</div>
+                </div>
+            </div>
+        
+            <div class="hotel-card">
+                <div class="hotel-img-frame">
+                    <img src="https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?auto=format&fit=crop&w=600&q=80" alt="The Midnight Bali" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=600&q=80';">
+                </div>
+                <div class="hotel-info">
+                    <div class="hotel-name">The Midnight Bali</div>
+                    <div class="hotel-vibe">设计感十足的精品别墅，Canggu 极简主义美学。</div>
+                    <div class="hotel-price">Est. $220+ / night</div>
+                </div>
+            </div>
+        
+            </div>
+        </section>
+        
+
+    <footer>
+        DESIGNED FOR YIDAN • ANTIGRAVITY AGENT
+    </footer>
+</body>
+</html>
+    
