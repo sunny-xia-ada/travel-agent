@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XYLab Travel Agent | 智能旅行决策中心</title>
+    <title>XYLab Travel Agent | 智能旅行架构 v5</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700;900&display=swap" rel="stylesheet">
     <style>
         /* ─── RESET & ROOT ─────────────────────────────────── */
@@ -61,7 +61,7 @@
 
         .header-title {
             font-weight: 900;
-            font-size: clamp(3.5rem, 9vw, 6.5rem);
+            font-size: clamp(3.5rem, 9vw, 7.5rem);
             letter-spacing: -3px;
             line-height: 1;
             margin-bottom: 12px;
@@ -71,7 +71,7 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
             animation: waveShift 6s ease infinite;
-            filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.95)) drop-shadow(0 0 30px rgba(255, 255, 255, 0.85));
+            filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.95)) drop-shadow(0 0 30px rgba(255, 255, 255, 0.85)) drop-shadow(0 0 50px rgba(255, 105, 180, 0.35));
         }
 
         .header-subtitle {
@@ -97,85 +97,116 @@
             letter-spacing: 3px;
             color: var(--text-mid);
             text-transform: uppercase;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 4px 20px rgba(255, 105, 180, 0.15);
         }
 
         .header-meta .sep {
             opacity: 0.3;
         }
 
-        /* ─── BUDGET CARD ──────────────────────────────────── */
+        /* ─── BUDGET CARD (Financial Intelligence) ─────────── */
         .budget-card {
             max-width: 1280px;
             margin: 0 auto 52px;
-            background: rgba(255, 255, 255, 0.6);
+            background: linear-gradient(135deg, rgba(255, 105, 180, 0.12), rgba(255, 165, 0, 0.08));
             backdrop-filter: blur(25px);
             -webkit-backdrop-filter: blur(25px);
             border-radius: 32px;
-            border: 2px solid rgba(255, 255, 255, 0.8);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.75);
+            box-shadow: 0 20px 60px rgba(255, 105, 180, 0.1), 0 2px 0 rgba(255, 255, 255, 0.9) inset;
             overflow: hidden;
         }
 
         .budget-accent {
             height: 5px;
-            background: linear-gradient(to right, #FF69B4, #FFA500);
+            background: linear-gradient(to right, #FF69B4, #FFA500, #FF69B4);
+            background-size: 200%;
+            animation: waveShift 4s linear infinite;
         }
 
         .budget-inner {
             padding: 36px 44px;
         }
 
+        .budget-title-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 28px;
+        }
+
+        .budget-heading {
+            font-size: 1.4rem;
+            font-weight: 900;
+            color: var(--text-dark);
+        }
+
+        .budget-sub {
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--text-soft);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
         .budget-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr) 1.5fr;
-            gap: 20px;
+            grid-template-columns: repeat(4, 1fr) 1.5fr;
+            gap: 16px;
         }
 
         .budget-item {
-            background: rgba(255, 255, 255, 0.7);
+            background: rgba(255, 255, 255, 0.75);
             border-radius: 20px;
-            padding: 20px;
+            padding: 20px 22px;
+            border: 1.5px solid rgba(255, 255, 255, 0.9);
         }
 
-        .budget-total {
-            background: var(--text-dark);
-            color: white;
-            border-radius: 20px;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .budget-label {
+        .budget-item-label {
             font-size: 0.7rem;
             font-weight: 800;
             letter-spacing: 2px;
             text-transform: uppercase;
             color: var(--text-soft);
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
 
-        .budget-total .budget-label {
-            color: rgba(255, 255, 255, 0.6);
-        }
-
-        .budget-amount {
+        .budget-item-amount {
             font-size: 1.8rem;
             font-weight: 900;
+            color: var(--text-dark);
         }
 
-        .budget-total .budget-amount {
-            font-size: 2.4rem;
-            color: var(--orange);
-        }
-
-        .budget-cur {
-            color: var(--pink);
+        .budget-item-amount .cur {
             font-size: 1rem;
+            font-weight: 700;
+            color: var(--pink);
             vertical-align: super;
-            margin-right: 2px;
+        }
+
+        .budget-total {
+            background: linear-gradient(135deg, #1a1a2e, #2a2a4e);
+            border-radius: 20px;
+            padding: 20px 22px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .budget-total-label {
+            font-size: 0.7rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 6px;
+        }
+
+        .budget-total-amount {
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: var(--orange);
+            filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
         }
 
         /* ─── ISLANDS ───────────────────────────────────────── */
@@ -190,10 +221,16 @@
         .island {
             background: var(--glass-bg);
             backdrop-filter: blur(22px);
+            -webkit-backdrop-filter: blur(22px);
             border-radius: 40px;
             border: 2px solid var(--glass-border);
+            box-shadow: 0 24px 80px rgba(0, 0, 0, 0.07), 0 2px 0 rgba(255, 255, 255, 0.9) inset;
             overflow: hidden;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.05);
+            transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .island:hover {
+            transform: translateY(-4px);
         }
 
         .island-accent {
@@ -202,24 +239,24 @@
         }
 
         .accent-sfo {
-            background: #6a82fb;
+            background: linear-gradient(to right, #6a82fb, #fc5c7d);
         }
 
         .accent-psp {
-            background: #f7971e;
+            background: linear-gradient(to right, #f7971e, #ffd200);
         }
 
         .accent-dxb {
             background: #ef4444;
         }
 
-        /* Risk Red */
+        /* Risk Solid Red */
         .accent-dps {
-            background: #134e5e;
+            background: linear-gradient(to right, #134e5e, #71b280);
         }
 
         .accent-sin {
-            background: #ff4b2b;
+            background: linear-gradient(to right, #ff4b2b, #ff416c);
         }
 
         .island-header {
@@ -230,91 +267,94 @@
             border-bottom: 1px solid rgba(0, 0, 0, 0.06);
         }
 
-        .island-title {
+        .island-title-group {
             display: flex;
             align-items: center;
-            gap: 16px;
         }
 
-        .island-icon {
-            font-size: 2.5rem;
+        .island-flag {
+            font-size: 2.8rem;
+            margin-right: 16px;
         }
 
         .island-name-cn {
-            font-size: 1.8rem;
+            font-size: 1.9rem;
             font-weight: 900;
+            color: var(--text-dark);
+            line-height: 1.1;
         }
 
         .island-name-en {
-            font-size: 0.8rem;
+            font-size: 0.82rem;
             font-weight: 700;
             color: var(--text-soft);
             letter-spacing: 2px;
             text-transform: uppercase;
+            margin-top: 3px;
         }
 
+        .island-dates {
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--text-soft);
+            text-transform: uppercase;
+            background: rgba(0, 0, 0, 0.04);
+            padding: 8px 18px;
+            border-radius: 30px;
+        }
+
+        /* Asymmetric Body */
         .island-body {
             display: grid;
             grid-template-columns: 320px 1fr 1.2fr;
+            gap: 0;
         }
 
-        /* Columns */
-        .pulse-col {
+        .col-divider {
+            border-right: 1px solid rgba(0, 0, 0, 0.07);
+        }
+
+        /* Column Styles */
+        .price-pulse {
             padding: 32px;
-            border-right: 1px solid rgba(0, 0, 0, 0.06);
-        }
-
-        .itin-col {
-            padding: 32px;
-            border-right: 1px solid rgba(0, 0, 0, 0.06);
-        }
-
-        .stay-col {
-            padding: 32px;
-        }
-
-        /* Risk Tracker */
-        .risk-alert-box {
-            background: rgba(239, 68, 68, 0.1);
-            border: 1.5px solid rgba(239, 68, 68, 0.3);
-            border-radius: 16px;
-            padding: 16px;
-            margin-top: 16px;
-            color: #b91c1c;
-            font-size: 0.85rem;
-            line-height: 1.5;
-        }
-
-        .risk-header {
-            font-weight: 900;
             display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 8px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            flex-direction: column;
+            gap: 18px;
         }
 
-        marquee.risk-marquee {
-            background: #ef4444;
-            color: white;
+        .itinerary-col {
+            padding: 32px;
+            border-right: 1px solid rgba(0, 0, 0, 0.07);
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .curated-stays {
+            padding: 32px;
+        }
+
+        .section-label {
+            font-size: 0.68rem;
             font-weight: 800;
-            padding: 8px 0;
-            font-size: 0.8rem;
-            letter-spacing: 1px;
+            letter-spacing: 3px;
             text-transform: uppercase;
+            color: var(--text-soft);
+            margin-bottom: 2px;
         }
 
-        /* Elements */
+        /* Badges */
         .status-badge {
             display: inline-flex;
             align-items: center;
             gap: 6px;
             font-size: 0.7rem;
             font-weight: 800;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
             padding: 5px 12px;
             border-radius: 20px;
-            text-transform: uppercase;
         }
 
         .status-live {
@@ -331,92 +371,151 @@
 
         .status-risk {
             background: rgba(239, 68, 68, 0.1);
-            color: #b91c1c;
+            color: #ef4444;
             border: 1.5px solid rgba(239, 68, 68, 0.3);
         }
 
         .price-val {
-            font-size: 3.5rem;
+            font-size: 3.8rem;
             font-weight: 900;
             line-height: 1;
-            margin: 12px 0;
         }
 
-        .price-val span {
-            font-size: 1.5rem;
-            color: var(--pink);
+        .price-val .currency {
+            font-size: 1.8rem;
+            font-weight: 700;
             vertical-align: super;
+            color: var(--pink);
         }
 
+        /* Risk Box */
+        .risk-advisory {
+            background: rgba(239, 68, 68, 0.08);
+            border-radius: 16px;
+            padding: 16px;
+            border: 1.5px solid rgba(239, 68, 68, 0.3);
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.15);
+            margin-top: 10px;
+        }
+
+        .risk-header {
+            font-weight: 900;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+            color: #ef4444;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Itinerary */
         .itin-item {
             display: flex;
             gap: 12px;
+            align-items: flex-start;
             margin-bottom: 12px;
-            font-size: 0.85rem;
-            color: var(--text-mid);
         }
 
-        .itin-day {
-            font-weight: 900;
-            color: var(--pink);
+        .itin-badge {
             flex-shrink: 0;
-            width: 45px;
-        }
-
-        .hotel-card {
+            width: 56px;
+            height: 24px;
+            border-radius: 12px;
             display: flex;
-            gap: 12px;
-            background: white;
-            border-radius: 16px;
-            padding: 10px;
-            margin-bottom: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+            align-items: center;
+            justify-content: center;
+            font-size: 0.62rem;
+            font-weight: 800;
+            color: white;
+            background: linear-gradient(135deg, var(--pink), var(--orange));
         }
 
-        .hotel-img {
-            width: 70px;
-            height: 70px;
-            border-radius: 10px;
+        .itin-text {
+            font-size: 0.83rem;
+            color: var(--text-mid);
+            line-height: 1.5;
+            padding-top: 3px;
+        }
+
+        /* Hotels */
+        .hotel-card {
+            background: white;
+            border-radius: 18px;
+            overflow: hidden;
+            display: flex;
+            gap: 0;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+            margin-bottom: 14px;
+        }
+
+        .hotel-img-wrap {
+            width: 90px;
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+
+        .hotel-img-wrap img {
+            width: 100%;
+            height: 100%;
             object-fit: cover;
         }
 
+        .hotel-info {
+            padding: 12px 14px;
+            flex: 1;
+        }
+
         .hotel-name {
-            font-size: 0.85rem;
+            font-size: 0.88rem;
             font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 4px;
         }
 
         .hotel-vibe {
-            font-size: 0.72rem;
+            font-size: 0.74rem;
+            color: var(--text-mid);
+            line-height: 1.45;
+            margin-bottom: 6px;
+        }
+
+        .hotel-rate {
+            font-size: 0.68rem;
+            font-weight: 700;
             color: var(--text-soft);
-            line-height: 1.4;
-            margin-top: 4px;
+            letter-spacing: 1px;
         }
 
         footer {
             text-align: center;
-            margin-top: 60px;
-            padding-bottom: 40px;
+            margin-top: 64px;
+            padding-bottom: 50px;
         }
 
-        .footer-badge {
-            background: white;
-            padding: 12px 30px;
-            border-radius: 40px;
-            font-size: 0.8rem;
+        .footer-pill {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(10px);
+            padding: 12px 36px;
+            border-radius: 50px;
+            font-size: 0.78rem;
             font-weight: 800;
+            letter-spacing: 3px;
             color: var(--pink);
-            letter-spacing: 2px;
+            text-transform: uppercase;
+            box-shadow: 0 4px 20px rgba(255, 105, 180, 0.12);
         }
 
-        @media (max-width: 1000px) {
+        @media (max-width: 1100px) {
             .island-body {
                 grid-template-columns: 1fr;
             }
 
-            .pulse-col,
-            .itin-col {
+            .col-divider,
+            .itinerary-col {
                 border-right: none;
-                border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+                border-bottom: 1px solid rgba(0, 0, 0, 0.07);
             }
         }
     </style>
@@ -428,7 +527,7 @@
         <span class="header-subtitle">Powered by XYLab Lifestyle Intelligence</span>
         <h1 class="header-title">XYLab Travel Agent</h1>
         <div class="header-meta">
-            <span>智能决策中心</span>
+            <span>战略数据看板 v5</span>
             <span class="sep">|</span>
             <span>2026年03月12日</span>
             <span class="sep">|</span>
@@ -436,30 +535,42 @@
         </div>
     </header>
 
-    <!-- ═══ BUDGET SUMMARY ══════════════════════════════════════ -->
+    <!-- ═══ FINANCIAL INTELLIGENCE ════════════════════════════════ -->
     <div class="budget-card">
         <div class="budget-accent"></div>
         <div class="budget-inner">
+            <div class="budget-title-row">
+                <span style="font-size:2.5rem; margin-right:15px;">📊</span>
+                <div>
+                    <div class="budget-heading">财务智能 · 2026 年度旅行组合</div>
+                    <div class="budget-sub">Financial Intelligence &nbsp;·&nbsp; 全年计划资产分配</div>
+                </div>
+            </div>
             <div class="budget-grid">
                 <div class="budget-item">
-                    <div class="budget-label">✈️ 预估航费 (5条航线)</div>
-                    <div class="budget-amount"><span class="budget-cur">$</span>3,790</div>
-                    <p style="font-size:0.7rem; color:var(--text-soft); margin-top:8px;">含 SFO, PSP, DXB, DPS, SIN</p>
+                    <div class="budget-item-label">✈️ 预估航费 (Total)</div>
+                    <div class="budget-item-amount"><span class="cur">$</span>3,790</div>
+                    <p style="font-size:0.7rem; color:var(--text-soft); margin-top:8px;">SFO/PSP/DXB/DPS/SIN</p>
                 </div>
                 <div class="budget-item">
-                    <div class="budget-label">🏨 住宿投资 (25晚)</div>
-                    <div class="budget-amount"><span class="budget-cur">$</span>7,500</div>
-                    <p style="font-size:0.7rem; color:var(--text-soft); margin-top:8px;">XYLab 精选四星/精品酒店</p>
+                    <div class="budget-item-label">🏨 住宿投资</div>
+                    <div class="budget-item-amount"><span class="cur">$</span>7,500</div>
+                    <p style="font-size:0.7rem; color:var(--text-soft); margin-top:8px;">25晚精选设计类酒店</p>
                 </div>
                 <div class="budget-item">
-                    <div class="budget-label">📊 迪拜资金状态</div>
-                    <div class="budget-amount" style="color:var(--risk-red);">PENDING</div>
-                    <p style="font-size:0.7rem; color:var(--text-soft); margin-top:8px;">风险因素：资金已预留/候补</p>
+                    <div class="budget-item-label">📊 迪拜风险状态</div>
+                    <div class="budget-item-amount" style="color:var(--risk-red);">PENDING</div>
+                    <p style="font-size:0.7rem; color:var(--text-soft); margin-top:8px;">资金候补 / 重分配预警</p>
+                </div>
+                <div class="budget-item">
+                    <div class="budget-item-label">🇸🇬 新加坡溢价</div>
+                    <div class="budget-item-amount"><span class="cur">$</span>1,200</div>
+                    <p style="font-size:0.7rem; color:var(--text-soft); margin-top:8px;">追加扩张资产分配</p>
                 </div>
                 <div class="budget-total">
-                    <div class="budget-label">🏆 年度旅行总投资额 (Est.)</div>
-                    <div class="budget-amount"><span class="budget-cur">$</span>17,296</div>
-                    <p style="font-size:0.7rem; opacity:0.7; margin-top:8px;">含 15% 弹性备用金与日常消费</p>
+                    <div class="budget-total-label">🏆 年度预算总额 (Est.)</div>
+                    <div class="budget-total-amount"><span class="cur">$</span>17,296</div>
+                    <p style="font-size:0.7rem; color:rgba(255,255,255,0.6); margin-top:8px;">含 15% 弹性备用资金</p>
                 </div>
             </div>
         </div>
@@ -467,113 +578,111 @@
 
     <div class="islands-wrapper">
 
-        <!-- 🏙️ DUBAI - RISK TRACKER -->
+        <!-- 🏙️ DUBAI - DISRUPTED STRATEGY -->
         <section class="island">
-            <marquee class="risk-marquee">⚠️ ALERT: DXB Airport operations disrupted due to regional conflict. Limited
-                flights resumed as of Mar 11, but schedules are fluid. Travel not recommended for May 22 window.
-            </marquee>
             <div class="island-accent accent-dxb"></div>
             <div class="island-header">
-                <div class="island-title">
-                    <span class="island-icon">🏙️</span>
+                <div class="island-title-group">
+                    <span class="island-flag">🏙️</span>
                     <div>
                         <div class="island-name-cn">迪拜 Dubai</div>
-                        <div class="island-name-en">SEA → DXB &nbsp;·&nbsp; 风险预警</div>
+                        <div class="island-name-en">SEA → DXB &nbsp;·&nbsp; 风险规避层</div>
                     </div>
                 </div>
                 <div class="island-dates">MAY 22 – 28, 2026</div>
             </div>
             <div class="island-body">
-                <div class="pulse-col">
-                    <div class="section-label">情报脉冲</div>
-                    <span class="status-badge status-risk">🔴 HIGH RISK / DISRUPTED</span>
-                    <div class="price-val"><span>$</span>975</div>
-                    <div class="risk-alert-box">
-                        <div class="risk-header">🚨 战略备忘 (XYLab)</div>
-                        由于中东局势升级，迪拜行程目前处于“高度预警”状态。XYLab 建议考虑备选方案（如新加坡或巴厘岛延长）或延迟计划。目前的 $975 价格已失去参考意义。
+                <div class="price-pulse col-divider">
+                    <div class="section-label">实时情报</div>
+                    <span class="status-badge status-risk">🔴 DISRUPTED / HIGH RISK</span>
+                    <div class="price-val" style="color:var(--text-soft); font-size:2.5rem; opacity:0.5;">
+                        <span>$</span>---</div>
+                    <div class="risk-advisory">
+                        <div class="risk-header">🚨 战略简报 (XYLab)</div>
+                        <p style="font-size:0.82rem; color:var(--text-mid); line-height:1.6;">中东局势升级影响 DXB 机场运作。XYLab
+                            战略组建议：<b>无限期推迟</b>或将预算重分配至新加坡扩张。目前 May 22 窗口不建议前往。</p>
                     </div>
                 </div>
-                <div class="itin-col">
-                    <div class="section-label">预设行程 (PAUSED)</div>
+                <div class="itinerary-col">
+                    <div class="section-label">原定计划 (已封存)</div>
                     <div class="itin-item">
-                        <div class="itin-day">D1-2</div>
-                        <div class="itin-text">未来博物馆 & 哈利法塔。</div>
+                        <div class="itin-badge">D1-2</div>
+                        <div class="itin-text">未来博物馆观展，入住 Atlantis The Royal。</div>
                     </div>
                     <div class="itin-item">
-                        <div class="itin-day">D3-4</div>
-                        <div class="itin-text">Al Maha 沙漠保护区。</div>
-                    </div>
-                    <div class="itin-item">
-                        <div class="itin-day">D5-6</div>
-                        <div class="itin-text">Atlantis The Royal 放空。</div>
+                        <div class="itin-badge">D3-4</div>
+                        <div class="itin-text">沙漠营地高端体验。</div>
                     </div>
                 </div>
-                <div class="stay-col">
-                    <div class="section-label">资产池 (HOTELS)</div>
-                    <div class="hotel-card">
-                        <img src="https://images.unsplash.com/photo-1512453979798-850f04a6c4d9?w=100" class="hotel-img">
+                <div class="curated-stays">
+                    <div class="section-label">资产风险锁定</div>
+                    <div class="hotel-card" style="opacity:0.6; filter:grayscale(0.5);">
+                        <div class="hotel-img-wrap"><img
+                                src="https://images.unsplash.com/photo-1512453979798-850f04a6c4d9?w=100"></div>
                         <div class="hotel-info">
                             <div class="hotel-name">Atlantis The Royal</div>
-                            <div class="hotel-vibe">顶奢地标 (风险封存)</div>
+                            <div class="hotel-vibe">顶奢美学 (PAUSED)</div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- 🇸🇬 SINGAPORE - NEW -->
+        <!-- 🇸🇬 SINGAPORE - NEW EXPANSION -->
         <section class="island">
             <div class="island-accent accent-sin"></div>
             <div class="island-header">
-                <div class="island-title">
-                    <span class="island-icon">🇸🇬</span>
+                <div class="island-title-group">
+                    <span class="island-flag">🇸🇬</span>
                     <div>
                         <div class="island-name-cn">新加坡 Singapore</div>
-                        <div class="island-name-en">SEA → SIN &nbsp;·&nbsp; 高科技花园城市</div>
+                        <div class="island-name-en">SEA → SIN &nbsp;·&nbsp; 技术美学扩张目的地</div>
                     </div>
                 </div>
                 <div class="island-dates">SEP 3 – 9, 2026</div>
             </div>
             <div class="island-body">
-                <div class="pulse-col">
-                    <div class="section-label">情报脉冲</div>
-                    <span class="status-badge status-live">🟢 Stable / Stable</span>
-                    <div class="price-val"><span>$</span>715</div>
+                <div class="price-pulse col-divider">
+                    <div class="section-label">实时情报</div>
+                    <span class="status-badge status-live">🟢 STABLE / NON-STOP</span>
+                    <div class="price-val"><span class="currency">$</span>718</div>
                     <div class="carrier-pill">✈️ Singapore Airlines</div>
-                    <div class="memo-box" style="margin-top:16px;">🤖 XYLab 调研：九月为新加坡淡季，SEA-SIN 直飞价格极具竞争力。该目的地极度符合 XYLab
-                        科技美学。</div>
+                    <div class="memo-box" style="margin-top:10px;">🤖 XYLab AI 分析：9月淡季直飞价格极佳。新加坡的<b>高科技花园城市</b>调性完美匹配
+                        XYLab 品牌基因。</div>
                 </div>
-                <div class="itin-col">
-                    <div class="section-label">核心行程</div>
-                    <div class="itinerary-list">
-                        <div class="itin-item">
-                            <div class="itin-day">D1</div>
-                            <div class="itin-text">星耀樟宜 (Jewel) & 滨海湾金沙。</div>
-                        </div>
-                        <div class="itin-item">
-                            <div class="itin-day">D2</div>
-                            <div class="itin-text">滨海湾花园 (Garden by the Bay) & 艺术科学博物馆。</div>
-                        </div>
-                        <div class="itin-item">
-                            <div class="itin-day">D3-4</div>
-                            <div class="itin-text">牛车水文化径 & 麦士威熟食中心 (Hawker Food)。</div>
-                        </div>
+                <div class="itinerary-col">
+                    <div class="section-label">3日精华战略</div>
+                    <div class="itin-item">
+                        <div class="itin-badge">Day 1</div>
+                        <div class="itin-text"><b>星耀樟宜 & MBS</b>: 入境即开启建筑美学巡礼。</div>
+                    </div>
+                    <div class="itin-item">
+                        <div class="itin-badge">Day 2</div>
+                        <div class="itin-text"><b>Gardens by the Bay</b>: 云雾森林与艺术科学博物馆。</div>
+                    </div>
+                    <div class="itin-item">
+                        <div class="itin-badge">Day 3</div>
+                        <div class="itin-text"><b>文化与味觉</b>: 牛车水探索与麦士威熟食中心。</div>
                     </div>
                 </div>
-                <div class="stay-col">
-                    <div class="section-label">XYLab 调性住宿</div>
+                <div class="curated-stays">
+                    <div class="section-label">XYLab 调性精选</div>
                     <div class="hotel-card">
-                        <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=100" class="hotel-img">
+                        <div class="hotel-img-wrap"><img
+                                src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=100"></div>
                         <div class="hotel-info">
                             <div class="hotel-name">YOTEL Singapore Orchard</div>
-                            <div class="hotel-vibe">极简科技感，智能机器人服务。</div>
+                            <div class="hotel-vibe">极简科技感 (Vibe: Cyber-Zen)</div>
+                            <div class="hotel-rate">Est. $240/晚</div>
                         </div>
                     </div>
                     <div class="hotel-card">
-                        <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=100" class="hotel-img">
+                        <div class="hotel-img-wrap"><img
+                                src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=100"></div>
                         <div class="hotel-info">
                             <div class="hotel-name">lyf Bugis Singapore</div>
-                            <div class="hotel-vibe">社交型设计，Digital Nomad 首选。</div>
+                            <div class="hotel-vibe">社交型精品 (Vibe: Design Nomad)</div>
+                            <div class="hotel-rate">Est. $190/晚</div>
                         </div>
                     </div>
                 </div>
@@ -584,42 +693,42 @@
         <section class="island">
             <div class="island-accent accent-sfo"></div>
             <div class="island-header">
-                <div class="island-title">
-                    <span class="island-icon">🌉</span>
+                <div class="island-title-group">
+                    <span class="island-flag">🌉</span>
                     <div>
                         <div class="island-name-cn">旧金山 San Francisco</div>
-                        <div class="island-name-en">SEA → SFO &nbsp;·&nbsp; 文艺短途</div>
+                        <div class="island-name-en">SEA → SFO &nbsp;·&nbsp; 文艺资产中心</div>
                     </div>
                 </div>
                 <div class="island-dates">MAR 27 – 29, 2026</div>
             </div>
             <div class="island-body">
-                <div class="pulse-col">
-                    <div class="section-label">情报脉冲</div>
-                    <span class="status-badge status-live">🟢 LIVE Data</span>
-                    <div class="price-val"><span>$</span>452</div>
+                <div class="price-pulse col-divider">
+                    <div class="section-label">实时情报</div>
+                    <span class="status-badge status-live">🟢 LIVE DATA</span>
+                    <div class="price-val"><span class="currency">$</span>452</div>
                     <div class="carrier-pill">✈️ Alaska Airlines</div>
                 </div>
-                <div class="itin-col">
-                    <div class="section-label">核心行程</div>
-                    <div class="itinerary-list">
-                        <div class="itin-item">
-                            <div class="itin-day">D1</div>
-                            <div class="itin-text">日本城 (Japantown) 慢漫步。</div>
-                        </div>
-                        <div class="itin-item">
-                            <div class="itin-day">D2</div>
-                            <div class="itin-text">SFMOMA 现代艺术 & Twin Peaks 全景。</div>
-                        </div>
+                <div class="itinerary-col">
+                    <div class="section-label">精华行程</div>
+                    <div class="itin-item">
+                        <div class="itin-badge">D1</div>
+                        <div class="itin-text">SFMOMA 现代艺术巡礼。</div>
+                    </div>
+                    <div class="itin-item">
+                        <div class="itin-badge">D2</div>
+                        <div class="itin-text">日本城漫步，体验 Hotel Kabuki 禅意。</div>
                     </div>
                 </div>
-                <div class="stay-col">
+                <div class="curated-stays">
                     <div class="section-label">精选住宿</div>
                     <div class="hotel-card">
-                        <img src="https://images.unsplash.com/photo-1550586678-f7b249a4f47d?w=100" class="hotel-img">
+                        <div class="hotel-img-wrap"><img
+                                src="https://images.unsplash.com/photo-1550586678-f7b249a4f47d?w=100"></div>
                         <div class="hotel-info">
                             <div class="hotel-name">Hotel Kabuki</div>
-                            <div class="hotel-vibe">日式禅意，静谧之选。</div>
+                            <div class="hotel-vibe">和风禅意 (Vibe: Minimalist Zen)</div>
+                            <div class="hotel-rate">Est. $320/晚</div>
                         </div>
                     </div>
                 </div>
@@ -630,39 +739,41 @@
         <section class="island">
             <div class="island-accent accent-psp"></div>
             <div class="island-header">
-                <div class="island-title">
-                    <span class="island-icon">🌵</span>
+                <div class="island-title-group">
+                    <span class="island-flag">🌵</span>
                     <div>
                         <div class="island-name-cn">棕榈泉 Palm Springs</div>
-                        <div class="island-name-en">SEA → PSP &nbsp;·&nbsp; 沙漠逃放</div>
+                        <div class="island-name-en">SEA → PSP &nbsp;·&nbsp; 沙漠美学研究</div>
                     </div>
                 </div>
                 <div class="island-dates">APR 9 – 13, 2026</div>
             </div>
             <div class="island-body">
-                <div class="pulse-col">
+                <div class="price-pulse col-divider">
                     <div class="section-label">情报脉冲</div>
-                    <span class="status-badge status-est">🟡 Estimated</span>
-                    <div class="price-val"><span>$</span>413</div>
+                    <span class="status-badge status-est">🟡 ESTIMATED</span>
+                    <div class="price-val"><span class="currency">$</span>413</div>
                 </div>
-                <div class="itin-col">
-                    <div class="section-label">核心行程</div>
+                <div class="itinerary-col">
+                    <div class="section-label">核心计划</div>
                     <div class="itin-item">
-                        <div class="itin-day">D1</div>
+                        <div class="itin-badge">D1</div>
                         <div class="itin-text">Ace Hotel 泳池派对。</div>
                     </div>
                     <div class="itin-item">
-                        <div class="itin-day">D2</div>
-                        <div class="itin-text">Aerial Tramway 雪山奇遇。</div>
+                        <div class="itin-badge">D2</div>
+                        <div class="itin-text">Aerial Tramway 高空奇景。</div>
                     </div>
                 </div>
-                <div class="stay-col">
+                <div class="curated-stays">
                     <div class="section-label">精选住宿</div>
                     <div class="hotel-card">
-                        <img src="https://images.unsplash.com/photo-1582719508461-905c67377189?w=100" class="hotel-img">
+                        <div class="hotel-img-wrap"><img
+                                src="https://images.unsplash.com/photo-1582719508461-905c67377189?w=100"></div>
                         <div class="hotel-info">
                             <div class="hotel-name">Ace Hotel & Swim Club</div>
-                            <div class="hotel-vibe">复古嬉皮，沙漠灵魂。</div>
+                            <div class="hotel-vibe">复古嬉皮 (Vibe: Retro Desert)</div>
+                            <div class="hotel-rate">Est. $350/晚</div>
                         </div>
                     </div>
                 </div>
@@ -673,39 +784,41 @@
         <section class="island">
             <div class="island-accent accent-dps"></div>
             <div class="island-header">
-                <div class="island-title">
-                    <span class="island-icon">🌴</span>
+                <div class="island-title-group">
+                    <span class="island-flag">🌴</span>
                     <div>
                         <div class="island-name-cn">巴厘岛 Bali</div>
-                        <div class="island-name-en">SEA → DPS &nbsp;·&nbsp; 热带能量</div>
+                        <div class="island-name-en">SEA → DPS &nbsp;·&nbsp; 热带能量中心</div>
                     </div>
                 </div>
                 <div class="island-dates">JUL 1 – 8, 2026</div>
             </div>
             <div class="island-body">
-                <div class="pulse-col">
+                <div class="price-pulse col-divider">
                     <div class="section-label">情报脉冲</div>
-                    <span class="status-badge status-est">🟡 Estimated</span>
-                    <div class="price-val"><span>$</span>1,250</div>
+                    <span class="status-badge status-est">🟡 ESTIMATED</span>
+                    <div class="price-val"><span class="currency">$</span>1,250</div>
                 </div>
-                <div class="itin-col">
-                    <div class="section-label">核心行程</div>
+                <div class="itinerary-col">
+                    <div class="section-label">核心计划</div>
                     <div class="itin-item">
-                        <div class="itin-day">D1-2</div>
-                        <div class="itin-text">Potato Head Beach Club。</div>
+                        <div class="itin-badge">D1-2</div>
+                        <div class="itin-text">Potato Head Beach Club 派对。</div>
                     </div>
                     <div class="itin-item">
-                        <div class="itin-day">D3-4</div>
-                        <div class="itin-text">Ubud 丛林 & 圣猴森林。</div>
+                        <div class="itin-badge">D3-5</div>
+                        <div class="itin-text">Ubud 丛林隐世与圣猴森林。</div>
                     </div>
                 </div>
-                <div class="stay-col">
+                <div class="curated-stays">
                     <div class="section-label">精选住宿</div>
                     <div class="hotel-card">
-                        <img src="https://images.unsplash.com/photo-1573790387438-4da905039392?w=100" class="hotel-img">
+                        <div class="hotel-img-wrap"><img
+                                src="https://images.unsplash.com/photo-1573790387438-4da905039392?w=100"></div>
                         <div class="hotel-info">
                             <div class="hotel-name">Potato Head Studios</div>
-                            <div class="hotel-vibe">工业美学，创意巅峰。</div>
+                            <div class="hotel-vibe">创意工厂 (Vibe: Brutalist Tropical)</div>
+                            <div class="hotel-rate">Est. $280/晚</div>
                         </div>
                     </div>
                 </div>
@@ -715,7 +828,7 @@
     </div>
 
     <footer>
-        <div class="footer-badge">✦ POWERED BY XYLAB LIFESTYLE INTELLIGENCE ✦</div>
+        <div class="footer-pill">✦ POWERED BY XYLab LIFESTYLE INTELLIGENCE ✦</div>
     </footer>
 
 </body>
