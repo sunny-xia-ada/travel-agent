@@ -1,9 +1,9 @@
 {
     "sf_weekend": {
         "latest": {
-            "date": "2026-01-30",
+            "date": "2026-02-06",
             "price": 257,
-            "market_avg": 342.22
+            "market_avg": 267.0
         },
         "history": [
             {
@@ -222,14 +222,86 @@
                 "price": 257,
                 "carrier": "United",
                 "market_avg": 342.22
+            },
+            {
+                "date": "2026-02-04",
+                "price": 257,
+                "carrier": "United",
+                "market_avg": 357.94
+            },
+            {
+                "date": "2026-02-04",
+                "price": 257,
+                "carrier": "United",
+                "market_avg": 357.94
+            },
+            {
+                "date": "2026-02-04",
+                "price": 257,
+                "carrier": "United",
+                "market_avg": 357.94
+            },
+            {
+                "date": "2026-02-04",
+                "price": 257,
+                "carrier": "United",
+                "market_avg": 357.94
+            },
+            {
+                "date": "2026-02-04",
+                "price": 257,
+                "carrier": "United",
+                "market_avg": 357.94
+            },
+            {
+                "date": "2026-02-04",
+                "price": 257,
+                "carrier": "United",
+                "market_avg": 357.94
+            },
+            {
+                "date": "2026-02-04",
+                "price": 257,
+                "carrier": "United",
+                "market_avg": 357.94
+            },
+            {
+                "date": "2026-02-04",
+                "price": 257,
+                "carrier": "United",
+                "market_avg": 357.94
+            },
+            {
+                "date": "2026-02-04",
+                "price": 257,
+                "carrier": "United",
+                "market_avg": 357.94
+            },
+            {
+                "date": "2026-02-05",
+                "price": 257,
+                "carrier": "United",
+                "market_avg": 340.5
+            },
+            {
+                "date": "2026-02-06",
+                "price": 257,
+                "carrier": "Delta",
+                "market_avg": 267.0
+            },
+            {
+                "date": "2026-02-06",
+                "price": 257,
+                "carrier": "Delta",
+                "market_avg": 267.0
             }
         ]
     },
     "desert_escape": {
         "latest": {
-            "date": "2026-01-30",
-            "price": 505,
-            "market_avg": 657.58
+            "date": "2026-02-06",
+            "price": 413,
+            "market_avg": 479.5
         },
         "history": [
             {
@@ -448,6 +520,147 @@
                 "price": 505,
                 "carrier": "Alaska",
                 "market_avg": 657.58
+            },
+            {
+                "date": "2026-02-04",
+                "price": 413,
+                "carrier": "Alaska",
+                "market_avg": 658.08
+            },
+            {
+                "date": "2026-02-04",
+                "price": 413,
+                "carrier": "Alaska",
+                "market_avg": 665.25
+            },
+            {
+                "date": "2026-02-04",
+                "price": 413,
+                "carrier": "Alaska",
+                "market_avg": 665.25
+            },
+            {
+                "date": "2026-02-04",
+                "price": 413,
+                "carrier": "Alaska",
+                "market_avg": 665.25
+            },
+            {
+                "date": "2026-02-04",
+                "price": 413,
+                "carrier": "Alaska",
+                "market_avg": 665.25
+            },
+            {
+                "date": "2026-02-04",
+                "price": 413,
+                "carrier": "Alaska",
+                "market_avg": 665.25
+            },
+            {
+                "date": "2026-02-04",
+                "price": 413,
+                "carrier": "Alaska",
+                "market_avg": 665.25
+            },
+            {
+                "date": "2026-02-04",
+                "price": 413,
+                "carrier": "Alaska",
+                "market_avg": 665.25
+            },
+            {
+                "date": "2026-02-04",
+                "price": 413,
+                "carrier": "Alaska",
+                "market_avg": 665.25
+            },
+            {
+                "date": "2026-02-05",
+                "price": 413,
+                "carrier": "Alaska",
+                "market_avg": 668.0
+            },
+            {
+                "date": "2026-02-06",
+                "price": 413,
+                "carrier": "Alaska",
+                "market_avg": 479.5
+            },
+            {
+                "date": "2026-02-06",
+                "price": 413,
+                "carrier": "Alaska",
+                "market_avg": 479.5
+            }
+        ]
+    },
+    "dubai_sanctuary": {
+        "latest": {
+            "date": "2026-02-06",
+            "price": 975,
+            "market_avg": 975.0
+        },
+        "history": [
+            {
+                "date": "2026-02-04",
+                "price": 4587,
+                "carrier": "Unknown",
+                "market_avg": 6686.46
+            },
+            {
+                "date": "2026-02-04",
+                "price": 4587,
+                "carrier": "Unknown",
+                "market_avg": 6686.46
+            },
+            {
+                "date": "2026-02-04",
+                "price": 652,
+                "carrier": "Unknown",
+                "market_avg": 993.9
+            },
+            {
+                "date": "2026-02-04",
+                "price": 975,
+                "carrier": "Emirates",
+                "market_avg": 975.0
+            },
+            {
+                "date": "2026-02-04",
+                "price": 975,
+                "carrier": "Emirates",
+                "market_avg": 975.0
+            },
+            {
+                "date": "2026-02-04",
+                "price": 975,
+                "carrier": "Emirates",
+                "market_avg": 975.0
+            },
+            {
+                "date": "2026-02-04",
+                "price": 975,
+                "carrier": "Emirates",
+                "market_avg": 975.0
+            },
+            {
+                "date": "2026-02-05",
+                "price": 975,
+                "carrier": "Emirates",
+                "market_avg": 975.0
+            },
+            {
+                "date": "2026-02-06",
+                "price": 975,
+                "carrier": "Emirates",
+                "market_avg": 975.0
+            },
+            {
+                "date": "2026-02-06",
+                "price": 975,
+                "carrier": "Emirates",
+                "market_avg": 975.0
             }
         ]
     }

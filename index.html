@@ -45,7 +45,8 @@
             position: relative;
             max-width: 1400px;
             margin: 0 auto;
-            height: 1100px;
+
+            height: 1600px; /* Extended height for Dubai */
             margin-bottom: 200px;
         }
 
@@ -66,6 +67,13 @@
         
         .pos-alpha { top: 0; left: 5%; z-index: 20; border-left: 10px solid var(--creamy-pink); }
         .pos-beta { top: 480px; right: 5%; z-index: 10; border-right: 10px solid var(--creamy-pink); }
+        .pos-gamma { 
+            top: 980px; left: 50%; transform: translateX(-50%); 
+            z-index: 30; width: 80%;
+            border-bottom: 15px solid #5F9EA0; 
+            background: rgba(255, 255, 255, 0.6);
+        }
+        .pos-gamma:hover { transform: translateX(-50%) translateY(-15px) scale(1.01); }
 
         .label-upper { font-size: 0.75rem; font-weight: 800; letter-spacing: 6px; color: var(--soft-blue); text-transform: uppercase; margin-bottom: 25px; }
         .route-fluid { font-family: 'Mrs Saint Delafield', cursive; font-size: 5.5rem; color: var(--soft-blue); margin-bottom: 15px; }
@@ -143,14 +151,14 @@
 </head>
 <body>
     <header>
-        <div class="header-edition">Pastel Dreams Suite • 2026年01月30日 • Private Briefing</div>
-        <h1 class="header-title">Travel Agent from 一丹 | Yidan's Travel Assistant</h1>
+        <div class="header-edition">Pastel Dreams Suite • 2026年02月04日 • 私享简报</div>
+        <h1 class="header-title">一丹的 Travel Agent</h1>
     </header>
 
     <section class="dashboard-wrapper">
         
         <div class="pastel-floating-card pos-alpha">
-            <div class="label-upper">Private Flight Path • 2026-03-27 to 2026-03-29</div>
+            <div class="label-upper">私享飞行轨迹 • 2026-03-27 to 2026-03-29</div>
             <div class="route-fluid">SEA-SFO</div>
             <div class="hero-price-box">
                 <span class="hero-price-val">$257</span>
@@ -158,77 +166,107 @@
             </div>
             
             <div class="market-briefing">
-                <div class="label-upper" style="font-size:0.6rem; color: #ADD8E6; margin-bottom:15px;">Market Intelligence Brief</div>
-                <div class="carrier-brief-row carrier-priority"><span>Alaska Focus</span><span>$317</span></div><div class="carrier-brief-row carrier-priority"><span>Delta Focus</span><span>$347</span></div><div class="carrier-brief-row"><span>United Context</span><span>$257</span></div><div class="carrier-brief-row"><span>United Context</span><span>$296</span></div>
+                <div class="label-upper" style="font-size:0.6rem; color: #ADD8E6; margin-bottom:15px;">市场情报简报</div>
+                <div class="carrier-brief-row carrier-priority"><span>Alaska Focus</span><span>$317</span></div><div class="carrier-brief-row carrier-priority"><span>Delta Focus</span><span>$337</span></div><div class="carrier-brief-row"><span>United Context</span><span>$257</span></div><div class="carrier-brief-row"><span>United Context</span><span>$312</span></div>
             </div>
             
             <div class="concierge-memo-wave">助理提示：一丹，这次旧金山的‘Vibe’很特别。目前价格为 $257，建议关注 $160 的回调契机。</div>
         </div>
         
         <div class="pastel-floating-card pos-beta">
-            <div class="label-upper">Private Flight Path • 2026-04-09 to 2026-04-13</div>
+            <div class="label-upper">私享飞行轨迹 • 2026-04-09 to 2026-04-13</div>
             <div class="route-fluid">SEA-PSP</div>
             <div class="hero-price-box">
-                <span class="hero-price-val">$505</span>
+                <span class="hero-price-val">$413</span>
                 <span class="hero-price-curr">USD</span>
             </div>
             
             <div class="market-briefing">
-                <div class="label-upper" style="font-size:0.6rem; color: #ADD8E6; margin-bottom:15px;">Market Intelligence Brief</div>
-                <div class="carrier-brief-row carrier-priority"><span>Alaska Focus</span><span>$567</span></div><div class="carrier-brief-row carrier-priority"><span>Alaska Focus</span><span>$567</span></div><div class="carrier-brief-row"><span>Southwest Context</span><span>$567</span></div><div class="carrier-brief-row"><span>Southwest Context</span><span>$567</span></div>
+                <div class="label-upper" style="font-size:0.6rem; color: #ADD8E6; margin-bottom:15px;">市场情报简报</div>
+                <div class="carrier-brief-row carrier-priority"><span>Alaska Focus</span><span>$606</span></div><div class="carrier-brief-row carrier-priority"><span>Alaska Focus</span><span>$606</span></div><div class="carrier-brief-row"><span>Southwest Context</span><span>$567</span></div><div class="carrier-brief-row"><span>Southwest Context</span><span>$567</span></div>
             </div>
             
-            <div class="concierge-memo-wave">助理提示：棕榈泉的沙漠阳光正当时 ($505)。若是价格跌破 $400，那将是完美的逃离理由。</div>
+            <div class="concierge-memo-wave">助理提示：棕榈泉的沙漠阳光正当时 ($413)。若是价格跌破 $400，那将是完美的逃离理由。</div>
+        </div>
+        
+        <div class="pastel-floating-card pos-gamma">
+            <div class="label-upper">私享飞行轨迹 • 2026-05-22 to 2026-05-28</div>
+            <div class="route-fluid">SEA-DXB</div>
+            <div class="hero-price-box">
+                <span class="hero-price-val">$975</span>
+                <span class="hero-price-curr">USD</span>
+            </div>
+            
+            <div class="market-briefing">
+                <div class="label-upper" style="font-size:0.6rem; color: #ADD8E6; margin-bottom:15px;">市场情报简报</div>
+                <div class="carrier-brief-row"><span>Emirates Context</span><span>$975</span></div><div class="carrier-brief-row"><span>Emirates Context</span><span>$975</span></div>
+            </div>
+            
+            <div class="concierge-memo-wave">助理提示：一丹，5月的迪拜虽热，但这几家4星级酒店正如沙漠绿洲般清凉。Emirates 等航司的“Value Peak”若出现，便是以高性价比享受5星级度假感的最佳时机。当前起价 $975。</div>
         </div>
         
     </section>
 
     <div class="sanctuary-title-box">
-        <h2 style="font-family: 'Mrs Saint Delafield', cursive; font-size: 6rem; color: var(--soft-blue);">Sanctuary Highlights</h2>
+        <h2 style="font-family: 'Mrs Saint Delafield', cursive; font-size: 6rem; color: var(--soft-blue);">精选栖息地</h2>
     </div>
     <section class="sanctuary-pastel-grid">
         
         <div class="pastel-vertical-card">
             <div class="highlight-bar"></div>
-            <div class="vibe-check-badge">Sanctuary Vibe Check</div>
+            <div class="vibe-check-badge">氛围感鉴定</div>
             <div class="view-frame">
-                <img src="hotel_sfo.png" alt="1 Hotel San Francisco">
+                <img src="hotel_sfo.png" alt="Hotel Kabuki">
             </div>
             <div class="pastel-info">
-                <div class="pastel-name">1 Hotel San Francisco</div>
-                <div class="pastel-vibe-text">Sustainable luxury on the waterfront.</div>
-                <div class="pastel-meta">Exclusive Rate from $325 起</div>
+                <div class="pastel-name">Hotel Kabuki</div>
+                <div class="pastel-vibe-text">日式和风与现代加州的完美融合。</div>
+                <div class="pastel-meta">专属优享价 $220 起</div>
             </div>
-            <div class="concierge-handwritten">助理提示：the panoramic bay views are best enjoyed at sunset.</div>
+            <div class="concierge-handwritten">助理提示：位于 Japantown 中心，闹中取静的禅意。花园景观房是首选。</div>
         </div>
     
         <div class="pastel-vertical-card">
             <div class="highlight-bar"></div>
-            <div class="vibe-check-badge">Sanctuary Vibe Check</div>
+            <div class="vibe-check-badge">氛围感鉴定</div>
             <div class="view-frame">
-                <img src="hotel_psp.png" alt="Korakia Pensione">
+                <img src="hotel_psp.png" alt="Ace Hotel & Swim Club">
             </div>
             <div class="pastel-info">
-                <div class="pastel-name">Korakia Pensione</div>
-                <div class="pastel-vibe-text">Moroccan desert sanctuary.</div>
-                <div class="pastel-meta">Exclusive Rate from $425 起</div>
+                <div class="pastel-name">Ace Hotel & Swim Club</div>
+                <div class="pastel-vibe-text">沙漠中的复古嬉皮绿洲。</div>
+                <div class="pastel-meta">专属优享价 $280 起</div>
             </div>
-            <div class="concierge-handwritten">助理提示：candlelit courtyards make this the ultimate escape.</div>
+            <div class="concierge-handwritten">助理提示：泳池派对是这里的灵魂，夜晚的篝火更是氛围拉满。</div>
+        </div>
+    
+        <div class="pastel-vertical-card">
+            <div class="highlight-bar"></div>
+            <div class="vibe-check-badge">氛围感鉴定</div>
+            <div class="view-frame">
+                <img src="hotel_sfo.png" alt="Rove Downtown">
+            </div>
+            <div class="pastel-info">
+                <div class="pastel-name">Rove Downtown</div>
+                <div class="pastel-vibe-text">直面哈利法塔的潮流设计酒店。</div>
+                <div class="pastel-meta">专属优享价 $150 起</div>
+            </div>
+            <div class="concierge-handwritten">助理提示：步行可达 Dubai Mall，性价比之王，拥有无敌天际线视野。</div>
         </div>
     
     </section>
 
     <div class="tilted-memory">
         <img src="price_trend.png" alt="Intelligence History">
-        <div class="polaroid-hand-title">Market Pulse Memory</div>
+        <div class="polaroid-hand-title">市场脉搏记忆</div>
     </div>
 
     <section class="concierge-hub">
-        <div class="wave-memo-pill">SEA-SFO 目前价格 $257。建议再等等，关注 $160 的突破点。</div><div class="wave-memo-pill">SEA-PSP 目前价格 $505。建议再等等，关注 $400 的突破点。</div>
+        <div class="wave-memo-pill">SEA-SFO 目前价格 $257。建议再等等，关注 $160 的突破点。</div><div class="wave-memo-pill">SEA-PSP 当前价格 $413，已低于 7 日平均价，具备不错的出行价值。</div><div class="wave-memo-pill">SEA-DXB 当前价格 $975，已低于 7 日平均价，具备不错的出行价值。</div>
     </section>
 
     <footer>
-        Antigravity Personalized Concierge • For Yidan Yan
+        Antigravity 私人定制管家 • 专属 Yidan Yan
     </footer>
 </body>
 </html>
