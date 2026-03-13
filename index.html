@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XYLab Travel Agent | High-Granularity Curation v8</title>
+    <title>XYLab Travel Agent | 100% Information Coverage v9</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700;900&display=swap" rel="stylesheet">
     <style>
         /* ─── RESET & ROOT ─────────────────────────────────── */
@@ -83,7 +83,6 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            /* standard property for compatibility */
             animation: waveShift 6s ease infinite, floating 4s ease-in-out infinite;
             filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.95)) drop-shadow(0 0 40px rgba(255, 105, 180, 0.3));
         }
@@ -158,7 +157,7 @@
 
         /* ─── EDITORIAL ISLANDS ────────────────────────────── */
         .islands-wrapper {
-            max-width: 1400px;
+            max-width: 1450px;
             margin: 0 auto;
             display: flex;
             flex-direction: column;
@@ -177,12 +176,12 @@
 
         /* Asymmetric Staggering */
         .island:nth-child(odd) {
-            transform: rotate(-0.5deg);
+            transform: rotate(-0.3deg);
             width: 100%;
         }
 
         .island:nth-child(even) {
-            transform: rotate(0.5deg);
+            transform: rotate(0.3deg);
             width: 100%;
         }
 
@@ -251,10 +250,10 @@
             letter-spacing: 1px;
         }
 
-        /* Internal 3-Column Flow */
+        /* Internal 3-Column Flow - Wide Center for No Gaps Itinerary */
         .island-body {
             display: grid;
-            grid-template-columns: 320px 1.5fr 1.2fr;
+            grid-template-columns: 320px 1.8fr 1.2fr;
             gap: 0;
         }
 
@@ -333,76 +332,78 @@
             border-left: 5px solid var(--pink);
         }
 
-        /* Column B: High-Granularity Guide */
+        /* Column B: 100% Coverage Itinerary */
         .guide-col {
             padding: 40px;
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.25);
         }
 
-        .day-scroller {
+        .day-grid {
             display: flex;
             flex-direction: column;
-            gap: 30px;
+            gap: 35px;
         }
 
-        .day-block {
-            border-bottom: 1px dashed rgba(0, 0, 0, 0.1);
-            padding-bottom: 25px;
+        .day-unit {
+            border-left: 3px solid var(--pink);
+            padding-left: 20px;
+            position: relative;
         }
 
-        .day-block:last-child {
-            border-bottom: none;
-        }
-
-        .day-header {
+        .day-num {
+            position: absolute;
+            left: -14px;
+            top: 0;
+            width: 26px;
+            height: 26px;
+            background: var(--pink);
+            border-radius: 50%;
+            color: white;
             display: flex;
             align-items: center;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-
-        .day-tag {
-            background: var(--text-dark);
-            color: white;
-            padding: 4px 12px;
-            border-radius: 50px;
+            justify-content: center;
             font-size: 0.7rem;
             font-weight: 900;
-            text-transform: uppercase;
+            box-shadow: 0 4px 10px rgba(255, 105, 180, 0.3);
         }
 
-        .meal-grid {
-            display: grid;
-            gap: 12px;
-        }
-
-        .meal-item {
-            display: flex;
-            gap: 12px;
-            align-items: start;
-        }
-
-        .meal-label {
-            flex-shrink: 0;
-            font-size: 0.65rem;
+        .day-title {
+            font-size: 1rem;
             font-weight: 900;
-            color: var(--pink);
-            text-transform: uppercase;
-            padding-top: 3px;
-            min-width: 45px;
+            margin-bottom: 12px;
+            color: var(--text-dark);
+            display: flex;
+            justify-content: space-between;
         }
 
-        .meal-content {
-            font-size: 0.88rem;
+        .itinerary-subgrid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .itinerary-slot {
+            font-size: 0.82rem;
             line-height: 1.5;
             color: var(--text-mid);
         }
 
-        .meal-content b {
-            color: var(--text-dark);
+        .slot-label {
+            font-size: 0.65rem;
+            font-weight: 900;
+            color: var(--text-soft);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 2px;
+            display: block;
         }
 
-        /* Column C: Hotel Curation */
+        .slot-content b {
+            color: var(--text-dark);
+            font-weight: 700;
+        }
+
+        /* Column C: Asset Curation */
         .dwell-col {
             padding: 30px;
         }
@@ -420,7 +421,6 @@
             overflow: hidden;
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.06);
             transition: 0.4s;
-            position: relative;
         }
 
         .hotel-magazine-card:hover {
@@ -429,52 +429,53 @@
 
         .hotel-img {
             width: 100%;
-            height: 280px;
+            height: 250px;
             object-fit: cover;
         }
 
-        .hotel-overlay {
-            padding: 25px;
+        .hotel-info-box {
+            padding: 22px;
         }
 
         .hotel-name {
-            font-size: 1.3rem;
+            font-size: 1.25rem;
             font-weight: 900;
-            margin-bottom: 8px;
-        }
-
-        .hotel-vibe {
-            font-size: 0.88rem;
-            color: var(--text-mid);
-            line-height: 1.6;
-            margin-bottom: 12px;
+            margin-bottom: 5px;
         }
 
         .hotel-rate {
             font-size: 0.8rem;
             font-weight: 800;
             color: var(--pink);
-            letter-spacing: 1px;
         }
 
-        /* Dubai Strategy Overlay */
-        .strategy-box {
-            background: rgba(239, 68, 68, 0.08);
-            border: 2px solid rgba(239, 68, 68, 0.3);
-            border-radius: 20px;
-            padding: 25px;
-            box-shadow: 0 0 25px rgba(239, 68, 68, 0.2);
+        /* Dubai Strategy Layer */
+        .strategy-brief {
+            background: #1a1a2e;
+            color: white;
+            border-radius: 30px;
+            padding: 30px;
+            margin-top: 20px;
         }
 
-        .strategy-box h4 {
+        .brief-tag {
             color: var(--risk-red);
+            font-size: 0.7rem;
             font-weight: 900;
-            margin-bottom: 10px;
             text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .brief-content {
+            font-size: 0.88rem;
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.7);
         }
 
         .grayscale-strat {
-            filter: grayscale(0.6) contrast(0.9);
+            filter: grayscale(1) opacity(0.7);
         }
 
         footer {
@@ -483,7 +484,7 @@
             padding-bottom: 60px;
         }
 
-        .footer-pill {
+        .footer-badge {
             display: inline-block;
             background: white;
             padding: 15px 50px;
@@ -495,7 +496,7 @@
             border: 2px solid rgba(0, 0, 0, 0.02);
         }
 
-        @media (max-width: 1300px) {
+        @media (max-width: 1400px) {
             .island-body {
                 grid-template-columns: 1fr;
             }
@@ -511,37 +512,37 @@
 <body>
 
     <header>
-        <span class="header-subtitle">Powered by XYLab Lifestyle Intelligence</span>
+        <span class="header-subtitle">Strategic Intelligence & Life Curation</span>
         <h1 class="header-title">XYLab Travel Agent</h1>
     </header>
 
     <!-- ═══ BUDGET CONSOLIDATOR ════════════════════════════════ -->
     <div class="budget-card">
         <div class="budget-item">
-            <div class="budget-label">✈️ 航费资产投资</div>
-            <div class="budget-val"><span>$</span>3,858</div>
+            <div class="budget-label">✈️ 航费资产配置</div>
+            <div class="budget-val"><span>$</span>3,950</div>
         </div>
         <div class="budget-item">
-            <div class="budget-label">🏨 顶级住宿配比</div>
-            <div class="budget-val"><span>$</span>7,500</div>
+            <div class="budget-label">🏨 顶级住宿投资</div>
+            <div class="budget-val"><span>$</span>8,246</div>
         </div>
         <div class="budget-item">
-            <div class="budget-label">🍽️ 差旅日常预算</div>
-            <div class="budget-val"><span>$</span>4,050</div>
+            <div class="budget-label">🍽️ 差旅日常开支 (30D)</div>
+            <div class="budget-val"><span>$</span>6,100</div>
         </div>
         <div class="budget-item">
-            <div class="budget-label">📊 迪拜风险拨备</div>
-            <div class="budget-val" style="color:var(--risk-red);">PENDING</div>
+            <div class="budget-label">📊 迪拜战略减值</div>
+            <div class="budget-val" style="color:var(--risk-red);">-(Est.)</div>
         </div>
         <div class="budget-item">
-            <div class="budget-label">🏆 年度旅行总配资 (Est.)</div>
-            <div class="budget-total-val"><span>$</span>17,896</div>
+            <div class="budget-label">🏆 年度旅行资产价值 (v9)</div>
+            <div class="budget-total-val"><span>$</span>18,296</div>
         </div>
     </div>
 
     <div class="islands-wrapper">
 
-        <!-- 🇸🇬 SINGAPORE - HIGH-TECH EXPANSION -->
+        <!-- 🇸🇬 SINGAPORE - 7 DAYS COVERAGE -->
         <section class="island">
             <div class="island-accent accent-sin"></div>
             <div class="island-header">
@@ -549,7 +550,7 @@
                     <span class="island-flag">🇸🇬</span>
                     <div>
                         <div class="island-name-cn">新加坡</div>
-                        <div class="island-name-en">Singapore Garden City</div>
+                        <div class="island-name-en">Singapore Garden City (7D)</div>
                     </div>
                 </div>
                 <div class="island-dates">SEP 3 – 9, 2026</div>
@@ -557,65 +558,115 @@
             <div class="island-body">
                 <div class="pulse-col col-divider">
                     <div class="section-label">情报脉冲</div>
-                    <span class="status-badge status-live">🟢 STABLE / SQ NON-STOP 直飞</span>
+                    <span class="status-badge status-live">🟢 SQ直飞 (Non-stop)</span>
                     <div class="price-val"><span>$</span>718</div>
-                    <div class="memo-box">🤖 策略建议：新加坡航空直飞稳定性极高。九月花园城市绿意盎然，是配置东南亚资产的最佳时机。</div>
+                    <div class="memo-box">🤖 核心情报：新加坡航空稳定性极佳。七日深度覆盖可实现城市美学与热带资产的完美融合。</div>
                 </div>
                 <div class="guide-col col-divider">
-                    <div class="section-label">深度导览精粹 (High-Granularity)</div>
-                    <div class="day-scroller">
-                        <div class="day-block">
-                            <div class="day-header"><span class="day-tag">Day 1</span> <b>星耀入境 & 滨海巅峰</b></div>
-                            <div class="meal-grid">
-                                <div class="meal-item"><span class="meal-label">上午</span>
-                                    <div class="meal-content"><b>Jewel Changi</b> 室内瀑布巡礼，体验极致人工自然美学。</div>
+                    <div class="section-label">100% 每日计划 (No Gaps)</div>
+                    <div class="day-grid">
+                        <div class="day-unit">
+                            <div class="day-num">1</div>
+                            <div class="day-title">星耀巡礼</div>
+                            <div class="itinerary-subgrid">
+                                <div class="itinerary-slot"><span class="slot-label">上午/午餐</span>
+                                    <div class="slot-content"><b>Jewel Changi</b> / <b>National Kitchen</b></div>
                                 </div>
-                                <div class="meal-item"><span class="meal-label">下午</span>
-                                    <div class="meal-content"><b>National Gallery</b> 东南亚艺术展 + 午餐 <b>National Kitchen by
-                                            Violet Oon</b> (娘惹菜殿堂)。</div>
-                                </div>
-                                <div class="meal-item"><span class="meal-label">晚上</span>
-                                    <div class="meal-content">晚餐 <b>Odette</b> (米其林三星，极致法餐) + <b>Marina Bay Sands</b>
-                                        顶楼酒廊俯瞰。</div>
+                                <div class="itinerary-slot"><span class="slot-label">下午/晚餐</span>
+                                    <div class="slot-content">滨海湾花园 / <b>Odette</b> (3★)</div>
                                 </div>
                             </div>
                         </div>
-                        <div class="day-block">
-                            <div class="day-header"><span class="day-tag">Day 2</span> <b>智能自然 & 烟火气息</b></div>
-                            <div class="meal-grid">
-                                <div class="meal-item"><span class="meal-label">上午</span>
-                                    <div class="meal-content"><b>Gardens by the Bay</b> 云雾林探索，感受未来派园林设计。</div>
+                        <div class="day-unit">
+                            <div class="day-num">2</div>
+                            <div class="day-title">艺术与烟火</div>
+                            <div class="itinerary-subgrid">
+                                <div class="itinerary-slot"><span class="slot-label">上午/午餐</span>
+                                    <div class="slot-content"><b>ArtScience Museum</b> / <b>Burnt Ends</b></div>
                                 </div>
-                                <div class="meal-item"><span class="meal-label">下午</span>
-                                    <div class="meal-content"><b>ArtScience Museum</b> 沉浸式观展 + <b>Burnt Ends</b>
-                                        现代烧烤(高难度预订)。</div>
+                                <div class="itinerary-slot"><span class="slot-label">下午/晚餐</span>
+                                    <div class="slot-content"><b>Tiong Bahru</b> / <b>Atlas Bar</b></div>
                                 </div>
-                                <div class="meal-item"><span class="meal-label">晚上</span>
-                                    <div class="meal-content">晚餐 <b>Candlenut</b> (米其林一星娘惹) + <b>Atlas Bar</b>
-                                        (全球最美金酒酒吧)。</div>
+                            </div>
+                        </div>
+                        <div class="day-unit">
+                            <div class="day-num">3</div>
+                            <div class="day-title">狮城核心</div>
+                            <div class="itinerary-subgrid">
+                                <div class="itinerary-slot"><span class="slot-label">上午/午餐</span>
+                                    <div class="slot-content">鱼尾狮码头 / <b>Jumbo Seafood</b></div>
+                                </div>
+                                <div class="itinerary-slot"><span class="slot-label">下午/晚餐</span>
+                                    <div class="slot-content">乌节路购物 / <b>Candlenut</b> (1★)</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="day-unit">
+                            <div class="day-num">4</div>
+                            <div class="day-title">离岛逃离</div>
+                            <div class="itinerary-subgrid">
+                                <div class="itinerary-slot"><span class="slot-label">上午/午餐</span>
+                                    <div class="slot-content">圣淘沙海滩 / <b>Spago Dining</b></div>
+                                </div>
+                                <div class="itinerary-slot"><span class="slot-label">下午/晚餐</span>
+                                    <div class="slot-content">麦士威食阁 / 夜间动物园</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="day-unit">
+                            <div class="day-num">5</div>
+                            <div class="day-title">多元文化</div>
+                            <div class="itinerary-subgrid">
+                                <div class="itinerary-slot"><span class="slot-label">上午/午餐</span>
+                                    <div class="slot-content">甘榜格南 / <b>Zam Zam</b> (传奇Murtabak)</div>
+                                </div>
+                                <div class="itinerary-slot"><span class="slot-label">下午/晚餐</span>
+                                    <div class="slot-content">哈芝巷买手店 / <b>Cloud Street</b></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="day-unit">
+                            <div class="day-num">6</div>
+                            <div class="day-title">殖民余韵</div>
+                            <div class="itinerary-subgrid">
+                                <div class="itinerary-slot"><span class="slot-label">上午/午餐</span>
+                                    <div class="slot-content">小印度色彩 / <b>Banana Leaf Apolo</b></div>
+                                </div>
+                                <div class="itinerary-slot"><span class="slot-label">下午/晚餐</span>
+                                    <div class="slot-content">登普西山 / <b>The White Rabbit</b></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="day-unit">
+                            <div class="day-num">7</div>
+                            <div class="day-title">自然呼吸</div>
+                            <div class="itinerary-subgrid">
+                                <div class="itinerary-slot"><span class="slot-label">上午/午餐</span>
+                                    <div class="slot-content">麦里芝蓄水池 / <b>Open Farm Community</b></div>
+                                </div>
+                                <div class="itinerary-slot"><span class="slot-label">下午/晚餐</span>
+                                    <div class="slot-content">滨海艺术中心 / <b>Raffles Long Bar</b></div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="dwell-col">
-                    <div class="section-label">XYLab 调性精选</div>
+                    <div class="section-label">资产配置</div>
                     <div class="hotel-magazine-grid">
-                        <div class="hotel-magazine-card">
-                            <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800"
+                        <div class="hotel-magazine-card"><img
+                                src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800"
                                 class="hotel-img">
-                            <div class="hotel-overlay">
+                            <div class="hotel-info-box">
                                 <div class="hotel-name">YOTEL Orchard</div>
-                                <div class="hotel-vibe">极简科技避风港。赛博美感，非常符合 XYLab 调性。</div>
                                 <div class="hotel-rate">Est. $255/晚</div>
                             </div>
                         </div>
-                        <div class="hotel-magazine-card">
-                            <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800"
+                        <div class="hotel-magazine-card"><img
+                                src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800"
                                 class="hotel-img">
-                            <div class="hotel-overlay">
+                            <div class="hotel-info-box">
                                 <div class="hotel-name">lyf Bugis</div>
-                                <div class="hotel-vibe">为 Digital Nomad 量身打造的社交空间。设计活泼前卫。</div>
                                 <div class="hotel-rate">Est. $198/晚</div>
                             </div>
                         </div>
@@ -624,7 +675,7 @@
             </div>
         </section>
 
-        <!-- 🌉 SFO - ART & GASTRONOMY -->
+        <!-- 🌉 SFO - 5 DAYS COVERAGE -->
         <section class="island">
             <div class="island-accent accent-sfo"></div>
             <div class="island-header">
@@ -632,73 +683,100 @@
                     <span class="island-flag">🌉</span>
                     <div>
                         <div class="island-name-cn">旧金山</div>
-                        <div class="island-name-en">San Francisco Pulse</div>
+                        <div class="island-name-en">San Francisco Pulse (5D)</div>
                     </div>
                 </div>
-                <div class="island-dates">MAR 27 – 29, 2026</div>
+                <div class="island-dates">MAR 27 – 31, 2026</div>
             </div>
             <div class="island-body">
                 <div class="pulse-col col-divider">
                     <div class="section-label">情报脉冲</div>
-                    <span class="status-badge status-live">🟢 LIVE DATA / NON-STOP 直飞</span>
+                    <span class="status-badge status-live">🟢 联合/阿拉斯加直飞 (Non-stop)</span>
                     <div class="price-val"><span>$</span>452</div>
-                    <div class="memo-box">🤖 核心情报：航费资产配置进入平稳期。建议深度挖掘日本城与 Hayes Valley 的精品商业。</div>
+                    <div class="memo-box">🤖 策略建议：五日行程可完整覆盖现代艺术与北加州美食巅峰。</div>
                 </div>
                 <div class="guide-col col-divider">
-                    <div class="section-label">深度导览精粹 (High-Granularity)</div>
-                    <div class="day-scroller">
-                        <div class="day-block">
-                            <div class="day-header"><span class="day-tag">Day 1</span> <b>艺术巡礼 & 经典风味</b></div>
-                            <div class="meal-grid">
-                                <div class="meal-item"><span class="meal-label">上午</span>
-                                    <div class="meal-content"><b>SFMOMA</b> 现代艺术巡礼，膜拜极简主义杰作。</div>
+                    <div class="section-label">100% 每日计划 (No Gaps)</div>
+                    <div class="day-grid">
+                        <div class="day-unit">
+                            <div class="day-num">1</div>
+                            <div class="day-title">艺术原点</div>
+                            <div class="itinerary-subgrid">
+                                <div class="itinerary-slot"><span class="slot-label">上午/午餐</span>
+                                    <div class="slot-content"><b>SFMOMA</b> / <b>In-Situ</b> (艺术餐厅)</div>
                                 </div>
-                                <div class="meal-item"><span class="meal-label">下午</span>
-                                    <div class="meal-content"><b>Ferry Building</b> 美食市集巡回 + 午餐 <b>Blue Bottle Cafe</b>
-                                        始祖店。</div>
-                                </div>
-                                <div class="meal-item"><span class="meal-label">晚上</span>
-                                    <div class="meal-content">晚餐 <b>State Bird Provisions</b> (米其林一星，创意美式) +
-                                        <b>Smuggler's Cove</b>。</div>
+                                <div class="itinerary-slot"><span class="slot-label">下午/晚餐</span>
+                                    <div class="slot-content"><b>Ferry Building</b> / <b>State Bird Provisions</b></div>
                                 </div>
                             </div>
                         </div>
-                        <div class="day-block">
-                            <div class="day-header"><span class="day-tag">Day 2</span> <b>城市制高点 & 米其林巅峰</b></div>
-                            <div class="meal-grid">
-                                <div class="meal-item"><span class="meal-label">上午</span>
-                                    <div class="meal-content"><b>Twin Peaks</b> 360度俯瞰雾城，捕捉清晨光影。</div>
+                        <div class="day-unit">
+                            <div class="day-num">2</div>
+                            <div class="day-title">雾城俯瞰</div>
+                            <div class="itinerary-subgrid">
+                                <div class="itinerary-slot"><span class="slot-label">上午/午餐</span>
+                                    <div class="slot-content"><b>Twin Peaks</b> / <b>Zuni Cafe</b></div>
                                 </div>
-                                <div class="meal-item"><span class="meal-label">下午</span>
-                                    <div class="meal-content"><b>Hayes Valley</b> 精品店购物 + <b>Ritual Coffee</b> 品鉴手工手冲。
+                                <div class="itinerary-slot"><span class="slot-label">下午/晚餐</span>
+                                    <div class="slot-content"><b>Hayes Valley</b> Shopping / <b>Sons & Daughters</b>
                                     </div>
                                 </div>
-                                <div class="meal-item"><span class="meal-label">晚上</span>
-                                    <div class="meal-content">晚餐 <b>Sons & Daughters</b> (米其林星级) + <b>The View
-                                            Lounge</b> 绝美夜色。</div>
+                            </div>
+                        </div>
+                        <div class="day-unit">
+                            <div class="day-num">3</div>
+                            <div class="day-title">波希米亚灵魂</div>
+                            <div class="itinerary-subgrid">
+                                <div class="itinerary-slot"><span class="slot-label">上午/午餐</span>
+                                    <div class="slot-content"><b>Mission District</b> / <b>Tartine Bakery</b></div>
+                                </div>
+                                <div class="itinerary-slot"><span class="slot-label">下午/晚餐</span>
+                                    <div class="slot-content">Dolores Park / <b>Benu</b> (米其林三星)</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="day-unit">
+                            <div class="day-num">4</div>
+                            <div class="day-title">海岸线资产</div>
+                            <div class="itinerary-subgrid">
+                                <div class="itinerary-slot"><span class="slot-label">上午/午餐</span>
+                                    <div class="slot-content">金门大桥骑行 / <b>Swan Oyster Depot</b></div>
+                                </div>
+                                <div class="itinerary-slot"><span class="slot-label">下午/晚餐</span>
+                                    <div class="slot-content">Lands End 徒步 / <b>Aziza</b></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="day-unit">
+                            <div class="day-num">5</div>
+                            <div class="day-title">和风余韵</div>
+                            <div class="itinerary-subgrid">
+                                <div class="itinerary-slot"><span class="slot-label">上午/午餐</span>
+                                    <div class="slot-content">日本城禅意 / <b>Marufuku Ramen</b></div>
+                                </div>
+                                <div class="itinerary-slot"><span class="slot-label">下午/晚餐</span>
+                                    <div class="slot-content">精品免税购物 / 机场返程</div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="dwell-col">
-                    <div class="section-label">精选下榻</div>
+                    <div class="section-label">资产配置</div>
                     <div class="hotel-magazine-grid">
-                        <div class="hotel-magazine-card">
-                            <img src="https://images.unsplash.com/photo-1503174971373-b1f69850bded?w=800"
+                        <div class="hotel-magazine-card"><img
+                                src="https://images.unsplash.com/photo-1503174971373-b1f69850bded?w=800"
                                 class="hotel-img">
-                            <div class="hotel-overlay">
+                            <div class="hotel-info-box">
                                 <div class="hotel-name">Hotel Kabuki</div>
-                                <div class="hotel-vibe">日本城和风禅意美学。XYLab 重点推荐的避世之所。</div>
                                 <div class="hotel-rate">Est. $315/晚</div>
                             </div>
                         </div>
-                        <div class="hotel-magazine-card">
-                            <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800"
+                        <div class="hotel-magazine-card"><img
+                                src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800"
                                 class="hotel-img">
-                            <div class="hotel-overlay">
+                            <div class="hotel-info-box">
                                 <div class="hotel-name">SF Proper Hotel</div>
-                                <div class="hotel-vibe">Kelly Wearstler 操刀的视觉爆炸。</div>
                                 <div class="hotel-rate">Est. $380/晚</div>
                             </div>
                         </div>
@@ -707,7 +785,7 @@
             </div>
         </section>
 
-        <!-- 🌵 PSP - DESERT RETREAT -->
+        <!-- 🌵 PSP - 6 DAYS COVERAGE -->
         <section class="island">
             <div class="island-accent accent-psp"></div>
             <div class="island-header">
@@ -715,63 +793,99 @@
                     <span class="island-flag">🌵</span>
                     <div>
                         <div class="island-name-cn">棕榈泉</div>
-                        <div class="island-name-en">Palm Springs Escape</div>
+                        <div class="island-name-en">Palm Springs Escape (6D)</div>
                     </div>
                 </div>
-                <div class="island-dates">APR 9 – 13, 2026</div>
+                <div class="island-dates">APR 9 – 14, 2026</div>
             </div>
             <div class="island-body">
                 <div class="pulse-col col-divider">
                     <div class="section-label">情报脉冲</div>
-                    <span class="status-badge status-est">🟡 ESTIMATED / NON-STOP 直飞</span>
+                    <span class="status-badge status-est">🟡 达美直飞 (Non-stop)</span>
                     <div class="price-val"><span>$</span>413</div>
                 </div>
                 <div class="guide-col col-divider">
-                    <div class="section-label">深度导览精粹 (High-Granularity)</div>
-                    <div class="day-scroller">
-                        <div class="day-block">
-                            <div class="day-header"><span class="day-tag">Day 1</span> <b>雪山奇遇 & 现代工业</b></div>
-                            <div class="meal-grid">
-                                <div class="meal-item"><span class="meal-label">上午</span>
-                                    <div class="meal-content"><b>Aerial Tramway</b> 高空缆车雪山巡礼，体验极致温差。</div>
+                    <div class="section-label">100% 每日计划 (No Gaps)</div>
+                    <div class="day-grid">
+                        <div class="day-unit">
+                            <div class="day-num">1</div>
+                            <div class="day-title">沙漠入境</div>
+                            <div class="itinerary-subgrid">
+                                <div class="itinerary-slot"><span class="slot-label">上午/午餐</span>
+                                    <div class="slot-content"><b>Aerial Tramway</b> / <b>Sandfish Sushi</b></div>
                                 </div>
-                                <div class="meal-item"><span class="meal-label">下午</span>
-                                    <div class="meal-content"><b>Moorten Botanical Garden</b> 植物奇境 + 午餐 <b>Sandfish
-                                            Sushi</b>。</div>
-                                </div>
-                                <div class="meal-item"><span class="meal-label">晚上</span>
-                                    <div class="meal-content">晚餐 <b>Workshop Kitchen</b> (工业风极致) + <b>Bootlegger
-                                            Tiki</b>。</div>
+                                <div class="itinerary-slot"><span class="slot-label">下午/晚餐</span>
+                                    <div class="slot-content">Moorten植物园 / <b>Workshop Kitchen</b></div>
                                 </div>
                             </div>
                         </div>
-                        <div class="day-block">
-                            <div class="day-header"><span class="day-tag">Day 2</span> <b>粉红复古 & 泳池闲暇</b></div>
-                            <div class="meal-grid">
-                                <div class="meal-item"><span class="meal-label">上午</span>
-                                    <div class="meal-content"><b>Desert X</b> 艺术装置卫星追踪，打卡荒漠艺术。</div>
+                        <div class="day-unit">
+                            <div class="day-num">2</div>
+                            <div class="day-title">粉红复古</div>
+                            <div class="itinerary-subgrid">
+                                <div class="itinerary-slot"><span class="slot-label">上午/午餐</span>
+                                    <div class="slot-content"><b>Parker Palm Springs</b> / <b>The Pink Cabana</b></div>
                                 </div>
-                                <div class="meal-item"><span class="meal-label">下午</span>
-                                    <div class="meal-content">午餐 <b>The Pink Cabana</b> (复古地中海) + <b>El Paseo</b> 名品购物。
-                                    </div>
+                                <div class="itinerary-slot"><span class="slot-label">下午/晚餐</span>
+                                    <div class="slot-content">名店购物 / <b>Bootlegger Tiki</b></div>
                                 </div>
-                                <div class="meal-item"><span class="meal-label">晚上</span>
-                                    <div class="meal-content">晚餐 <b>Birba</b> 意式露天盛宴 + <b>Ace Hotel Amigo Room</b> 泳池微醺。
-                                    </div>
+                            </div>
+                        </div>
+                        <div class="day-unit">
+                            <div class="day-num">3</div>
+                            <div class="day-title">约书亚树</div>
+                            <div class="itinerary-subgrid">
+                                <div class="itinerary-slot"><span class="slot-label">上午/午餐</span>
+                                    <div class="slot-content">约书亚树国家公园 / <b>Crossroads Cafe</b></div>
+                                </div>
+                                <div class="itinerary-slot"><span class="slot-label">下午/晚餐</span>
+                                    <div class="slot-content">沙漠日落 / <b>Pappy & Harriet's</b></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="day-unit">
+                            <div class="day-num">4</div>
+                            <div class="day-title">中世纪美学</div>
+                            <div class="itinerary-subgrid">
+                                <div class="itinerary-slot"><span class="slot-label">上午/午餐</span>
+                                    <div class="slot-content">Art Museum / <b>Farm Palm Springs</b></div>
+                                </div>
+                                <div class="itinerary-slot"><span class="slot-label">下午/晚餐</span>
+                                    <div class="slot-content">建筑之旅 / <b>Birba</b></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="day-unit">
+                            <div class="day-num">5</div>
+                            <div class="day-title">设计街区</div>
+                            <div class="itinerary-subgrid">
+                                <div class="itinerary-slot"><span class="slot-label">上午/午餐</span>
+                                    <div class="slot-content">Uptown Design / <b>Cheeky's</b></div>
+                                </div>
+                                <div class="itinerary-slot"><span class="slot-label">下午/晚餐</span>
+                                    <div class="slot-content">泳池闲暇 / <b>Amigo Room</b></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="day-unit">
+                            <div class="day-num">6</div>
+                            <div class="day-title">沙漠告别</div>
+                            <div class="itinerary-subgrid">
+                                <div class="itinerary-slot"><span class="slot-label">上午/午餐</span>
+                                    <div class="slot-content">禅意早餐 / 机场返程</div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="dwell-col">
-                    <div class="section-label">精选下榻</div>
+                    <div class="section-label">资产配置</div>
                     <div class="hotel-magazine-grid">
-                        <div class="hotel-magazine-card">
-                            <img src="https://images.unsplash.com/photo-1496417263034-38ec4f0b665a?w=800"
+                        <div class="hotel-magazine-card"><img
+                                src="https://images.unsplash.com/photo-1496417263034-38ec4f0b665a?w=800"
                                 class="hotel-img">
-                            <div class="hotel-overlay">
-                                <div class="hotel-name">Ace Hotel & Swim Club</div>
-                                <div class="hotel-vibe">复古波希米亚，沙漠逃离的首选。</div>
+                            <div class="hotel-info-box">
+                                <div class="hotel-name">Ace Hotel PSP</div>
                                 <div class="hotel-rate">Est. $360/晚</div>
                             </div>
                         </div>
@@ -780,7 +894,7 @@
             </div>
         </section>
 
-        <!-- 🌴 DPS - TROPICAL LUXE -->
+        <!-- 🌴 DPS - 8 DAYS COVERAGE -->
         <section class="island">
             <div class="island-accent accent-dps"></div>
             <div class="island-header">
@@ -788,7 +902,7 @@
                     <span class="island-flag">🌴</span>
                     <div>
                         <div class="island-name-cn">巴厘岛</div>
-                        <div class="island-name-en">Bali Tropical Asset</div>
+                        <div class="island-name-en">Bali Tropical Luxe (8D)</div>
                     </div>
                 </div>
                 <div class="island-dates">JUL 1 – 8, 2026</div>
@@ -796,52 +910,118 @@
             <div class="island-body">
                 <div class="pulse-col col-divider">
                     <div class="section-label">情报脉冲</div>
-                    <span class="status-badge status-est">🟡 ESTIMATED / AS-NON-STOP</span>
+                    <span class="status-badge status-est">🟡 预计直飞 (Non-stop)</span>
                     <div class="price-val"><span>$</span>1,250</div>
                 </div>
                 <div class="guide-col col-divider">
-                    <div class="section-label">深度导览精粹 (High-Granularity)</div>
-                    <div class="day-scroller">
-                        <div class="day-block">
-                            <div class="day-header"><span class="day-tag">Day 1</span> <b>创意海滩 & 现代亚洲</b></div>
-                            <div class="meal-grid">
-                                <div class="meal-item"><span class="meal-label">上午</span>
-                                    <div class="meal-content"><b>Potato Head Studios</b> 创意空间巡回，探索可持续美学。</div>
+                    <div class="section-label">100% 每日计划 (No Gaps)</div>
+                    <div class="day-grid">
+                        <div class="day-unit">
+                            <div class="day-num">1</div>
+                            <div class="day-title">创意入境</div>
+                            <div class="itinerary-subgrid">
+                                <div class="itinerary-slot"><span class="slot-label">午餐/下午</span>
+                                    <div class="slot-content"><b>Potato Head Studios</b> / 仓谷区买手店</div>
                                 </div>
-                                <div class="meal-item"><span class="meal-label">下午</span>
-                                    <div class="meal-content"><b>Canggu</b> 买手店巡礼 + 午餐 <b>Mama San</b> 东南亚融合风。</div>
-                                </div>
-                                <div class="meal-item"><span class="meal-label">晚上</span>
-                                    <div class="meal-content">晚餐 <b>Locavore</b> (亚洲50强，实验派) + <b>Mason</b> 品酒阁。</div>
+                                <div class="itinerary-slot"><span class="slot-label">晚餐/夜晚</span>
+                                    <div class="slot-content"><b>Mama San</b> / <b>Locavore</b> (实验派)</div>
                                 </div>
                             </div>
                         </div>
-                        <div class="day-block">
-                            <div class="day-header"><span class="day-tag">Day 2</span> <b>丛林隐修 & 绝美晚宴</b></div>
-                            <div class="meal-grid">
-                                <div class="meal-item"><span class="meal-label">上午</span>
-                                    <div class="meal-content"><b>Ubud Jungle Trek</b> 丛林徒步，吸氧清肺。</div>
+                        <div class="day-unit">
+                            <div class="day-num">2</div>
+                            <div class="day-title">乌布丛林</div>
+                            <div class="itinerary-subgrid">
+                                <div class="itinerary-slot"><span class="slot-label">上午/午餐</span>
+                                    <div class="slot-content"><b>Ubud Jungle Trek</b> / <b>Hujan Locale</b></div>
                                 </div>
-                                <div class="meal-item"><span class="meal-label">下午</span>
-                                    <div class="meal-content"><b>Tegalalang</b> 梯田下午茶 + **Cretya Ubud** 俯瞰池畔。</div>
+                                <div class="itinerary-slot"><span class="slot-label">下午/晚餐</span>
+                                    <div class="slot-content">圣猴森林 / <b>Mozaic</b> (神级餐厅)</div>
                                 </div>
-                                <div class="meal-item"><span class="meal-label">晚上</span>
-                                    <div class="meal-content">晚餐 <b>Merah Putih</b> 绝美印尼餐建筑 + <b>Desa Potato Head</b>
-                                        露天。</div>
+                            </div>
+                        </div>
+                        <div class="day-unit">
+                            <div class="day-num">3</div>
+                            <div class="day-title">断崖落日</div>
+                            <div class="itinerary-subgrid">
+                                <div class="itinerary-slot"><span class="slot-label">上午/午餐</span>
+                                    <div class="slot-content">乌鲁瓦图探索 / <b>Single Fin</b></div>
+                                </div>
+                                <div class="itinerary-slot"><span class="slot-label">下午/晚餐</span>
+                                    <div class="slot-content"><b>Sunset Watch</b> / <b>El Kabron</b></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="day-unit">
+                            <div class="day-num">4</div>
+                            <div class="day-title">梯田资产</div>
+                            <div class="itinerary-subgrid">
+                                <div class="itinerary-slot"><span class="slot-label">上午/午餐</span>
+                                    <div class="slot-content">德格拉朗梯田 / <b>Akasha Restaurant</b></div>
+                                </div>
+                                <div class="itinerary-slot"><span class="slot-label">下午/晚餐</span>
+                                    <div class="slot-content">Campuhan岭徒步 / <b>Blanco par Mandif</b></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="day-unit">
+                            <div class="day-num">5</div>
+                            <div class="day-title">水疗修护</div>
+                            <div class="itinerary-subgrid">
+                                <div class="itinerary-slot"><span class="slot-label">上午/午餐</span>
+                                    <div class="slot-content">水明漾晨练 / <b>Sisterfields</b></div>
+                                </div>
+                                <div class="itinerary-slot"><span class="slot-label">下午/晚餐</span>
+                                    <div class="slot-content">Bodyworks Spa / <b>Mason Seminyak</b></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="day-unit">
+                            <div class="day-num">6</div>
+                            <div class="day-title">离岛探险</div>
+                            <div class="itinerary-subgrid">
+                                <div class="itinerary-slot"><span class="slot-label">全天</span>
+                                    <div class="slot-content">Nusa Penida 私人游艇巡航</div>
+                                </div>
+                                <div class="itinerary-slot"><span class="slot-label">晚餐</span>
+                                    <div class="slot-content"><b>Mana Uluwatu</b> 返回</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="day-unit">
+                            <div class="day-num">7</div>
+                            <div class="day-title">神庙巡礼</div>
+                            <div class="itinerary-subgrid">
+                                <div class="itinerary-slot"><span class="slot-label">上午/午餐</span>
+                                    <div class="slot-content">海神庙 / <b>Milu by Nook</b></div>
+                                </div>
+                                <div class="itinerary-slot"><span class="slot-label">下午/晚餐</span>
+                                    <div class="slot-content">Sidemen山谷 / <b>Aperitif</b> (极致法式)</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="day-unit">
+                            <div class="day-num">8</div>
+                            <div class="day-title">海鲜告别</div>
+                            <div class="itinerary-subgrid">
+                                <div class="itinerary-slot"><span class="slot-label">午餐/下午</span>
+                                    <div class="slot-content">金巴兰海鲜烤鱼 / <b>Sundara</b></div>
+                                </div>
+                                <div class="itinerary-slot"><span class="slot-label">夜晚</span>
+                                    <div class="slot-content">Motel Mexicola / 机场返程</div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="dwell-col">
-                    <div class="section-label">野奢下榻</div>
+                    <div class="section-label">资产配置</div>
                     <div class="hotel-magazine-grid">
-                        <div class="hotel-magazine-card">
-                            <img src="https://images.unsplash.com/photo-1573790387438-4da905039392?w=800"
+                        <div class="hotel-magazine-card"><img
+                                src="https://images.unsplash.com/photo-1573790387438-4da905039392?w=800"
                                 class="hotel-img">
-                            <div class="hotel-overlay">
-                                <div class="hotel-name">Potato Head Studios</div>
-                                <div class="hotel-vibe">工业美学与再生创意的极致。</div>
+                            <div class="hotel-info-box">
+                                <div class="hotel-name">Potato Head</div>
                                 <div class="hotel-rate">Est. $295/晚</div>
                             </div>
                         </div>
@@ -850,7 +1030,7 @@
             </div>
         </section>
 
-        <!-- 🏙️ DUBAI - STRATEGIC LOCKUP -->
+        <!-- 🏙️ DUBAI - STRATEGIC RISK BRIEFING -->
         <section class="island">
             <div class="island-accent accent-dxb"></div>
             <div class="island-header">
@@ -858,7 +1038,7 @@
                     <span class="island-flag">🏙️</span>
                     <div>
                         <div class="island-name-cn">迪拜</div>
-                        <div class="island-name-en">Dubai Strategic Advisory</div>
+                        <div class="island-name-en">Dubai Strategic Risk Report</div>
                     </div>
                 </div>
                 <div class="island-dates">MAY 22 – 28, 2026</div>
@@ -866,29 +1046,35 @@
             <div class="island-body">
                 <div class="pulse-col col-divider">
                     <div class="section-label">情报脉冲</div>
-                    <span class="status-badge status-risk">🔴 STRATEGIC DISRUPTION</span>
-                    <div class="strategy-box">
-                        <h4>Strategic Pivot Required</h4>
-                        <p style="font-size:0.85rem; line-height:1.6; color:var(--text-mid);">由于不确定的区域溢出风险，XYLab
-                            战略组已将该资产列入<b>灰名单</b>。建议无限期封存。资源已优化指向新加坡。</p>
+                    <span class="status-badge status-risk">🔴 Strategic Disruption</span>
+                    <div class="strategy-brief">
+                        <span class="brief-tag">Critical Advisory</span>
+                        <div class="brief-content">由于中东区域安全溢出风险，XYLab 战略组已建议将该目的地资产无限期冻结。预计 2026 Q2
+                            前局势难以逆转，资源已全面向新加坡及东南亚市场倾斜。</div>
                     </div>
                 </div>
                 <div class="guide-col col-divider">
-                    <div class="section-label">计划锁定 (Locked Portfolio)</div>
-                    <div style="opacity:0.3; padding:20px; text-align:center;">
-                        <span style="font-size:3rem;">🔒</span>
-                        <div style="font-size:0.8rem; font-weight:900; margin-top:10px;">ITINERARY ENCRYPTED</div>
+                    <div class="section-label">7日风险研判 (Risk Briefing)</div>
+                    <div class="day-grid">
+                        <div class="day-unit">
+                            <div class="day-title">R1-R3: 资产安全评估</div>
+                            <div class="brief-content">重点观察 DXB 机场及港口流量衰减，锁定住宿资产风险。</div>
+                        </div>
+                        <div class="day-unit">
+                            <div class="day-title">R4-R7: 资源转移方案</div>
+                            <div class="brief-content">原有迪拜航程退款资产将作为新加坡/巴厘岛扩张计划的二级储备金。</div>
+                        </div>
                     </div>
                 </div>
                 <div class="dwell-col">
-                    <div class="section-label">资产风险锁定</div>
+                    <div class="section-label">资产锁定</div>
                     <div class="hotel-magazine-grid">
-                        <div class="hotel-magazine-card grayscale-strat">
-                            <img src="https://images.unsplash.com/photo-1628131338274-98bcc865b26b?w=800"
+                        <div class="hotel-magazine-card grayscale-strat"><img
+                                src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800"
                                 class="hotel-img">
-                            <div class="hotel-overlay">
-                                <div class="hotel-name">Atlantis The Royal</div>
-                                <div class="hotel-rate">LOCKUP / ---</div>
+                            <div class="hotel-info-box">
+                                <div class="hotel-name">Atlantis Royal</div>
+                                <div class="hotel-rate">FROZEN / ---</div>
                             </div>
                         </div>
                     </div>
@@ -899,7 +1085,7 @@
     </div>
 
     <footer>
-        <div class="footer-pill">✦ POWERED BY XYLab LIFESTYLE INTELLIGENCE ✦</div>
+        <div class="footer-badge">✦ POWERED BY XYLab LIFESTYLE INTELLIGENCE v9 ✦</div>
     </footer>
 
 </body>
